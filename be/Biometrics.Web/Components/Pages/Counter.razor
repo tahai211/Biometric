@@ -1,0 +1,296 @@
+﻿@page "/counter"
+@rendermode InteractiveServer
+
+@inject IJSRuntime JS
+
+<h3>Face Login and QR Scan</h3>
+
+@if (!modelsLoaded)
+{
+    <p>Loading Models...</p>
+}
+else
+{
+    <video id="videoElement" width="640" height="480" autoplay></video>
+    <button @onclick="StartFaceScan">Scan my face</button>
+    <div>
+        <button @onclick="StartQRScan">Scan QR Code</button>
+    </div>
+
+    @if (loginResult == "SUCCESS")
+    {
+        <p>Login successful! Redirecting in @counter seconds...</p>
+    }
+    else if (loginResult == "FAILED")
+    {
+        <p>Face not recognized. Please try again.</p>
+    }
+}
+
+<script>
+    window.loadFaceApiModels = async (dotnetHelper) => {
+        console.log("ưedgsyudg");
+        await faceapi.nets.ssdMobilenetv1.loadFromUri('/models');
+        await faceapi.nets.faceLandmark68Net.loadFromUri('/models');
+        await faceapi.nets.faceRecognitionNet.loadFromUri('/models');
+        dotnetHelper.invokeMethodAsync('SetModelsLoaded');
+    };
+
+    window.startFaceScan = async (dotnetHelper) => {
+        const video = document.getElementById('videoElement');
+
+        // Lấy quyền truy cập vào camera
+        navigator.mediaDevices.getUserMedia({ video: {} }).then(stream => {
+            video.srcObject = stream;
+        });
+
+        const labeledFaceDescriptors = await loadLabeledImages();
+        const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6);
+
+        video.addEventListener('play', async () => {
+            const canvas = faceapi.createCanvasFromMedia(video);
+            document.body.append(canvas);
+            const displaySize = { width: video.width, height: video.height };
+            faceapi.matchDimensions(canvas, displaySize);
+
+            const interval = setInterval(async () => {
+                const detections = await faceapi.detectAllFaces(video)
+                    .withFaceLandmarks().withFaceDescriptors();
+
+                const resizedDetections = faceapi.resizeResults(detections, displaySize);
+                const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor));
+
+                if (results.some(res => res.label !== 'unknown')) {
+                    dotnetHelper.invokeMethodAsync('SetFaceScanResult', 'SUCCESS');
+                    clearInterval(interval);
+                } else {
+                    dotnetHelper.invokeMethodAsync('SetFaceScanResult', 'FAILED');
+                }
+
+                canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+                faceapi.draw.drawDetections(canvas, resizedDetections);
+                faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
+            }, 100);
+        });
+    };
+
+    window.StartQRScan = async (dotnetHelper) => {
+        const qrCodeScanner = new Html5Qrcode("qr-reader");
+
+        // Chạy quét QR với camera hiện tại
+        qrCodeScanner.start(
+            { facingMode: "environment" },
+            { fps: 10, qrbox: 250 },
+            (decodedText, decodedResult) => {
+                // Xử lý kết quả quét QR
+                dotnetHelper.invokeMethodAsync('SetQRScanResult', decodedText);
+                qrCodeScanner.stop();
+            },
+            (errorMessage) => {
+                console.log("QR code scan error:", errorMessage);
+            }
+        ).catch(err => {
+            console.error("Unable to start QR scanner:", err);
+        });
+    };
+
+    async function loadLabeledImages() {
+        const labels = ['Person1', 'Person2']; // Thay đổi với dữ liệu người dùng thực tế
+        return Promise.all(
+            labels.map(async label => {
+                const descriptions = [];
+                for (let i = 1; i <= 1; i++) {
+                    const img = await faceapi.fetchImage(`/images/${label}/${i}.jpg`);
+                    const detections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor();
+                    descriptions.push(detections.descriptor);
+                }
+                return new faceapi.LabeledFaceDescriptors(label, descriptions);
+            })
+        );
+    }
+</script>
+
+<div id="qr-reader" style="width:500px"></div>
+
+@code {
+    [Inject]
+    public NavigationManager Navigation { get; set; }
+    private string loginResult = "PENDING";
+    private bool modelsLoaded = false;
+    private int counter = 5;
+    private DotNetObjectReference<Counter>? objRef;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            objRef = DotNetObjectReference.Create(this);
+
+            // Sau khi render lần đầu, gọi loadFaceApiModels
+            await JS.InvokeVoidAsync("loadFaceApiModels", objRef);
+        }
+    }
+
+    [JSInvokable]
+    public void SetModelsLoaded()
+    {
+        modelsLoaded = true;
+        StateHasChanged();
+    }
+
+    public async Task StartFaceScan()
+    {
+        if (modelsLoaded)
+        {
+            loginResult = "PENDING";
+            await JS.InvokeVoidAsync("startFaceScan", objRef);
+        }
+    }
+
+    public async Task StartQRScan()
+    {
+        await JS.InvokeVoidAsync("StartQRScan", objRef);
+    }
+
+    [JSInvokable]
+    public async Task SetFaceScanResult(string result)
+    {
+        loginResult = result;
+
+        if (loginResult == "SUCCESS")
+        {
+            await CountdownRedirect();
+        }
+        else
+        {
+            StateHasChanged();
+        }
+    }
+
+    [JSInvokable]
+    public void SetQRScanResult(string result)
+    {
+        Console.WriteLine("QR Code Result: " + result);
+        // Xử lý dữ liệu QR code
+        StateHasChanged();
+    }
+
+    private async Task CountdownRedirect()
+    {
+        while (counter > 0)
+        {
+            await Task.Delay(1000);
+            counter--;
+            StateHasChanged();
+        }
+        Navigation.NavigateTo("/anotherpage");
+    }
+}
+
+
+
+
+@* @inject ApiClient.BiometricApiClient BiometricApi
+
+<h1>Fun Blazor Web Camera Application</h1>
+
+<div>
+    <canvas id="@options.CanvasID"
+            style="background-color:lightgray;"
+            width="@options.Width"
+            height="360">
+    </canvas>
+</div>
+<div>
+    <button class="btn btn-primary" @onclick="Start">Start</button>
+    <button class="btn btn-primary" @onclick="TakePhoto">Generate</button>
+</div>
+<div>
+    <video id="@options.VideoID"
+           style="background-color:lightblue; visibility:hidden;"
+           width="@options.Width">
+        Video stream not available.
+    </video>
+</div>
+<div>
+    @if (!string.IsNullOrEmpty(faceData))
+    {
+        <p>Face data detected: @faceData</p>
+    }
+</div>
+<div>
+    @if (!string.IsNullOrEmpty(data))
+    {
+        <img src="@data" alt="Captured Image" />
+    }
+</div>
+
+<!-- Hidden div to store base64 image data -->
+<div id="base64Image" style="display:none;"></div>
+
+@code {
+    private string faceData;
+    private string data;
+    private dynamic biomertric;
+    WebCamOptions options = new WebCamOptions()
+    {
+        CanvasID = "canvas",
+        VideoID = "video"
+    };
+
+    protected override void OnInitialized()
+    {
+        options.Width = 480;
+    }
+
+    private async Task Start()
+    {
+        await JSRuntime.InvokeVoidAsync("WebCamFunctions.start", options);
+    }
+    private async Task TakePhoto()
+    {
+        // Call JavaScript to take a photo and analyze face
+        await JSRuntime.InvokeVoidAsync("WebCamFunctions.takePhoto");
+        var base64Image = await JSRuntime.InvokeAsync<string>("getBase64Image");
+        faceData = await AnalyzeFace(base64Image);
+        StateHasChanged();
+    }
+
+    [JSInvokable]
+    public async Task UpdateBase64Image(string base64Image)
+    {
+        // Gọi hàm AnalyzeFace để lấy đặc điểm khuôn mặt
+        faceData = await AnalyzeFace(base64Image);
+        StateHasChanged();  // Cập nhật giao diện người dùng
+    }
+
+    private async Task<string> AnalyzeFace(string base64Image)
+    {
+        try
+        {
+            // Gửi dữ liệu base64 đến server để phân tích khuôn mặt
+            var result = await BiometricApi.AnalyzeFace(base64Image);
+            return result;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error analyzing face: {ex.Message}");
+            return string.Empty;
+        }
+    }
+
+    // private async Task Generator()
+    // {
+    //     try
+    //     {
+    //         biomertric = await BiometricApi.RegisterBiometricAsync("1", "1234", "123", "125");
+    //         data = biomertric.Response.GetString();
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         // Handle any errors that may occur
+    //         Console.WriteLine($"Error loading policies: {ex.Message}");
+    //     }
+    // }
+}
+ *@

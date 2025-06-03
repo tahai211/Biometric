@@ -1,0 +1,279 @@
+﻿@page "/upload"
+@* @inject IJSRuntime JS
+
+<h3>Face Login</h3>
+
+@if (!modelsLoaded)
+{
+    <p>Loading Models...</p>
+}
+else
+{
+    <video id="videoElement" width="640" height="480" autoplay></video>
+    <button @onclick="StartFaceScan">Scan my face</button>
+
+    @if (loginResult == "SUCCESS")
+    {
+        <p>Login successful! Redirecting in @counter seconds...</p>
+    }
+    else if (loginResult == "FAILED")
+    {
+        <p>Face not recognized. Please try again.</p>
+    }
+}
+
+@code {
+    [Inject]
+    public NavigationManager Navigation { get; set; }
+    private string loginResult = "PENDING";
+    private bool modelsLoaded = false;
+    private int counter = 5;
+    private DotNetObjectReference<Upload>? objRef;
+
+    protected override async Task OnInitializedAsync()
+    {
+        objRef = DotNetObjectReference.Create(this);
+        await JS.InvokeVoidAsync("loadFaceApiModels", objRef);
+    }
+
+    public async Task StartFaceScan()
+    {
+        loginResult = "PENDING";
+        await JS.InvokeVoidAsync("startFaceScan", objRef);
+    }
+
+    [JSInvokable]
+    public async Task SetFaceScanResult(string result)
+    {
+        loginResult = result;
+
+        if (loginResult == "SUCCESS")
+        {
+            await CountdownRedirect();
+        }
+    }
+
+    private async Task CountdownRedirect()
+    {
+        while (counter > 0)
+        {
+            await Task.Delay(1000);
+            counter--;
+            StateHasChanged();
+        }
+        Navigation.NavigateTo("/anotherpage");
+    }
+
+    // public override void Dispose()
+    // {
+    //     objRef?.Dispose(); // Giải phóng tham chiếu
+    //     objRef = null; // Đảm bảo không còn giữ lại tham chiếu nào
+    //     base.Dispose(); // Gọi Dispose của lớp cha
+    // }
+}
+ *@
+
+@rendermode InteractiveServer
+@inject IJSRuntime JSRuntime
+@attribute [StreamRendering(true)]
+@attribute [OutputCache(Duration = 5)]
+@inject ApiClient.BiometricApiClient BiometricApi
+
+<div class="page-inner">
+        <div class="page-header">
+        <h3 class="fw-bold mb-3">Register QR</h3>
+            <ul class="breadcrumbs mb-3">
+                <li class="nav-home">
+                    <a href="#">
+                        <i class="icon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Register QR</a>
+                </li>
+            </ul>
+        </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                    <div class="card-title">Register QR For Customer</div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                        @if (isLoading && !isSubmit)
+                        {
+                            <!-- Hiển thị loading spinner -->
+                            <div class="text-center my-3">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <p>Processing file, please wait...</p>
+                            </div>
+                        }
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                            <label for="userName">User Name:</label>
+                                <InputText id="userName" type="text" class="form-control" @bind-Value="formModel.UserName" placeholder="Enter User Name" disabled="@isLoading" />
+                        </div>
+                        <div class="form-group">
+                            <label for="firstName">First Name:</label>
+                                <InputText id="firstName" type="text" class="form-control" @bind-Value="formModel.FirstName" placeholder="Enter First Name" disabled="@isLoading" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                            <label for="middleName">Middle Name:</label>
+                                <InputText id="middleName" type="text" class="form-control" @bind-Value="formModel.MiddleName" placeholder="Enter Middle Name" disabled="@isLoading" />
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name:</label>
+                                <InputText id="lastName" type="text" class="form-control" @bind-Value="formModel.LastName" placeholder="Enter Last Name" disabled="@isLoading" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                            <label for="gender">Gender:</label>
+                            <div>
+                                    <label><InputCheckbox @bind-Value="formModel.IsMale" disabled="@isLoading" /> Male</label>
+                            </div>
+                            <div>
+                                    <label><InputCheckbox @bind-Value="formModel.IsFemale" disabled="@isLoading" /> Female</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                                <InputText id="email" type="email" class="form-control" @bind-Value="formModel.Email" placeholder="Enter Email" disabled="@isLoading" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                            <label for="phoneNumber">Phone Number:</label>
+                                <InputText id="phoneNumber" type="tel" class="form-control" @bind-Value="formModel.PhoneNumber" placeholder="Enter Phone Number" disabled="@isLoading" />
+                        </div>
+                        <div class="form-group">
+                            <label for="pass">Password Authentication:</label>
+                                <InputText id="pass" type="password" class="form-control" @bind-Value="formModel.Pass" placeholder="Enter Password" disabled="@isLoading" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="mt-4">
+                            <label for="image">Upload Image:</label>
+                                <InputFile OnChange="HandleFileSelected" accept="image/*" disabled="@isLoading" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-action">
+                @if (errorMessage != null)
+                {
+                    <p class="text-danger">@errorMessage</p>
+                }
+                    <button class="btn btn-success" @onclick="HandleSubmit" disabled="@isLoading">Start</button>
+                <div>
+                    @if (!string.IsNullOrEmpty(data))
+                    {
+                        <div>
+                            <!-- Giới hạn kích cỡ của ảnh -->
+                            <img src="@data" alt="Captured Image" style="max-width: 300px; max-height: 300px;" />
+
+                            <!-- Nút để lưu ảnh xuống máy -->
+                            <a href="@data" download="captured-image.png" class="btn btn-primary mt-2">Save Image</a>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+@code {
+    private FormModel formModel = new FormModel();
+    private IBrowserFile? selectedFile;
+    private string? errorMessage;
+    private string faceData;
+    private string data;
+    private dynamic biomertric;
+    private bool isLoading = false;
+    private bool isSubmit = false;
+    // Handle file selection
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        selectedFile = e.File;
+    }
+
+    // Handle form submission
+    private async Task HandleSubmit()
+    {
+        if (selectedFile == null)
+        {
+            errorMessage = "Please select an image to upload.";
+            return;
+        }
+        isLoading = true;
+        // // Convert image to byte array and Base64 string
+        // var buffer = new byte[selectedFile.Size];
+        // await selectedFile.OpenReadStream(1024 * 1024 * 15).ReadAsync(buffer); // 15MB max size
+        // string base64Image = Convert.ToBase64String(buffer);
+
+        // faceData = await AnalyzeFace(base64Image);
+        // // Add base64 image as a string
+        // formContent.Add(new StringContent(base64Image), "imageBase64");
+
+        // Lưu file vào thư mục tạm
+        var filePath = Path.Combine(Path.GetTempPath(), selectedFile.Name);
+        using (var fileStream = new FileStream(filePath, FileMode.Create))
+        {
+            await selectedFile.OpenReadStream().CopyToAsync(fileStream);
+        }
+
+        // Truyền đường dẫn của tệp vào hàm GetFaceData
+        string faceDescriptor = await BiometricApi.AnalyzeFace(filePath);
+
+        // Xóa file tạm sau khi sử dụng
+        File.Delete(filePath);
+        string Gender = "F";
+        if (formModel.IsMale)
+        {
+            Gender = "M";
+        }
+        await Generator(faceDescriptor, formModel.UserName, formModel.FirstName, formModel.MiddleName, formModel.LastName, Gender, formModel.Email, formModel.PhoneNumber, formModel.Pass);
+        isSubmit = true;
+        // Xử lý kết quả trả về từ GetFaceData
+
+    }
+    private async Task Generator(string faceDescriptor, string userName, string firstName, string middleName, string? lastName, string? gender, string? email, string? phoneNo, string? password)
+    {
+        try
+        {
+            biomertric = await BiometricApi.RegisterBiometricAsync(faceDescriptor, userName, firstName, middleName, lastName, gender, email, phoneNo,password);
+            data = biomertric.Response;
+        }
+        catch (Exception ex)
+        {
+            // Handle any errors that may occur
+            Console.WriteLine($"Error loading policies: {ex.Message}");
+        }
+    }
+
+    public class FormModel
+    {
+        public string FirstName { get; set; } = string.Empty;
+        public string MiddleName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public bool IsMale { get; set; } = false;  // Checkbox cho Male
+        public bool IsFemale { get; set; } = false;  // Checkbox cho Female
+        public string PhoneNumber { get; set; } = string.Empty;
+        public string Pass { get; set; } = string.Empty;
+    }
+
+}
+

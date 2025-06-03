@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Biometrics.ApiService.DTO.Entity
+{
+    [Table("Sys_PasswordHis")]
+    public class SysPasswordHis
+    {
+        [Key]
+        public string? LoginId { get; set; }
+        public string? Type { get; set; }
+        public string? PasswordValue { get; set; }
+        public string? UserModified { get; set; }
+        public DateTime? DateModified { get; set; }
+        public int? ChangeTimeNumber { get; set; }
+        public string? ServiceId { get; set; }
+        public string? ActionType { get; set; }
+        public string? Option { get; set; }
+    }
+}

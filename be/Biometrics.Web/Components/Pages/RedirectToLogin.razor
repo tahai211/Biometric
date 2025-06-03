@@ -1,0 +1,19 @@
+﻿@page "/checkauth"
+@using Microsoft.AspNetCore.Components.Authorization
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+@code {
+    private bool _isAuthenticated;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        _isAuthenticated = authState.User.Identity.IsAuthenticated;
+
+        if (!_isAuthenticated)
+        {
+            Navigation.NavigateTo("/login");
+        }
+    }
+}

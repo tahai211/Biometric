@@ -1,0 +1,98 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">Biometrics</a>
+    </div>
+</div>
+
+<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <div class="sidebar" data-background-color="dark">
+        <div class="sidebar-logo">
+            <!-- Logo Header -->
+            <div class="logo-header" data-background-color="dark">
+                <a href="index.html" class="logo">
+                    <img src="assets/img/kaiadmin/logo_light.svg"
+                         alt="navbar brand"
+                         class="navbar-brand"
+                         height="20" />
+                </a>
+                <div class="nav-toggle">
+                    <button class="btn btn-toggle toggle-sidebar">
+                        <i class="gg-menu-right"></i>
+                    </button>
+                    <button class="btn btn-toggle sidenav-toggler">
+                        <i class="gg-menu-left"></i>
+                    </button>
+                </div>
+                <button class="topbar-toggler more">
+                    <i class="gg-more-vertical-alt"></i>
+                </button>
+            </div>
+            <!-- End Logo Header -->
+        </div>
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+            <div class="sidebar-content">
+                <ul class="nav nav-secondary">
+                    <li class="nav-item active">
+                        <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                            <i class="fas fa-home"></i>
+                            <p>Dashboard</p>
+                            <span class="caret"></span>
+                        </NavLink>
+                        
+                    </li>
+                    <li class="nav-section">
+                        <span class="sidebar-mini-icon">
+                            <i class="fa fa-ellipsis-h"></i>
+                        </span>
+                        <h4 class="text-section">Components</h4>
+                    </li>
+                    <li class="nav-item">
+                        <NavLink class="nav-link" href="userlist">
+                                <i class="fas fa-layer-group"></i>
+                                <p>User Management</p>
+                        </NavLink>
+                    </li>
+                    <li class="nav-item">
+                        <NavLink class="nav-link" href="rolelist">
+                            <i class="fas fa-desktop"></i>
+                            <p>Role Management</p>
+                            <span class="badge badge-success">4</span>
+                        </NavLink>
+                    </li>
+                    <li class="nav-item">
+                        <NavLink class="nav-link" href="portallist">
+                            <i class="fas fa-file"></i>
+                            <p>Portal Management</p>
+                            <span class="badge badge-secondary">1</span>
+                        </NavLink>
+                    </li>
+                    <li class="nav-item">
+                        <NavLink class="nav-link" href="policylist">
+                            <i class="fas fa-file"></i>
+                            <p>Policy Management</p>
+                            <span class="badge badge-secondary">1</span>
+                        </NavLink>
+                    </li>
+                    <li class="nav-item">
+                        <NavLink class="nav-link" href="regenerateQRList">
+                            <i class="fas fa-desktop"></i>
+                            <p>Regenerate QR</p>
+                            <span class="badge badge-success">4</span>
+                        </NavLink>
+                    </li>
+                    <li class="nav-item">
+                        <NavLink class="nav-link" href="upload">
+                            <i class="fas fa-file"></i>
+                            <p>Register QR</p>
+                            <span class="badge badge-secondary">1</span>
+                        </NavLink>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
