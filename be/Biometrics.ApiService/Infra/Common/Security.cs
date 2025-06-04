@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
+using QRCoder;
 using System;
 using System.Collections.Generic;
 using System.IO.Compression;
