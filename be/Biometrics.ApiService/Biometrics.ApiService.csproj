@@ -6,6 +6,9 @@
     <Nullable>enable</Nullable>
   <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	<DocumentationFile>bin\Debug\net8.0\Biometrics.ApiService.xml</DocumentationFile>
+	<UserSecretsId>91da35a4-c403-4e70-b474-c8872ac05c8b</UserSecretsId>
+	<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	<DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
 	<ItemGroup>
@@ -49,6 +52,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OpenCvSharp4" Version="4.10.0.20240616" />
     <PackageReference Include="QRCoder" Version="1.6.0" />

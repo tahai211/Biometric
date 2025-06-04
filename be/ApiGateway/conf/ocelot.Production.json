@@ -1,0 +1,36 @@
+﻿{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/{any}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7256
+        }
+      ],
+      "UpstreamPathTemplate": "/biometricapi/{any}",
+      "UpstreamHeaderTransform": {
+        "X-Forwarded-For": "{RemoteIpAddress}"
+      }
+    }
+    //,
+    //{
+    //  "DownstreamPathTemplate": "/{any}",
+    //  "DownstreamScheme": "https", 
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "localhost",
+    //      "Port": 7053
+    //    }
+    //  ],
+    //  "UpstreamPathTemplate": "/cimphelpdeskapi/{any}",
+    //  "UpstreamHeaderTransform": {
+    //    "X-Forwarded-For": "{RemoteIpAddress}"
+    //  }
+    //}
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:5116/"
+  }
+}

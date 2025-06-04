@@ -1,0 +1,20 @@
+services:
+  biometrics.apiservice:
+    image: ${DOCKER_REGISTRY-}biometricsapiservice
+    build:
+      context: .
+      dockerfile: Biometrics.ApiService/Dockerfile
+
+  biometrics.web:
+    image: ${DOCKER_REGISTRY-}biometricsweb
+    build:
+      context: .
+      dockerfile: Biometrics.Web/Dockerfile
+
+
+  apigateway:
+    image: ${DOCKER_REGISTRY-}apigateway
+    build:
+      context: .
+      dockerfile: ApiGateway/Dockerfile
+

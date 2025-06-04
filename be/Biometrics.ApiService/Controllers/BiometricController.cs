@@ -76,7 +76,7 @@ namespace Biometrics.ApiService.Controllers
                     request.Gender, request.Email, request.PhoneNo, request.Password);
                 var decryptedContent = EE2E.ServerDecrypt("requestBody", RSAKey.PrivateKey).content;
 
-                httpResponseExtensions = new HttpBase(HttpStatusCode.OK, GenerateQrCode(CompressString(registerBiometric)), ResposeType.TextPlain);
+                httpResponseExtensions = new HttpBase(HttpStatusCode.OK, HandelQR.GenerateQrCode(HandelQR.CompressString(registerBiometric)), ResposeType.TextPlain);
                 return Ok(httpResponseExtensions);
             }
             catch (Exception ex)
@@ -112,7 +112,7 @@ namespace Biometrics.ApiService.Controllers
                 HttpBase httpResponseExtensions = null;
                 string registerBiometric = await _biomertricService.ApproveRegenerateQR(request.id);
 
-                httpResponseExtensions = new HttpBase(HttpStatusCode.OK, GenerateQrCode(CompressString(registerBiometric)), ResposeType.TextPlain);
+                httpResponseExtensions = new HttpBase(HttpStatusCode.OK, HandelQR.GenerateQrCode(HandelQR.CompressString(registerBiometric)), ResposeType.TextPlain);
                 return Ok(httpResponseExtensions);
             }
             catch (Exception ex)
@@ -157,28 +157,6 @@ namespace Biometrics.ApiService.Controllers
                 return BadRequest(responeResult);
             }
         }
-        public string CompressString(string text)
-        {
-            byte[] byteArray = Encoding.UTF8.GetBytes(text);
-            using (var outputStream = new MemoryStream())
-            {
-                using (var gzipStream = new GZipStream(outputStream, CompressionMode.Compress))
-                {
-                    gzipStream.Write(byteArray, 0, byteArray.Length);
-                }
-                return Convert.ToBase64String(outputStream.ToArray());
-            }
-        }
-        public static string GenerateQrCode(string data)
-        {
-            using (QRCodeGenerator qrGenerator = new QRCodeGenerator())
-            using (QRCodeData qrCodeData = qrGenerator.CreateQrCode(data, QRCodeGenerator.ECCLevel.M))
-            using (PngByteQRCode qrCode = new PngByteQRCode(qrCodeData))
-            {
-                byte[] qrCodeImage = qrCode.GetGraphic(20);
-                return $"data:image/png;base64,{Convert.ToBase64String(qrCodeImage)}";
-            }
-        }
 
         [HttpPost("positively")]
         [Check(checkRole: false, checkToken: false)]
@@ -187,7 +165,7 @@ namespace Biometrics.ApiService.Controllers
             try
             {
                 HttpBase httpResponseExtensions = null;
-                var compare = await _biomertricService.PositivelyBiomertric(request.faceData, DecompressString(request.dataQR));
+                var compare = await _biomertricService.PositivelyBiomertric(request.faceData, HandelQR.DecompressString(request.dataQR));
                 httpResponseExtensions = new HttpBase(HttpStatusCode.OK, compare, ResposeType.ApplicationJson, "Success","Face is match");
                 return Ok(httpResponseExtensions);
             }
@@ -195,16 +173,6 @@ namespace Biometrics.ApiService.Controllers
             {
                 var responeResult = new HttpBase(HttpStatusCode.BadRequest, ex.Message, ResposeType.TextPlain, "Fail", ex.Message);
                 return BadRequest(responeResult);
-            }
-        }
-        public string DecompressString(string compressedText)
-        {
-            byte[] compressedBytes = Convert.FromBase64String(compressedText);
-            using (var inputStream = new MemoryStream(compressedBytes))
-            using (var gzipStream = new GZipStream(inputStream, CompressionMode.Decompress))
-            using (var reader = new StreamReader(gzipStream, Encoding.UTF8))
-            {
-                return reader.ReadToEnd();
             }
         }
     }

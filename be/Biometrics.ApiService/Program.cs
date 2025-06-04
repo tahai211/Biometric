@@ -17,6 +17,7 @@ namespace Biometrics.ApiService
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    //nó ghi đè cấu hình port từ launchSettings.json hoặc biến môi trường.
                     //webBuilder.UseUrls("http://192.168.188.138:5000");
                     webBuilder.UseStartup<Startup>(); // Sử dụng lớp Startup
                 });

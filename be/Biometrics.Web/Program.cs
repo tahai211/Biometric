@@ -1,4 +1,4 @@
-using Biometrics.Web;
+﻿using Biometrics.Web;
 using Biometrics.Web.ApiClient;
 using Biometrics.Web.Components;
 using Blazored.LocalStorage;
@@ -66,6 +66,7 @@ builder.Services.AddHttpClient<UserApiClient>(client =>
     client.BaseAddress = new Uri(apiSettings.AuthenticationApiUrl);
 });
 builder.Services.AddBlazoredLocalStorage();
+//nó ghi đè cấu hình port từ launchSettings.json hoặc biến môi trường.
 //builder.WebHost.UseUrls("http://192.168.188.138:5050");
 var app = builder.Build();
 

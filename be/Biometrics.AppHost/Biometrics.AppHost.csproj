@@ -10,12 +10,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ApiGateway\ApiGateway.csproj" />
     <ProjectReference Include="..\Biometrics.ApiService\Biometrics.ApiService.csproj" />
     <ProjectReference Include="..\Biometrics.Web\Biometrics.Web.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting.AppHost" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Projects\" />
   </ItemGroup>
 
 </Project>

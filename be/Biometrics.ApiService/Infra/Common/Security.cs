@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO.Compression;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -243,6 +244,40 @@ namespace Biometrics.ApiService.Infra.Common
             return encryptedDataWithHeader;
         }
 
+    }
+    public class HandelQR{
+        public static string CompressString(string text)
+        {
+            byte[] byteArray = Encoding.UTF8.GetBytes(text);
+            using (var outputStream = new MemoryStream())
+            {
+                using (var gzipStream = new GZipStream(outputStream, CompressionMode.Compress))
+                {
+                    gzipStream.Write(byteArray, 0, byteArray.Length);
+                }
+                return Convert.ToBase64String(outputStream.ToArray());
+            }
+        }
+        public static string DecompressString(string compressedText)
+        {
+            byte[] compressedBytes = Convert.FromBase64String(compressedText);
+            using (var inputStream = new MemoryStream(compressedBytes))
+            using (var gzipStream = new GZipStream(inputStream, CompressionMode.Decompress))
+            using (var reader = new StreamReader(gzipStream, Encoding.UTF8))
+            {
+                return reader.ReadToEnd();
+            }
+        }
+        public static string GenerateQrCode(string data)
+        {
+            using (QRCodeGenerator qrGenerator = new QRCodeGenerator())
+            using (QRCodeData qrCodeData = qrGenerator.CreateQrCode(data, QRCodeGenerator.ECCLevel.M))
+            using (PngByteQRCode qrCode = new PngByteQRCode(qrCodeData))
+            {
+                byte[] qrCodeImage = qrCode.GetGraphic(20);
+                return $"data:image/png;base64,{Convert.ToBase64String(qrCodeImage)}";
+            }
+        }
     }
 
     public class Encryption
