@@ -170,7 +170,8 @@ namespace Biometrics.ApiService
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Biometrics.ApiService V1");
             });
-
+            //sử dụng khi log vào DB 
+            //app.UseMiddleware<LoggingMiddleware>();
             app.UseMiddleware<RoleCheckMiddleware>();
 
             app.UseEndpoints(endpoints =>
