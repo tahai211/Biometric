@@ -37,6 +37,7 @@ namespace Biometrics.ApiService.Infra
         {
             await _logChannel.Writer.WriteAsync(logEntry);
         }
+        //Todo: chõ này nên dùng RabitMQ để log 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)

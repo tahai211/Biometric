@@ -23,10 +23,12 @@ using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Authorization;
 using Biometrics.ApiService.Infra.Attributes;
 using Biometrics.ApiService.Infra.Constans;
+using Biometrics.ApiService.Infra.Permission;
 
 
 namespace Biometrics.ApiService.Controllers
 {
+    //[Authorize]
     [Route("api/authen")]
     [ApiController]
     public class AuthenticationController : Controller
@@ -59,6 +61,7 @@ namespace Biometrics.ApiService.Controllers
         /// <response code="404">Không tìm thấy tài khoản</response>
         /// <response code="400">Đăng nhập thất bại</response> 
         [HttpPost("login")]
+        //[Permission(PermissionConst.SearchStatusCardInfo.Default)]
         [Check(checkRole: false, checkToken: false)]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {

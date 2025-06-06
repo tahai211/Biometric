@@ -1,0 +1,25 @@
+# sử dụng cho trường hợp dev sửa code
+name: Pull Request Opened
+
+on: # trigger conditions
+  pull_request:
+    types: [opened, synchronize, reopened] # Optionally, trigger on pull requests too
+
+jobs:
+  build-pull-request:
+    runs-on: ubuntu-latest # GitHub hosted – Sharing between đây là tag của runner trong action
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+# Todo: đoạn này chỉ viết check lại code 
+      # - name: Build Docker Image
+      #   uses: ./github/actions/build-docker-image
+      #   with:
+      #     image_name: 774305578623.dkr.ecr.ap-southeast-1.amazonaws.com/promotionapp-ui
+      #     tag: pr
+
+# - SonarQube
+# - Unit
+# - Automation Test

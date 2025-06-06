@@ -1,0 +1,563 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cimp-apigateway-deployment
+  namespace: cimp-system
+  labels:
+    app: cimp-apigateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cimp-apigateway
+  template:
+    metadata:
+      labels:
+        app: cimp-apigateway
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: cimp-apigateway
+          image: tahai/cimpapigateway:latest
+          ports:
+          - containerPort: 8080
+          # resources:
+          #   requests:
+          #     cpu: 500m
+          #     memory: 512Mi
+          env:
+          - name: TZ
+            value: "Asia/Ho_Chi_Minh"
+          - name: ASPNETCORE_ENVIRONMENT
+            value: "Production"
+          - name: ASPNETCORE_HTTP_PORTS
+            value: "8080"
+          volumeMounts:
+          - name: logs-volume
+            mountPath: /app/logs
+          - name: config-volume
+            mountPath: /app/conf/ocelot.Production.json
+      volumes:
+      - name: logs-volume
+        hostPath:
+          path: /CIMS/logs/GW
+      - name: config-volume
+        hostPath:
+          path: /home/node/config/gw/ocelot.Production.json
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cimp-api-deployment
+  namespace: cimp-system
+  labels:
+    app: cimp-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cimp-api
+  template:
+    metadata:
+      labels:
+        app: cimp-api
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: cimp-api
+          image: tahai/cimpapi:latest
+          ports:
+          - containerPort: 8080
+          # resources:
+          #   requests:
+          #     cpu: 500m
+          #     memory: 512Mi
+          env:
+          - name: TZ
+            value: "Asia/Ho_Chi_Minh"
+          - name: ASPNETCORE_ENVIRONMENT
+            value: "Production"
+          - name: ASPNETCORE_HTTP_PORTS
+            value: "8080"
+          - name: App__CorsOrigins
+            value: "http://192.168.100.72:6010/*,http://192.168.100.72:6010,http://192.168.100.72:30660/*,http://192.168.100.72:30660"
+          - name: connectionstrings__default
+            value: "Ip/IKZN7HnNKdZAqiacFbzv7s/3xbvO7kjQSTFBicHYj2+ui1oDP4NPzQw9mIEYg47QMmQgedzspfGQG8QqFJlorv4g+5fq77XvGftQSqSdjQSI+HXUEyKArlbOT0DCkqE4IpCR+F0w2W45SwtXeIml6tD3/8EMZV/0OSJct+TEw/pIGCIIGlgq0KUuUnasxLzIxtt1i/NI="
+          - name: redis__connection
+            value: "192.168.100.239:6379"
+          - name: redis__password
+            value: "eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81"
+          - name: redis__instance
+            value: "CIMS_API_"
+          - name: App__secret_key
+            value: "+arHJCPbufxUMph1EWaLZywInX3IEJX07h8zB09Rme8="
+          - name: SystemId
+            value: "CIMSAPI"
+          - name: CIMPkey__KeyX
+            value: "ELx0ceOUXElav50GEzH7X5a4BtIp4hh1_kbdi65H7js"
+          - name: CIMPkey__KeyY
+            value: "hwjVDoJGPe4bM84DOHhUecbRgagiH3GGyyT8ojPHf6I"
+          - name: CIMPkey__KeyD
+            value: "ioAy3ntH53PAYmJonFpM0JVrbJg0BqDhGcZUBbviKkg"
+          - name: ApiConnection__CIMSITG__SystemId
+            value: "CIMSITG"
+          - name: ApiConnection__CIMSITG__BaseUrl
+            value: "http://192.168.100.72:30664/"
+          - name: ApiConnection__CIMSITG__KeyX
+            value: "TosoDz_0kL75u8VBUNfVy8V9JydH46uPZLOCu1AJ9XM"
+          - name: ApiConnection__CIMSITG__KeyY
+            value: "MRIc2OxNDDw5VrFgwIlJktkuOaVdyKYgbtjRRjcDv6c"
+          - name: ApiConnection__CIMSITG__DerrivedKey
+            value: "aXfND7EyODKkQJV3L5lyHmUcxaLbc1j5axifuGgf1i4"
+          - name: ApiConnection__CIMSITG__DerrivedKeyIn
+            value: "b4AtDZLP0qN55VFrkRqCEcL1h3_2TlW_BEmdnQ5nJSs"
+          - name: ApiConnection__CIMSITG__Timeout
+            value: "60"
+          volumeMounts:
+          - name: logs-volume
+            mountPath: /app/logs
+      volumes:
+      - name: logs-volume
+        hostPath:
+          path: /CIMS/logs/API
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cimp-public-api-deployment
+  namespace: cimp-system
+  labels:
+    app: cimp-public-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cimp-public-api
+  template:
+    metadata:
+      labels:
+        app: cimp-public-api
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: cimp-public-api
+          image: tahai/cimppublicapi:latest
+          ports:
+          - containerPort: 8080
+          # resources:
+          #   requests:
+          #     cpu: 500m
+          #     memory: 512Mi
+          env:
+          - name: TZ
+            value: "Asia/Ho_Chi_Minh"
+          - name: ASPNETCORE_ENVIRONMENT
+            value: "Production"
+          - name: ASPNETCORE_HTTP_PORTS
+            value: "8080"
+          - name: App__CorsOrigins
+            value: "http://192.168.100.72:6010/*,http://192.168.100.72:6010,http://192.168.100.72:30660/*,http://192.168.100.72:30660"
+          - name: connectionstrings__default
+            value: "Ip/IKZN7HnNKdZAqiacFbzv7s/3xbvO7kjQSTFBicHYj2+ui1oDP4NPzQw9mIEYg47QMmQgedzspfGQG8QqFJlorv4g+5fq77XvGftQSqSdjQSI+HXUEyKArlbOT0DCkqE4IpCR+F0w2W45SwtXeIml6tD3/8EMZV/0OSJct+TEw/pIGCIIGlgq0KUuUnasxLzIxtt1i/NI="
+            # valueFrom:
+            #   secretKeyRef:
+            #     name: cimp-secrets
+            #     key: publicapi-connection
+          - name: redis__connection
+            value: "192.168.100.239:6379"
+          - name: redis__password
+            value: "eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81"
+          - name: redis__instance
+            value: "CIMS_API_"
+          - name: SystemId
+            value: "CIMSPBL"
+          - name: CIMPkey__KeyX
+            value: "jILn8C8jxAhTuVL6YOxjspgW2Add8IYLgUxXHC8a3PA"
+          - name: CIMPkey__KeyY
+            value: "pRvEH_2nhSxEYQ_lBAh1MvRQZV3uyt1Vf2msyzWFE3Q"
+          - name: CIMPkey__KeyD
+            value: "wVzd8dGI9QX7ZYKVUuXSpF7q3l_exNnskiLoWQsfVFY"
+          - name: ApiConnection__CBSAPI__SystemId
+            value: "CBS"
+          - name: ApiConnection__CBSAPI__BaseUrl
+            value: "http://192.168.100.188:8015/"
+          - name: ApiConnection__CBSAPI__KeyX
+            value: "7dwTtUiG_L8-dkJQyyXXvBLAynUpCsxVALfSSUmHDMw"
+          - name: ApiConnection__CBSAPI__KeyY
+            value: "43s7xKwDHkLMqBFqsJ_Heyn97M9O37zknsmC92JeKUU"
+          - name: ApiConnection__CBSAPI__DerrivedKey
+            value: "FgvB3kKmxRtfoI61eVVoDZXKAL6vv1dlF4Uex25mMW0"
+          - name: ApiConnection__CBSAPI__DerrivedKeyIn
+            value: "S9Yq_yzKt3gml-FCipwbcLRnt58eAilhZEmfBeK-PpI"
+          volumeMounts:
+          - name: logs-volume
+            mountPath: /app/logs
+      volumes:
+      - name: logs-volume
+        hostPath:
+          path: /CIMS/logs/PublicAPI
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cimp-helpdesk-api-deployment
+  namespace: cimp-system
+  labels:
+    app: cimp-helpdesk-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cimp-helpdesk-api
+  template:
+    metadata:
+      labels:
+        app: cimp-helpdesk-api
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: cimp-helpdesk-api
+          image: tahai/cimphelpdeskapi:latest
+          ports:
+          - containerPort: 8080
+          # resources:
+          #   requests:
+          #     cpu: 500m
+          #     memory: 512Mi
+          env:
+          - name: TZ
+            value: "Asia/Ho_Chi_Minh"
+          - name: ASPNETCORE_ENVIRONMENT
+            value: "Production"
+          - name: ASPNETCORE_HTTP_PORTS
+            value: "8080"
+          - name: App__CorsOrigins
+            value: "http://192.168.100.72:6010/*,http://192.168.100.72:6010,http://192.168.100.72:30660/*,http://192.168.100.72:30660"
+          - name: connectionstrings__default
+            value: "Ip/IKZN7HnNKdZAqiacFbzv7s/3xbvO7kjQSTFBicHYj2+ui1oDP4NPzQw9mIEYg47QMmQgedzspfGQG8QqFJlorv4g+5fq77XvGftQSqSdjQSI+HXUEyKArlbOT0DCkqE4IpCR+F0w2W45SwtXeIml6tD3/8EMZV/0OSJct+TEw/pIGCIIGlgq0KUuUnasxLzIxtt1i/NI="
+            # valueFrom:
+            #   secretKeyRef:
+            #     name: cimp-secrets
+            #     key: helpdesk-connection
+          - name: redis__connection
+            value: "192.168.100.239:6379"
+          - name: redis__password
+            value: "eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81"
+          - name: redis__instance
+            value: "CIMS_API_"
+          - name: App__secret_key
+            value: "+arHJCPbufxUMph1EWaLZywInX3IEJX07h8zB09Rme8="
+          - name: SystemId
+            value: "CIMSAPI"
+          - name: CIMPkey__KeyX
+            value: "ELx0ceOUXElav50GEzH7X5a4BtIp4hh1_kbdi65H7js"
+          - name: CIMPkey__KeyY
+            value: "hwjVDoJGPe4bM84DOHhUecbRgagiH3GGyyT8ojPHf6I"
+          - name: CIMPkey__KeyD
+            value: "ioAy3ntH53PAYmJonFpM0JVrbJg0BqDhGcZUBbviKkg"
+          - name: ApiConnection__CIMSITG__SystemId
+            value: "CIMSITG"
+          - name: ApiConnection__CIMSITG__BaseUrl
+            value: "http://192.168.100.72:30664/"
+          - name: ApiConnection__CIMSITG__KeyX
+            value: "TosoDz_0kL75u8VBUNfVy8V9JydH46uPZLOCu1AJ9XM"
+          - name: ApiConnection__CIMSITG__KeyY
+            value: "MRIc2OxNDDw5VrFgwIlJktkuOaVdyKYgbtjRRjcDv6c"
+          - name: ApiConnection__CIMSITG__DerrivedKey
+            value: "aXfND7EyODKkQJV3L5lyHmUcxaLbc1j5axifuGgf1i4"
+          - name: ApiConnection__CIMSITG__DerrivedKeyIn
+            value: "b4AtDZLP0qN55VFrkRqCEcL1h3_2TlW_BEmdnQ5nJSs"
+          - name: ApiConnection__CIMSITG__Timeout
+            value: "60"
+          volumeMounts:
+          - name: logs-volume
+            mountPath: /app/logs
+      volumes:
+      - name: logs-volume
+        hostPath:
+          path: /CIMS/logs/HelpDeskAPI
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cimp-integration-api-deployment
+  namespace: cimp-system
+  labels:
+    app: cimp-integration-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cimp-integration-api
+  template:
+    metadata:
+      labels:
+        app: cimp-integration-api
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: cimp-integration-api
+          image: tahai/cimpintegrationapi:latest
+          ports:
+          - containerPort: 8080
+          # resources:
+          #   requests:
+          #     cpu: 500m
+          #     memory: 512Mi
+          env:
+          - name: TZ
+            value: "Asia/Ho_Chi_Minh"
+          - name: ASPNETCORE_ENVIRONMENT
+            value: "Production"
+          - name: ASPNETCORE_HTTP_PORTS
+            value: "8080"
+          - name: App__CorsOrigins
+            value: "http://192.168.100.72:6010/*,http://192.168.100.72:6010,http://192.168.100.72:30660/*,http://192.168.100.72:30660"
+          - name: connectionstrings__default
+            value: "Ip/IKZN7HnNKdZAqiacFbzv7s/3xbvO7kjQSTFBicHYj2+ui1oDP4NPzQw9mIEYg47QMmQgedzspfGQG8QqFJlorv4g+5fq77XvGftQSqSdjQSI+HXUEyKArlbOT0DCkqE4IpCR+F0w2W45SwtXeIml6tD3/8EMZV/0OSJct+TEw/pIGCIIGlgq0KUuUnasxLzIxtt1i/NI="
+            # valueFrom:
+            #   secretKeyRef:
+            #     name: cimp-secrets
+            #     key: integration-connection
+          - name: redis__connection
+            value: "192.168.100.239:6379"
+          - name: redis__password
+            value: "eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81"
+          - name: redis__instance
+            value: "CIMS_API_"
+          - name: SystemId
+            value: "CIMSITG"
+          - name: CIMPkey__KeyX
+            value: "TosoDz_0kL75u8VBUNfVy8V9JydH46uPZLOCu1AJ9XM"
+          - name: CIMPkey__KeyY
+            value: "MRIc2OxNDDw5VrFgwIlJktkuOaVdyKYgbtjRRjcDv6c"
+          - name: CIMPkey__KeyD
+            value: "N19jkYCv-N5uEP6gTfOddo_2jRSGyyVUxSrLFH_czJQ"
+          - name: ApiConnection__CBSAPI__SystemId
+            value: "CBS"
+          - name: ApiConnection__CBSAPI__BaseUrl
+            value: "http://192.168.100.188:8015/"
+          - name: ApiConnection__CBSAPI__KeyX
+            value: "7dwTtUiG_L8-dkJQyyXXvBLAynUpCsxVALfSSUmHDMw"
+          - name: ApiConnection__CBSAPI__KeyY
+            value: "43s7xKwDHkLMqBFqsJ_Heyn97M9O37zknsmC92JeKUU"
+          - name: ApiConnection__CBSAPI__DerrivedKey
+            value: "SzZ3iplFKqwMaeRIUkUWn-4ux9K9ovUszCApfylXRq8"
+          - name: ApiConnection__CBSAPI__DerrivedKeyIn
+            value: "S9Yq_yzKt3gml-FCipwbcLRnt58eAilhZEmfBeK-PpI"
+          - name: ApiConnection__CBSAPI__Timeout
+            value: "60"
+          - name: ApiConnection__CIMSAPI__SystemId
+            value: "CIMSAPI"
+          - name: ApiConnection__CIMSAPI__BaseUrl
+            value: "http://192.168.100.72:30660/cimpapi/"
+          - name: ApiConnection__CIMSAPI__KeyX
+            value: "ELx0ceOUXElav50GEzH7X5a4BtIp4hh1_kbdi65H7js"
+          - name: ApiConnection__CIMSAPI__KeyY
+            value: "hwjVDoJGPe4bM84DOHhUecbRgagiH3GGyyT8ojPHf6I"
+          - name: ApiConnection__CIMSAPI__DerrivedKey
+            value: "b4AtDZLP0qN55VFrkRqCEcL1h3_2TlW_BEmdnQ5nJSs"
+          - name: ApiConnection__CIMSAPI__DerrivedKeyIn
+            value: "aXfND7EyODKkQJV3L5lyHmUcxaLbc1j5axifuGgf1i4"
+          - name: ApiConnection__CIMSAPI__Timeout
+            value: "60"
+          volumeMounts:
+          - name: logs-volume
+            mountPath: /app/logs
+      volumes:
+      - name: logs-volume
+        hostPath:
+          path: /CIMS/logs/Intergration
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cimp-migrationrunner-deployment
+  namespace: cimp-system
+  labels:
+    app: cimp-migrationrunner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cimp-migrationrunner
+  template:
+    metadata:
+      labels:
+        app: cimp-migrationrunner
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: cimp-migrationrunner
+          image: tahai/cimpmigrationrunner:latest
+          env:
+          - name: TZ
+            value: "Asia/Ho_Chi_Minh"
+          - name: ConnectionStrings__DefaultConnection
+            value: "Ip/IKZN7HnOR5+fsJbaZHhc+YX9iID6p283XyHh7VS4zMVPxBKc48TnMquHljADairnxDym0sdWNXjxU+N8NNZr9Xb+c7HWW+pR5fZ9QjJMeSgIzeFO3lgM9n3OFj3nmfM7z9Y714Mrf+ZLiJ3vD/wEOxLohZqKpiVTno/I+LHYKMqH+poryWCrOhRuTJtg/bU03GQC0Aots2zWFn2GAZd6lxEyeDE18"
+            # valueFrom:
+            #   secretKeyRef:
+            #     name: cimp-secrets
+            #     key: migration-connection
+          volumeMounts:
+          - name: logs-volume
+            mountPath: /app/logs
+      volumes:
+      - name: logs-volume
+        hostPath:
+          path: /CIMS/logs/MigrationRunner
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cimp-fe-deployment
+  namespace: cimp-system
+  labels:
+    app: cimp-fe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cimp-fe
+  template:
+    metadata:
+      labels:
+        app: cimp-fe
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: cimp-fe
+          image: tahai/cimpfe:latest
+          ports:
+            - containerPort: 80
+          env:
+          - name: TZ
+            value: "Asia/Ho_Chi_Minh"
+          volumeMounts:
+          - name: config-volume
+            mountPath: /usr/share/nginx/html/assets/config/config.prod.json
+      volumes:
+      - name: config-volume
+        hostPath:
+          path: /home/node/config/fe/config.prod.json
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cimp-apigateway-service
+  namespace: cimp-system
+spec:
+  type: NodePort
+  selector:
+    app: cimp-apigateway
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30660
+      protocol: TCP
+      name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cimp-api-service
+  namespace: cimp-system
+spec:
+  type: NodePort
+  selector:
+    app: cimp-api
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30661
+      protocol: TCP
+      name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cimp-public-api-service
+  namespace: cimp-system
+spec:
+  type: NodePort
+  selector:
+    app: cimp-public-api
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30662
+      protocol: TCP
+      name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cimp-helpdesk-api-service
+  namespace: cimp-system
+spec:
+  type: NodePort
+  selector:
+    app: cimp-helpdesk-api
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30663
+      protocol: TCP
+      name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cimp-integration-api-service
+  namespace: cimp-system
+spec:
+  type: NodePort
+  selector:
+    app: cimp-integration-api
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30664
+      protocol: TCP
+      name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cimp-fe-service
+  namespace: cimp-system
+spec:
+  type: NodePort
+  selector:
+    app: cimp-fe
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30665
+      protocol: TCP
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cimp-secrets
+  namespace: cimp-system
+type: Opaque
+stringData:
+  publicapi-connection: "Ip/IKZN7HnNKdZAqiacFbzv7s/3xbvO7kjQSTFBicHYj2+ui1oDP4NPzQw9mIEYg47QMmQgedzspfGQG8QqFJlorv4g+5fq77XvGftQSqSdjQSI+HXUEyKArlbOT0DCkqE4IpCR+F0w2W45SwtXeIml6tD3/8EMZV/0OSJct+TEw/pIGCIIGlgq0KUuUnasxLzIxtt1i/NI="
+  helpdesk-connection: "Ip/IKZN7HnNKdZAqiacFbzv7s/3xbvO7kjQSTFBicHYj2+ui1oDP4NPzQw9mIEYg47QMmQgedzspfGQG8QqFJlorv4g+5fq77XvGftQSqSdjQSI+HXUEyKArlbOT0DCkqE4IpCR+F0w2W45SwtXeIml6tD3/8EMZV/0OSJct+TEw/pIGCIIGlgq0KUuUnasxLzIxtt1i/NI="
+  integration-connection: "Ip/IKZN7HnNKdZAqiacFbzv7s/3xbvO7kjQSTFBicHYj2+ui1oDP4NPzQw9mIEYg47QMmQgedzspfGQG8QqFJlorv4g+5fq77XvGftQSqSdjQSI+HXUEyKArlbOT0DCkqE4IpCR+F0w2W45SwtXeIml6tD3/8EMZV/0OSJct+TEw/pIGCIIGlgq0KUuUnasxLzIxtt1i/NI="
+  migration-connection: "Ip/IKZN7HnOR5+fsJbaZHhc+YX9iID6p283XyHh7VS4zMVPxBKc48TnMquHljADairnxDym0sdWNXjxU+N8NNZr9Xb+c7HWW+pR5fZ9QjJMeSgIzeFO3lgM9n3OFj3nmfM7z9Y714Mrf+ZLiJ3vD/wEOxLohZqKpiVTno/I+LHYKMqH+poryWCrOhRuTJtg/bU03GQC0Aots2zWFn2GAZd6lxEyeDE18"
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cimp-system

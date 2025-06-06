@@ -8,19 +8,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Biometrics.ApiService.Service.Cache;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Biometrics.ApiService.Service.Portal
 {
     public class PortalService : IPortalService
     {
         private readonly AppDbContext _context;
+        private readonly ICacheSerrvice _cacheSerrvice;
+        protected readonly IDistributedCache _cache;
 
-        public PortalService(AppDbContext context)
+        public PortalService(AppDbContext context, ICacheSerrvice cacheSerrvice,IDistributedCache cache)
         {
             _context = context;
+            _cacheSerrvice = cacheSerrvice;
+            _cache = cache;
         }
         public async ValueTask<object> GetListPortalManagement(string? portalName, string? portaiId, string? status, int pageSize = 0, int pageIndex = 1)
         {
+
+
+            await _cache.SetStringAsync("PERMISSION", "Hello Redis", new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5)
+            });
+            try
+            {
+                var pong = await _cache.GetStringAsync("PERMISSION");
+                Console.WriteLine("Redis connected successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Redis connection failed: " + ex.Message);
+            }
+            //var dataPermission = await _cacheSerrvice.GetPermission();
             bool? _status = String.IsNullOrEmpty(status) ? null : (status.Equals("1") ? true : false);
 
             int skip = ((pageIndex - 1) * pageSize);
