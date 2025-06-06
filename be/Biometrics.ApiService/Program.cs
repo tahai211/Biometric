@@ -116,6 +116,19 @@ builder.Services.AddStackExchangeRedisCache(options =>
     };
 });
 //Cấu hình HybridCache để dùng cả redis và memory
+var redisOptions = new RedisCacheOptions
+{
+    ConfigurationOptions = new StackExchange.Redis.ConfigurationOptions
+    {
+        EndPoints = { builder.Configuration["redis:connection"] ?? "localhost:6379" },
+        Password = builder.Configuration["redis:password"],
+        AbortOnConnectFail = true,
+        ConnectTimeout = 30000,
+        AllowAdmin = true,
+        AsyncTimeout = 30000,
+        ConnectRetry = 3
+    }
+};
 //FusionCache Config
 builder.Services.AddFusionCache()
     .WithOptions(options =>
@@ -141,17 +154,25 @@ builder.Services.AddFusionCache()
         //Nếu Redis lỗi nhiều lần, sẽ “ngắt mạch” (circuit breaker) trong 2 giây
         FactoryHardTimeout = TimeSpan.FromMilliseconds(2000),
     })
-    .WithSerializer(
-        //Dùng Newtonsoft.Json để serialize/deserialize object khi lưu vào Redis.
-        new FusionCacheNewtonsoftJsonSerializer()
-    )
-    .WithDistributedCache(
-        new RedisCache(new RedisCacheOptions() { Configuration = builder.Configuration["redis:connection"] ?? "" })
-    )
-    .WithBackplane(
-        //Cho phép invalid cache theo nhóm giữa nhiều instance (rất quan trọng trong load balancing).
-        new RedisBackplane(new RedisBackplaneOptions() { Configuration = builder.Configuration["redis:connection"] ?? "" })
-    );
+    //.WithSerializer(
+    //    //Dùng Newtonsoft.Json để serialize/deserialize object khi lưu vào Redis.
+    //    new FusionCacheNewtonsoftJsonSerializer()
+    //)
+    //.WithDistributedCache(
+    //    new RedisCache(new RedisCacheOptions() { Configuration = builder.Configuration["redis:connection"] ?? "" })
+    //)
+    //.WithBackplane(
+    //    //Cho phép invalid cache theo nhóm giữa nhiều instance (rất quan trọng trong load balancing).
+    //    new RedisBackplane(new RedisBackplaneOptions() { Configuration = builder.Configuration["redis:connection"] ?? "" })
+    //);
+     //Dùng Newtonsoft.Json để serialize/deserialize object khi lưu vào Redis.
+    .WithSerializer(new FusionCacheNewtonsoftJsonSerializer())
+    .WithDistributedCache(new RedisCache(redisOptions))
+    //Cho phép invalid cache theo nhóm giữa nhiều instance (rất quan trọng trong load balancing).
+    .WithBackplane(new RedisBackplane(new RedisBackplaneOptions
+    {
+        Configuration = $"{builder.Configuration["redis:connection"]},password={builder.Configuration["redis:password"]}"
+    }));
 // Add anti-forgery services
 builder.Services.AddAntiforgery(options =>
 {
