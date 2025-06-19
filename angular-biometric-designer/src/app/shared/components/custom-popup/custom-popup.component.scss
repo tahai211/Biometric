@@ -1,0 +1,82 @@
+.popup-backdrop {
+  position: fixed !important;  /* ép luôn fixed */
+  inset: 0 !important;         /* top/right/bottom/left = 0 */
+  z-index: 10000;   
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-container {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Dòng chứa nút close, nằm trên cùng */
+.popup-close-row {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.5rem 1rem 0 1rem; /* top/right/bottom/left */
+}
+
+/* Popup header (chứa title + line) */
+.popup-header {
+  padding: 0 1rem 0.5rem 1rem; /* top/right/bottom/left */
+  position: relative;
+}
+
+.popup-title {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #555;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+/* Vẽ đường ngang dưới title */
+// .popup-title::after {
+//   content: '';
+//   position: absolute;
+//   bottom: 0;
+//   left: 0;
+//   right: 0;
+//   height: 1px;
+//   background: #ccc;
+// }
+
+.close-btn {
+  border: none;
+  background: none;
+  padding: 0;                /* bỏ khoảng thừa */
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-icon {
+  width: 24px;               /* hoặc kích thước bạn muốn */
+  height: 24px;
+  object-fit: contain;
+}
+
+/* Body & footer giữ nguyên */
+.popup-body {
+  flex: 1;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-bottom: 2rem;
+  overflow: auto;
+}
+
+.popup-footer {
+  border-top: 1px solid #ccc;
+  padding: 1rem;
+  text-align: right;
+}

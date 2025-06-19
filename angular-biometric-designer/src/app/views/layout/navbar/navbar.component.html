@@ -1,0 +1,95 @@
+<!-- <nav class="navbar">
+  <a href="" class="sidebar-toggler" (click)="toggleSidebar($event)">
+    <i class="feather icon-menu"></i>
+  </a>
+  <div class="navbar-content">
+    <div class="navbar-nav align-items-center">
+      <span style="color: #4077fb; font-size: 13px;"><i>Ngày hệ thống: {{ today | date:'dd/MM/yyyy' }}</i></span>
+
+      <ul class="navbar-nav">
+        <li class="nav-item nav-profile" ngbDropdown>
+          <a class="nav-link" ngbDropdownToggle id="profileDropdown">
+            <img class="wd-30 ht-30 rounded-circle" src="assets/images/avatar_profile.jpg" alt="profile">
+          </a>
+          <div ngbDropdownMenu class="px-0" aria-labelledby="profileDropdown">
+            <div class="d-flex flex-column align-items-center border-bottom px-5 py-3">
+              <div class="mb-3">
+                <img class="wd-80 ht-80 rounded-circle" src="assets/images/avatar_profile.jpg" alt="">
+              </div>
+              <div class="text-center">
+                <p class="tx-16 fw-bolder">{{fullName}}</p>
+                <p class="tx-12 text-muted">{{branch}}</p>
+              </div>
+            </div>
+            <ul class="list-unstyled p-1">
+              <li class="dropdown-item py-2">
+                <a href="" (click)="onLogout($event)" class="d-flex text-body ms-0">
+                  <i class="feather icon-log-out me-2 icon-md"></i>
+                  <span>Đăng xuất</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav> -->
+
+<nav class="navbar">
+  <a href="" class="sidebar-toggler" (click)="toggleSidebar($event)">
+    <i class="feather icon-menu"></i>
+  </a>
+  <div class="navbar-content">
+    <div class="navbar-nav align-items-center w-100">
+      <!-- Dashboard view -->
+      <ng-container *ngIf="!isDashboardView">
+        <div class="d-flex justify-content-between w-100">
+          <!-- Left side: 3 lines -->
+          <div class="d-flex flex-column">
+            <!-- Line 1: System date -->
+            <div class="mb-1">
+              <span style="color: black; font-size: 10px; padding-left: 16px;padding-top: 10px;display: flex;align-items: flex-end;">
+                {{ today | date:'EEEE, MMMM d, yyyy' }}
+              </span>
+            </div>
+
+            <!-- Line 2: Dynamic Breadcrumb -->
+            <!-- <div class="d-flex align-items-center mb-1" style="padding-left: 10px; font-size: 14px !important"> -->
+            <div class="d-flex align-items-center mb-1 breadcrumb-line" style="padding-left: 16px;display: flex;">
+              <ng-container *ngFor="let item of breadcrumbs; let last = last">
+                <small [ngStyle]="{ color: item.active ? 'black' : '#6c757d' }"
+                  [style.cursor]="item.link ? 'pointer' : 'default'" (click)="item.link ? navigateTo(item.link) : null">
+                  {{ item.label }}
+                </small>
+                <small class="mx-1 text-muted" *ngIf="!last">»</small>
+              </ng-container>
+            </div>
+
+            <!-- Line 3: Title -->
+            <div class="page-title">
+              <h5 class="mb-0">{{title}}</h5>
+            </div>
+
+          </div>
+
+          <!-- Right side: Create button -->
+          <div class="d-flex align-items-end" style="padding-right: 16px;padding-bottom: 10px;display: flex;">
+            <app-custom-button *ngIf="showCreateButton" [icon]="'assets/images/icon/add.svg'" [text]="createButtonText"
+              [type]="'primary'" [width]="'auto'" [height]="'36px'" [iconSize]="'20px'" [fontSize]="'14px'"
+              (btnClick)="create()"></app-custom-button>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Other screens -->
+      <ng-container *ngIf="isDashboardView">
+        <div class="w-100">
+          <div class="px-3 py-2 rounded">
+            <h4 class="mb-0" style="color: black;font-size: 36px;display: flex;">Hệ thống phát hành thẻ</h4>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</nav>

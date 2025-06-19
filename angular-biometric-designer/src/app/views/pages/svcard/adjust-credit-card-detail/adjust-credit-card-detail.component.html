@@ -1,0 +1,231 @@
+<app-custom-header-title class="my-3" text="Thông tin chung"></app-custom-header-title>
+
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Số tài khoản vay"></app-custom-label>
+                <app-custom-text-box [(value)]="data.loan_account"></app-custom-text-box>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Ngày giao dịch"></app-custom-label>
+                <app-custom-text-box [(value)]="data.transaction_date" ></app-custom-text-box>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Số giao dịch"></app-custom-label>
+                <app-custom-text-box [(value)]="data.transaction_number" ></app-custom-text-box>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Trạng thái giao dịch"></app-custom-label>
+                <app-custom-text-box [(value)]="transaction_status_text" [disabled]="true"></app-custom-text-box>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Hình thức đảm bảo"></app-custom-label>
+                <app-custom-select-box placeholder="Chọn" [(value)]="data.form_guarantee"
+                                        [items]="dataFormofguarantee" [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                                        valueExpr="id" displayExpr="name"></app-custom-select-box>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Ngày hiệu lực"></app-custom-label>
+                <app-custom-text-box [(value)]="data.effective_date" ></app-custom-text-box>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Ngày hết hạn"></app-custom-label>
+                <app-custom-text-box [(value)]="data.expiration_date" ></app-custom-text-box>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Mã khách hàng"></app-custom-label>
+                <app-custom-text-box [(value)]="data.cust_no" [disabled]="true"></app-custom-text-box>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Họ tên khách hàng"></app-custom-label>
+                <app-custom-text-box [(value)]="data.cust_name" [disabled]="true"></app-custom-text-box>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Loại khách hàng"></app-custom-label>
+                <app-custom-text-box [(value)]="data.cust_type" [disabled]="true"></app-custom-text-box>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Số GTTT"></app-custom-label>
+                <app-custom-text-box [(value)]="data.unique_id_value" [disabled]="true"></app-custom-text-box>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Ngày cấp GTTT"></app-custom-label>
+                <app-custom-text-box [(value)]="data.unique_id_start_date" [disabled]="true"></app-custom-text-box>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Ngày hết hạn GTTT"></app-custom-label>
+                <app-custom-text-box [(value)]="data.unique_id_expiry_date" [disabled]="true"></app-custom-text-box>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Hạn mức cũ"></app-custom-label>
+                <app-custom-text-box [(value)]="data.old_limit" [disabled]="true" [isNumberBox]="true"></app-custom-text-box>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Hạn mức mới"></app-custom-label>
+                <app-custom-text-box [(value)]="data.new_limit" [isNumberBox]="true"></app-custom-text-box>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="TKTT trích nợ tự động"></app-custom-label>
+                <app-custom-text-box [(value)]="data.auto_debit_account" [disabled]="true"></app-custom-text-box>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Tên tài khoản trích nợ"></app-custom-label>
+                <app-custom-text-box [(value)]="data.debit_account_name" [disabled]="true"></app-custom-text-box>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-custom-header-title class="my-2" text="Hạn mức theo thẻ"></app-custom-header-title>
+
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Thẻ chính"></app-custom-label>
+                <app-custom-text-box [(value)]="data.main_card_no" [disabled]="true"></app-custom-text-box>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Hạn mức thẻ chính"></app-custom-label>
+                <app-custom-text-box [(value)]="data.main_card_limit" [disabled]="true" [isNumberBox]="true"></app-custom-text-box>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Thẻ phụ 1"></app-custom-label>
+                <app-custom-text-box [(value)]="data.sub_card_no_1" [disabled]="true"></app-custom-text-box>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Hạn mức thẻ phụ 1"></app-custom-label>
+                <app-custom-text-box [(value)]="data.sub_card_limit_1" [disabled]="true" [isNumberBox]="true"></app-custom-text-box>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Thẻ phụ 2"></app-custom-label>
+                <app-custom-text-box [(value)]="data.sub_card_no_2" [disabled]="true"></app-custom-text-box>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Hạn mức thẻ phụ 2"></app-custom-label>
+                <app-custom-text-box [(value)]="data.sub_card_limit_2" [disabled]="true" [isNumberBox]="true"></app-custom-text-box>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Thẻ phụ 3"></app-custom-label>
+                <app-custom-text-box [(value)]="data.sub_card_no_3" [disabled]="true"></app-custom-text-box>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Hạn mức thẻ phụ 3"></app-custom-label>
+                <app-custom-text-box [(value)]="data.sub_card_limit_3" [disabled]="true" [isNumberBox]="true"></app-custom-text-box>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-custom-header-title class="my-2" text="Thông tin tài sản đảm bảo"></app-custom-header-title>
+
+<div class="mb-2">
+    <app-data-grid-control-mini #dataGrid [dataSource]="dataSource"
+        [columns]="columns" 
+        [pageSize]="5"></app-data-grid-control-mini>
+</div>
+
+<div class="col-md-12 mb-3">
+    <div class="row">
+        <div class="col-md-3 mb-2">
+            <app-custom-label text="Người duyệt"></app-custom-label>
+            <app-custom-select-box [(value)]="data.auth_id"
+                            [items]="dataUserAuths"
+                            [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [searchEnabled]="true" 
+                            [(value)]="data.auth_id" valueExpr="value" displayExpr="text" placeholder="Chọn" ></app-custom-select-box>
+        </div>
+
+        <div class="col-md-9 mb-2">
+            <app-custom-label text="Diễn giải"></app-custom-label>
+            <app-custom-text-box [(value)]="data.description" ></app-custom-text-box>
+        </div>
+    </div>
+</div>
+
+<div class="card card-primary card-outline button-sticky-footer">
+    <app-screen-button (onItemClick)="onClick($event)"></app-screen-button>
+</div>

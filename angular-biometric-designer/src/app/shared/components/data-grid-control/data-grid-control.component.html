@@ -1,0 +1,38 @@
+<div>
+  <dx-data-grid #dataGrid id="gridContainer" [dataSource]="customDataSource" [remoteOperations]="true"
+    [allowColumnReordering]="false" [rowAlternationEnabled]="false" [showBorders]="false" [cacheEnabled]="false" [allowColumnResizing]="true"
+    (onContentReady)="contentReady($event)" [columns]="columns" width="100%" [(selectedRowKeys)]="selectedRows"
+    [loadPanel]="{ enabled: false }" (onRowPrepared)="onRowPreparedEvent($event)" (onSelectionChanged)="selectionChanged($event)"
+    noDataText="Không có dữ liệu" (onRowClick)="handleRowClick($event)">
+    <dxo-selection [selectAllMode]="selectAllMode" [showCheckBoxesMode]="showCheckBoxesMode"
+      [mode]="mode"></dxo-selection>
+    <dxo-paging [enabled]="true" [pageSize]="pageSize" [(pageIndex)]="pageIndex"
+      (pageIndexChange)="onPageIndexChanged($event)"></dxo-paging>
+    <dxo-pager [showPageSizeSelector]="false" [allowedPageSizes]="[10, 25, 50, 100]" [showNavigationButtons]="true"
+       [showInfo]="true" [displayMode]="'compact'"
+      [visible]="true" infoText="Page {0} of {1}. Total {2} items"></dxo-pager>
+    <dxo-search-panel [visible]="false" [highlightCaseSensitive]="false"></dxo-search-panel>
+    <dxo-group-panel [visible]="false"></dxo-group-panel>
+    <dxo-grouping [autoExpandAll]="false"></dxo-grouping>
+  </dx-data-grid>
+  <!-- [keyExpr]="keyExpr" -->
+  <!-- <div class="mt-2">
+    <mat-paginator-goto #paginator class="demo-paginator" (page)="handlePageEvent($event)" [length]="length"
+      [pageSize]="pageSize" [disabled]="disabled" [showFirstLastButtons]="showFirstLastButtons"
+      [hidePageSize]="hidePageSize" [pageIndex]="pageIndex" aria-label="Select page">
+    </mat-paginator-goto>
+  </div> -->
+</div>
+
+<!-- <dx-load-panel
+  #loadPanel
+  shadingColor="rgba(0,0,0,0.4)"
+  [position]="{ of: '#loading' }"
+  [visible]="true"
+  [showIndicator]="true"
+  [showPane]="true"
+  [shading]="true"
+  [hideOnOutsideClick]="false"
+>
+</dx-load-panel> -->
+<!-- [(visible)]="this.globals.loadingGlobal" -->

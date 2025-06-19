@@ -1,0 +1,56 @@
+<div class="card card-primary card-outline mb-2">
+    <div class="card-body pt-9 pb-0">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <label class="dx-widget mb-1">Người duyệt <span class="red_flag">*</span></label>
+                        <dx-select-box [showClearButton]="true" id="approved_by" [items]="dataUserAuths"
+                            [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [searchEnabled]="true"
+                            [(value)]="userauth" valueExpr="value" displayExpr="text"
+                            placeholder="Chọn"></dx-select-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <label class="dx-widget mb-1">Số Lô</label>
+                        <dx-text-box id="batch_num" [(value)]="batch_num" [readOnly]="true">
+                        </dx-text-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <label class="dx-widget mb-1">Trạng thái giao dịch</label>
+                        <dx-text-box id="auth_stat" [(value)]="auth_status" [readOnly]="true">
+                        </dx-text-box>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <label class="dx-widget mb-1">File tải lên <span class="red_flag">*</span></label>
+        <div id="fileuploader-container">
+            <!-- <dx-file-uploader [multiple]="false" [accept]="'.xlsx,.xls'" [uploadMode]="'instantly'"
+                [uploadUrl]="' '" (onUploadStarted)="onUploadStarted($event)"
+                (onValueChanged)="onValueChanged($event)">
+            </dx-file-uploader> -->
+            <dx-file-uploader #fileUploader [multiple]="false" [accept]="'.xlsx,.xls'" [uploadMode]="'useForm'"
+                [uploadUrl]="' '" (onValueChanged)="onValueChanged($event)" selectButtonText="Chọn File">
+            </dx-file-uploader>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="d-flex my-2">
+                    <dx-button class="me-1" stylingMode="text" type="default" (click)="reload()">
+                        <i class="fas fa-sync-alt"></i>
+                    </dx-button>
+                    <app-screen-button (onItemClick)="onClick($event)"></app-screen-button>
+                    <dx-button class="me-1" stylingMode="contained" text="Tải mẫu" type="default" [width]="'auto'"
+                        (click)="downloadTemplate()">
+                    </dx-button>
+                </div>
+            </div>
+        </div>
+        <app-data-grid-control-mini #dataGrid id="dataGridAcc" [dataSource]="dataSource" [columns]="columns"
+            [enabledPaging]="true" [pageSize]="10"></app-data-grid-control-mini>
+    </div>
+</div>

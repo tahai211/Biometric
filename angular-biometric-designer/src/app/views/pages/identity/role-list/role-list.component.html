@@ -1,0 +1,61 @@
+<app-custom-header-title class="my-3" text="Tìm kiếm phân quyền"></app-custom-header-title>
+
+<div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Mã quyền"></app-custom-label>
+                    <app-custom-text-box [(value)]="req.role_code"></app-custom-text-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Tên quyền"></app-custom-label>
+                    <app-custom-text-box [(value)]="req.role_name"></app-custom-text-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Trạng thái"></app-custom-label>
+
+                    <app-custom-select-box [showClearButton]="true" [items]="dataStatus" 
+                        [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="req.status" valueExpr="id" 
+                        displayExpr="name" placeholder="Chọn"></app-custom-select-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Trạng thái duyệt"></app-custom-label>
+
+                    <app-custom-select-box [showClearButton]="true" [items]="dataAuthStatus" 
+                        [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="req.auth_stat" valueExpr="id" 
+                        displayExpr="name" placeholder="Chọn"></app-custom-select-box>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="d-flex my-2 justify-content-end gap-3">
+                <app-custom-button [icon]="'assets/images/icon/reload.svg'" [text]="'LÀM MỚI'" [type]="'outline'"
+                    [width]="'140px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                    (btnClick)="reload()"></app-custom-button>
+
+                <app-custom-button [icon]="'assets/images/icon/search.svg'" [text]="'TÌM KIẾM'" [type]="'soft'"
+                    [width]="'140px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                    (btnClick)="search()"></app-custom-button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-custom-header-title class="my-2" text="Danh sách phân quyền"></app-custom-header-title>
+
+<app-data-grid-control [dataSource]="dataSource" [columns]="columns" [length]="length" [requestFilter]="req"
+    (loadData)="loadData($event)"></app-data-grid-control>
+
+<dx-popup *ngIf="isPopupVisible" [(visible)]="isPopupVisible" [width]="'1000'" [height]="'600'" (onHiding)="hidePopup()"
+    title="Tạo mới phân quyền">
+    <app-role-detail [id]="id" (close)="hidePopup()"></app-role-detail>
+</dx-popup>

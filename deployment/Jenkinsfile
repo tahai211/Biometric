@@ -1,0 +1,70 @@
+pipeline {
+    agent { label 'cimp' }
+
+    environment {
+        // Định nghĩa registry (ví dụ: docker.io/yourname/)
+        DOCKER_REGISTRY = ${DOCKER_REGISTRY}
+        DOCKER_USER = ${DOCKER_USER}
+        // Dòng build docker-compose chỉ build 3 service cần thiết
+        BUILD_COMPOSE = "sudo docker compose -f docker-compose.yml build biometrics.apiservice biometrics.web apigateway"
+    }
+
+    stages {
+        stage('Prepare') {
+            steps {
+                // Đảm bảo docker.sock có quyền phù hợp
+                sh 'sudo chmod 666 /var/run/docker.sock'
+            }
+        }
+
+        stage('Build Images') {
+            steps {
+                echo "🛠️  Building containers via docker-compose..."
+                sh "${BUILD_COMPOSE}"
+                echo "🔖  Tagging images with registry prefix..."
+                sh "docker tag biometricsapiservice:latest ${DOCKER_REGISTRY}biometricsapiservice:latest"
+                sh "docker tag biometricsweb:latest       ${DOCKER_REGISTRY}biometricsweb:latest"
+                sh "docker tag apigateway:latest          ${DOCKER_REGISTRY}apigateway:latest"
+            }
+        }
+
+        stage('Push Images') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: ${CREDENTIALS_ID},
+                    usernameVariable: ${DOCKER_USER},
+                    passwordVariable: ${DOCKER_PASS}
+                )]) {
+                    sh "echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} --password-stdin ${DOCKER_REGISTRY}"
+                    sh "docker push ${DOCKER_REGISTRY}biometricsapiservice:latest"
+                    sh "docker push ${DOCKER_REGISTRY}biometricsweb:latest"
+                    sh "docker push ${DOCKER_REGISTRY}apigateway:latest"
+                }
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                // Assumes you've stored your kubeconfig in Jenkins credentials
+                withCredentials([file(credentialsId: ${KUBE_CONFIG_CREDENTIALS_ID}, variable: ${KUBECONFIG_FILE})]) {
+                    sh 'export KUBECONFIG=${KUBECONFIG_FILE}'
+                    // Sửa Deployment.yml template nếu cần inject tag khác
+                    sh '''
+                      sed -e "s|<IMAGE_REGISTRY>|${DOCKER_REGISTRY}|g" \
+                          -e "s|<BUILD_TAG>|latest|g" \
+                          Deployment.yml | kubectl apply -f -
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Pipeline completed successfully!"
+        }
+        failure {
+            echo "❌ Pipeline failed."
+        }
+    }
+}

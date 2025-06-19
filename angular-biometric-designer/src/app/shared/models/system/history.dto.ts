@@ -1,0 +1,21 @@
+export class HistoryDto {
+    id: string = '';
+    system_id: string = '';
+    request_id: string = '';
+    reference_id: string = '';
+    username: string = '';
+    request_encrypt: string = '';
+    request_decypt: string = '';
+    response_enctypt: string = '';
+    response_decypt: string = '';
+    execution_time: string = '';
+    execution_duration: string = '';
+    http_method: string = '';
+    url: string = '';
+    http_status_code: string = '';
+    exception: string = '';
+    ip: string = '';
+    browser: string = '';
+    screen_name: string = '';
+    action_name: string = '';
+}

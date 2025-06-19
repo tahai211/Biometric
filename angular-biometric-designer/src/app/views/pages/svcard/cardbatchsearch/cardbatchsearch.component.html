@@ -1,0 +1,82 @@
+<app-custom-header-title class="my-3" text="Tra cứu lô"></app-custom-header-title>
+
+<div class="col-md-12">
+    <div class="row">
+
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Từ ngày"></app-custom-label>
+                <app-custom-date-box type="date" [(value)]="req.fromDate" displayFormat="dd/MM/yyyy"
+                    dateSerializationFormat="yyyy-MM-dd" [showClearButton]="true" [inputAttr]="{ 'aria-label': 'Date' }"
+                    (onEnterKey)="search()">
+                </app-custom-date-box>
+            </div>
+        </div>
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Đến ngày"></app-custom-label>
+                <app-custom-date-box type="date" [(value)]="req.endDate" displayFormat="dd/MM/yyyy"
+                    dateSerializationFormat="yyyy-MM-dd" [showClearButton]="true" [inputAttr]="{ 'aria-label': 'Date' }"
+                    (onEnterKey)="search()">
+                </app-custom-date-box>
+            </div>
+        </div>
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Đơn vị"></app-custom-label>
+                <app-custom-select-box [showClearButton]="true" [items]="dataBranchCode"
+                    [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="req.branchCode" valueExpr="param_code"
+                    displayExpr="param_name" placeholder="Chọn" (onEnterKey)="search()"></app-custom-select-box>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Số lô"></app-custom-label>
+                <app-custom-text-box [(value)]="req.batchNo" (onEnterKey)="search()">
+                </app-custom-text-box>
+            </div>
+        </div>
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Số thẻ"></app-custom-label>
+                <app-custom-text-box [(value)]="req.cardNo" (onEnterKey)="search()">
+                </app-custom-text-box>
+            </div>
+        </div>
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Trạng thái"></app-custom-label>
+                <app-custom-select-box [showClearButton]="true" [items]="dataStatus"
+                    [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="req.status" valueExpr="id"
+                    displayExpr="name" placeholder="Chọn" (onEnterKey)="search()"></app-custom-select-box>
+            </div>
+        </div>
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Người mở"></app-custom-label>
+                <app-custom-text-box [(value)]="req.createBy" (onEnterKey)="search()">
+                </app-custom-text-box>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="row">
+        <div class="d-flex gap-3 justify-content-end">
+            <app-custom-button [icon]="'assets/images/icon/reload.svg'" [text]="'LÀM MỚI'" [type]="'outline'"
+                [width]="'140px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                (btnClick)="reload()"></app-custom-button>
+
+            <app-custom-button [icon]="'assets/images/icon/search.svg'" [text]="'TÌM KIẾM'" [type]="'soft'"
+                [width]="'140px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                (btnClick)="search()"></app-custom-button>
+        </div>
+    </div>
+</div>
+
+<app-custom-header-title class="my-2" text="Danh sách lô"></app-custom-header-title>
+<app-data-grid-control [dataSource]="dataSource" [columns]="columns" [length]="length" [requestFilter]="req"
+    (loadData)="loadData($event)"></app-data-grid-control>

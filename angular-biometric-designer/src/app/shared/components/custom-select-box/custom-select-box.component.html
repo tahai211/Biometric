@@ -1,0 +1,38 @@
+<!-- <dx-select-box
+  #selectBoxRef
+  class="content-select-box"
+  [showClearButton]="showClearButton"
+  [items]="items"
+  [inputAttr]="inputAttr"
+  [(value)]="value"
+  [valueExpr]="valueExpr"
+  [displayExpr]="displayExpr"
+  [placeholder]="placeholder"
+  [disabled]="disabled"
+  [showDropDownButton]="showDropDownButton"
+  [id]="id"
+  [searchEnabled]="searchEnabled"
+  [ngClass]="class"
+  (onValueChanged)="onValueChanged($event)"
+  (onEnterKey)="enterKey($event)">
+</dx-select-box> -->
+
+
+<dx-select-box
+  #selectBoxRef
+  class="content-select-box"
+  [showClearButton]="showClearButton"
+  [items]="items"
+  [inputAttr]="inputAttr"
+  [(value)]="value"
+  [valueExpr]="valueExpr"
+  [displayExpr]="displayExpr"
+  [placeholder]="placeholder"
+  [disabled]="disabled"
+  [showDropDownButton]="showDropDownButton"
+  [id]="id"
+  [searchEnabled]="searchEnabled"
+  [ngClass]="class"
+  (onValueChanged)="handleInnerValueChanged($event)" 
+  (onEnterKey)="enterKey($event)">
+</dx-select-box>

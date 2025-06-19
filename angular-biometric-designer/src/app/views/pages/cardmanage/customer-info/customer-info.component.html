@@ -1,0 +1,181 @@
+<div class="mb-2">
+    <div class="card-body pt-9 pb-2">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4 mb-2">
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label">Mã KH</label>
+                        <div class="col-sm-8">
+                            <dx-text-box [value]="data_card_customer.client_code" [readOnly]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label">Tên KH</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.user_name" [readOnly]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label">Số CCCD</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.legal_id" [readOnly]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label">Ngày sinh</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.birth_date" [readOnly]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label">Ngày tạo</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.date_create" [readOnly]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label">Ngày hết hạn</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.date_expiry" [readOnly]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label">Kích hoạt thẻ</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.status_active" [readOnly]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                      <label class="col-sm-3 col-form-label">Người duyệt</label>
+                      <div class="col-sm-8">
+                        <dx-select-box [showClearButton]="true" [items]="lstUserForAuth"
+                                       [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                                       [displayExpr]="displayItemSelect"
+                                       [(value)]="name_user_confirm"
+                                       valueExpr="user_name"
+                                       placeholder="Chọn"
+                                       [readOnly]="!isButtonVisible"></dx-select-box>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-2">
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label">Địa chỉ 1</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.address_1" [readOnly]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label">Địa chỉ 2</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.address_2" [readOnly]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label">Địa chỉ 3</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.address_3" [readOnly]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label">Địa chỉ 4</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.address_4" [readOnly]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label">Thành phố</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.city" [readOnly]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label">Quốc gia</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.country" [readOnly]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label">Ngày kích hoạt</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.date_active" [readOnly]="true"></dx-text-box>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-2">
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label">Số thẻ</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [(value)]="data_card_customer.card_number" [readOnly]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label">Sản phẩm</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.product" [readOnly]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label">Loại thẻ</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.type_card" [readOnly]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label">Số thẻ chính</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.basic_card_number" [readOnly]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label">Tình trạng thẻ</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.status_card" [readOnly]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label">Tên in trên thẻ</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.embossed_name" [readOnly]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label">Đơn vị</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.branch" [readOnly]="true"></dx-text-box>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 d-flex align-items-center justify-content-center">
+                  <dx-button class="me-1" stylingMode="contained" text="Bàn giao" type="default" [width]="110"
+                             (click)="handover()" *ngIf="isButtonVisible">
+                  </dx-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

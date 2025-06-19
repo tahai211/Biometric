@@ -1,0 +1,107 @@
+<div>
+    <app-custom-header-title class="my-3" text="Danh sách đăng ký thẻ mới"></app-custom-header-title>
+
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-4 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Từ ngày"></app-custom-label>
+
+                    <app-custom-date-box [(value)]="req.from_date"
+                                type="date" displayFormat="dd/MM/yyyy"
+                                dateSerializationFormat="yyyy-MM-dd" 
+                                [showClearButton]="true"
+                                [inputAttr]="{ 'aria-label': 'Date' }"
+                                (onEnterKey)="search()"></app-custom-date-box>
+                </div>
+            </div>
+            <div class="col-md-4 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Đến ngày"></app-custom-label>
+
+                    <app-custom-date-box [(value)]="req.to_date"
+                                type="date" displayFormat="dd/MM/yyyy"
+                                dateSerializationFormat="yyyy-MM-dd" 
+                                [showClearButton]="true"
+                                [inputAttr]="{ 'aria-label': 'Date' }"
+                                (onEnterKey)="search()"></app-custom-date-box>
+                </div>
+            </div>
+            <div class="col-md-4 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Mã giao dịch"></app-custom-label>
+                    <app-custom-text-box [(value)]="req.reference_no" (onEnterKey)="search()"></app-custom-text-box>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Mã khách hàng"></app-custom-label>
+                    <app-custom-text-box [(value)]="req.cust_no" (onEnterKey)="search()"></app-custom-text-box>
+                </div>
+            </div>
+            <div class="col-md-4 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Tên khách hàng"></app-custom-label>
+                    <app-custom-text-box [(value)]="req.cust_name" (onEnterKey)="search()"></app-custom-text-box>
+                </div>
+            </div>
+            <div class="col-md-4 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Trạng thái duyệt"></app-custom-label>
+                    <app-custom-select-box [showClearButton]="true" [items]="dataAuthStatus"
+                        [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="req.auth_stat" valueExpr="id"
+                        displayExpr="name" placeholder="Chọn" (onEnterKey)="search()"></app-custom-select-box>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="d-flex my-2" style="display: flex; justify-content: flex-end; gap: 24px;">
+                <!-- <app-custom-button
+                    [icon]="'assets/images/icon/add.svg'"
+                    [text]="'TẠO MỚI'"
+                    [type]="'primary'"
+                    [width]="'140px'"
+                    [height]="'42px'"
+                    [iconSize]="'22px'"
+                    [fontSize]="'16px'"
+                    (btnClick)="create()"
+                ></app-custom-button> -->
+
+                <app-custom-button
+                    [icon]="'assets/images/icon/reload.svg'"
+                    [text]="'LÀM MỚI'"
+                    [type]="'outline'"
+                    [width]="'140px'"
+                    [height]="'42px'"
+                    [iconSize]="'22px'"
+                    [fontSize]="'16px'"
+                    (btnClick)="reload()"
+                ></app-custom-button>
+
+                <app-custom-button
+                    [icon]="'assets/images/icon/search.svg'"
+                    [text]="'TÌM KIẾM'"
+                    [type]="'soft'"
+                    [width]="'140px'"
+                    [height]="'42px'"
+                    [iconSize]="'22px'"
+                    [fontSize]="'16px'"
+                    (btnClick)="search()"
+                ></app-custom-button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<app-data-grid-control [dataSource]="dataSource" [columns]="columns" [length]="length" [requestFilter]="req"
+    (loadData)="loadData($event)"></app-data-grid-control>
+
+<!-- <dx-popup *ngIf="isPopupVisible" [(visible)]="isPopupVisible" [width]="'1200'" [height]="'auto'"
+    (onHiding)="hidePopup()" title="Thông tin chi tiết">
+    <app-cardnew-detail [id]="id" (close)="hidePopup()"></app-cardnew-detail>
+</dx-popup> -->

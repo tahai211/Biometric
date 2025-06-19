@@ -1,0 +1,80 @@
+<form (ngSubmit)="onClick($event)" #f="ngForm">
+	<div class="col-md-12">
+		<div class="row">
+			<div class="col-6 mb-2">
+				<div class="fv-row">
+					<app-custom-label text="Tên báo cáo" [important]="true"></app-custom-label>
+					<app-custom-text-box [(value)]="reportName"
+						(valueChange)="reportName = $event.trim()"></app-custom-text-box>
+				</div>
+			</div>
+
+			<div class="col-6 mb-2">
+				<div class="fv-row">
+					<app-custom-label text="Chọn tham số"></app-custom-label>
+					<!-- <div class="multi-select-container">
+						<div class="selected-items">
+							<div *ngFor="let selected of selectedParams" class="selected-tag">
+								{{ selected.name }}
+								<span class="remove-tag" (click)="removeParam(selected)">&times;</span>
+							</div>
+							<input type="text" class="tag-input" placeholder="Chọn nhiều tham số..."
+								(focus)="showDropdown = true" [(ngModel)]="searchText" (input)="filterParams()">
+						</div>
+
+						<div class="dropdown-menu" [class.show]="showDropdown">
+							<div *ngFor="let param of filteredParams" class="dropdown-item"
+								[class.selected]="isSelected(param)" (click)="toggleParam(param)">
+								{{ param.name }}
+							</div>
+							<div *ngIf="filteredParams.length === 0" class="dropdown-item no-results">
+								Không tìm thấy tham số nào phù hợp
+							</div>
+						</div>
+					</div> -->
+
+
+					<!-- <app-custom-dropdown-box [(value)]="selectedParams" [items]="multiParams" [columns]="columnsParam"
+						[inputAttr]="{ 'aria-label': 'Multiple role Selection' }" valueExpr="id" displayExpr="name"
+						placeholder="Chọn các tham số" selectionMode="multiple" displaySeparator="; "
+						[showClearButton]="true">
+					</app-custom-dropdown-box> -->
+					<app-custom-dropdown-box id="paramDropdown" [(value)]="selectedParamIds"
+						(valueChange)="onParamsChanged($event)" [items]="multiParams" [columns]="columnsParam"
+						[inputAttr]="{ 'aria-label': 'Multiple Param Selection' }" valueExpr="id" displayExpr="name"
+						placeholder="Chọn các tham số" selectionMode="multiple" displaySeparator="; "
+						[showClearButton]="true">
+					</app-custom-dropdown-box>
+				</div>
+			</div>
+
+
+			<div class="fv-row">
+				<app-custom-label text="Truy vấn dữ liệu"></app-custom-label>
+				<app-custom-text-area [value]="sqlQuery" (valueChange)="sqlQuery = $event"
+					placeholder="Viết truy vấn SQL...">
+				</app-custom-text-area>
+			</div>
+			<br>
+			<div>
+				<dx-report-designer [reportUrl]="reportUrl" height="700px">
+					<dxrd-request-options [getDesignerModelAction]="getDesignerModelAction"
+						[host]="hostUrl"></dxrd-request-options>
+					<dxrd-designer-model-settings [allowMDI]="true">
+						<dxrd-datasource-settings [allowAddDataSource]="false"
+							[allowRemoveDataSource]="false"></dxrd-datasource-settings>
+						<dxrd-preview-settings>
+							<dxrv-export-settings [useSameTab]="false"></dxrv-export-settings>
+							<dxrv-progressbar-settings position="TopRight"></dxrv-progressbar-settings>
+							<dxrv-search-settings [useAsyncSearch]="false"></dxrv-search-settings>
+						</dxrd-preview-settings>
+						<dxrd-wizard-settings [useFullscreenWizard]="false"
+							[enableSqlDataSource]="false"></dxrd-wizard-settings>
+					</dxrd-designer-model-settings>
+				</dx-report-designer>
+			</div>
+		</div>
+	</div>
+
+	<app-screen-button class="button-sticky-footer" (onItemClick)="onClick($event)"></app-screen-button>
+</form>

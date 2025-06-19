@@ -1,0 +1,14 @@
+<!-- <dx-button *ngFor="let item of buttonCustom" class="me-1" stylingMode="contained" text="{{item.buttonName}}"
+    type="default" [disabled]="item.disable" width="auto" (onClick)="onClick(item.buttonCode)">
+</dx-button>
+<dx-button *ngFor="let item of _buttons" class="me-1" stylingMode="contained" [disabled]="item.disable"
+    text="{{item.buttonName}}" type="default" width="auto" (onClick)="onClick(item.buttonCode)">
+</dx-button>-->
+
+
+<app-custom-button *ngFor="let item of buttonCustom" class="me-1" [text]="item.buttonName" 
+    [type]="item.buttonCode === 'CANCEL' ? 'outline-red' : 'outline'" [width]="'auto'" [disabled]="item.disable" (btnClick)="onClick(item.buttonCode)">
+</app-custom-button>
+<app-custom-button *ngFor="let item of _buttons" class="me-1" [text]="item.buttonName" 
+    [type]="item.buttonCode === 'CANCEL' ? 'outline-red' : 'outline'" [width]="'auto'" [disabled]="item.disable" (btnClick)="onClick(item.buttonCode)">
+</app-custom-button>

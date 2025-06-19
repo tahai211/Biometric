@@ -1,0 +1,69 @@
+.content-select-box {
+    height: 40px;
+    border: 1px solid #0000003B;
+    border-radius: 4px;   
+    width: 100%;
+}
+
+::ng-deep .content-select-box .dx-texteditor-input {
+  font-size: 14px;
+}
+
+::ng-deep .content-select-box.dx-state-disabled {
+  border: 1px solid #0000003B !important;
+}
+
+::ng-deep .content-select-box .dx-placeholder {
+  font-size: 14px;
+}
+.content-box-search {
+  height: 40px;
+  border: 1px solid #0000003B;
+  border-radius: 4px;   
+}
+
+::ng-deep .content-box-search .dx-texteditor-input {
+  font-size: 14px;
+}
+
+::ng-deep .content-box-search.dx-state-disabled {
+  border: 1px solid #0000003B !important;
+}
+
+::ng-deep .content-box-search.dx-state-readonly {
+  border: 1px solid #0000003B !important;
+}
+
+.left-calendar-icon {
+  height: 40px;
+  border: 1px solid #0000003B;
+  border-radius: 4px;   
+  width: 100%;
+}
+
+::ng-deep .left-calendar-icon .dx-dropdowneditor-button {
+  display: none !important;
+}
+
+.custom-date-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.calendar-icon {
+  position: absolute;
+  left: 8px;
+  z-index: 10;
+  cursor: pointer;
+  color: #757575;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+::ng-deep .left-calendar-icon .dx-texteditor-input {
+  padding-left: 35px !important; /* để chừa chỗ icon bên trái */
+  font-size: 14px;
+}

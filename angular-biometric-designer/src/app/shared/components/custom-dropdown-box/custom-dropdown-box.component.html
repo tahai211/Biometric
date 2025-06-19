@@ -1,0 +1,34 @@
+<dx-drop-down-box
+  #dropdownBoxRef
+  class="content-select-box"
+  [(value)]="value"
+  [valueExpr]="valueExpr"
+  [displayExpr]="displayExpr"
+  [dataSource]="items"
+  [placeholder]="placeholder"
+  [disabled]="disabled"
+  [showClearButton]="showClearButton"
+  [showDropDownButton]="showDropDownButton"
+  [inputAttr]="inputAttr"
+  [id]="id"
+  [ngClass]="class"
+  [text]="getDisplayText()"
+  (onValueChanged)="onValueChanged($event)"
+  (onEnterKey)="enterKey($event)">
+  
+  <div *dxTemplate="let data of 'content'">
+    <dx-data-grid
+      [dataSource]="items"
+      [columns]="columns"
+      [keyExpr]="valueExpr"
+      [hoverStateEnabled]="true"
+      [selection]="{ mode: selectionMode }"
+      [filterRow]="{ visible: true }"
+      [paging]="{ enabled: true, pageSize: 10 }"
+      [scrolling]="{ mode: 'virtual' }"
+      [height]="345"
+      [selectedRowKeys]="getSelectedRowKeys()"
+      (onSelectionChanged)="onSelectionChanged($event)">
+    </dx-data-grid>
+  </div>
+</dx-drop-down-box>

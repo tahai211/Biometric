@@ -31,6 +31,7 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using MassTransit;
 using Biometrics.ApiService.Infra;
+using Biometrics.ApiService.Service.Authen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -299,7 +300,7 @@ builder.Services.AddTransient<IPolicyService, PolicyService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<IPortalService, PortalService>();
 builder.Services.AddScoped<ICacheSerrvice, CacheService>();
-
+builder.Services.AddScoped<IAuthenService, AuthenService>();
 // Tạo app
 var app = builder.Build();
 
@@ -331,7 +332,7 @@ app.UseSwaggerUI(c =>
 
 // Nếu bạn có middleware custom
 // app.UseMiddleware<LoggingMiddleware>();
-app.UseMiddleware<RoleCheckMiddleware>();
+//app.UseMiddleware<RoleCheckMiddleware>();
 
 app.MapControllers();
 

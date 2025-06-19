@@ -1,0 +1,85 @@
+# version: '3.8'
+
+# services:
+#   rabbitmq:
+#     image: rabbitmq:3-management
+#     container_name: rabbitmq
+#     ports:
+#       - "5672:5672"
+#       - "15672:15672"
+#     environment:
+#       RABBITMQ_DEFAULT_USER: guest
+#       RABBITMQ_DEFAULT_PASS: guest
+#     volumes:
+#       - rabbitmq_data:/var/lib/rabbitmq
+#     networks:
+#       - cimsnet
+
+#   redis:
+#     image: redis:6.2
+#     container_name: redis
+#     command: ["redis-server", "--requirepass", "eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81"]
+#     ports:
+#       - "6379:6379"
+#     volumes:
+#       - redis_data:/data
+#     networks:
+#       - cimsnet
+
+#   elasticsearch:
+#     image: docker.elastic.co/elasticsearch/elasticsearch:7.17.20
+#     container_name: elasticsearch
+#     environment:
+#       - discovery.type=single-node
+#       - xpack.security.enabled=false
+#       - bootstrap.memory_lock=true
+#       - ES_JAVA_OPTS=-Xms1g -Xmx1g
+#     ulimits:
+#       memlock:
+#         soft: -1
+#         hard: -1
+#     ports:
+#       - "9200:9200"
+#     volumes:
+#       - es_data:/usr/share/elasticsearch/data
+#     networks:
+#       - cimsnet
+
+#   kibana:
+#     image: docker.elastic.co/kibana/kibana:7.17.20
+#     container_name: kibana
+#     ports:
+#       - "5601:5601"
+#     environment:
+#       ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
+#     depends_on:
+#       - elasticsearch
+#     networks:
+#       - cimsnet
+
+# volumes:
+#   rabbitmq_data:
+#   redis_data:
+#   es_data:
+
+# networks:
+#   cimsnet:
+#     driver: bridge
+
+
+
+
+
+# Service	Cổng	Giao diện / Mục đích
+# RabbitMQ	5672	Giao tiếp AMQP (dùng cho MassTransit)
+# RabbitMQ UI	15672	Truy cập Web UI
+# Redis	6379	Dùng để cache
+# Elasticsearch	9200	API Elasticsearch
+# Kibana	5601	Giao diện xem log Kibana
+
+# 🧪 Kiểm tra:
+# RabbitMQ UI: http://localhost:15672 (user: guest / pass: guest)
+
+# Kibana: http://localhost:5601
+
+# Elasticsearch test: curl http://localhost:9200

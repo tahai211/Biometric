@@ -1,0 +1,509 @@
+
+<div class="row mb-2">
+    <div class="col-md-5">
+        <div>
+            <app-custom-header-title class="my-3" text="Mã tra soát #{{issueid}}"></app-custom-header-title>
+
+            <div class="row dx-widget mb-2">
+                <label class="col-md-3 title-label">Mô tả</label>
+                <label class="col-md-8 description-label">{{issueDetail.issue_desc}}</label>
+            </div>
+
+            <div class="row dx-widget mb-2">
+                <label class="col-md-3 title-label">Tiêu đề</label>
+                <label class="col-md-8 description-label">{{issueDetail.issue_name}}</label>
+            </div>
+
+            <div class="row dx-widget mb-2">
+                <label class="col-md-3 title-label">Người lập</label>
+                <label class="col-md-8 description-label">{{issueDetail.user_submit}}</label>
+            </div>
+
+            <div class="row dx-widget mb-2">
+                <label class="col-md-3 title-label">Ngày lập</label>
+                <label class="col-md-8 description-label">{{issueDetail.date_submit}}</label>
+            </div>
+
+            <div class="row dx-widget mb-2">
+                <label class="col-md-3 title-label">Người nhận</label>
+                <label class="col-md-8 description-label">{{issueDetail.user_receive}}</label>
+            </div>
+
+            <div class="row dx-widget mb-2">
+                <label class="col-md-3 title-label">Nhóm nhận</label>
+                <label class="col-md-8 description-label">{{issueDetail.group_receive}}</label>
+            </div>
+
+            <div class="row dx-widget mb-2">
+                <label class="col-md-3 title-label">Mức độ ưu tiên</label>
+                <label class="col-md-8 description-label">{{issueDetail.prioity}}</label>
+            </div>
+
+            <div class="row dx-widget mb-2">
+                <label class="col-md-3 title-label">Trạng thái</label>
+                <label class="col-md-8 description-label">{{issueDetail.status}}</label>
+            </div>
+
+            <div class="row dx-widget mb-2">
+                <label class="col-md-3 title-label">Đơn vị</label>
+                <label class="col-md-8 description-label">{{issueDetail.branch}}</label>
+            </div>
+
+            <div class="row dx-widget mb-2">
+                <label class="col-md-3 title-label">Mã tham chiếu</label>
+                <label class="col-md-8 description-label">{{issueDetail.scr_reference}}</label>
+            </div>
+
+            <div class="row dx-widget mb-2 align-items-start">
+                <div class="col-md-3">
+                    <label class="title-label">Hồ sơ đính kèm</label>
+                </div>
+                
+                <div class="col-md-8">
+                <div *ngFor="let file of fileIssueDetail" class="mb-1">
+                    <label
+                        (click)="downloadFile(file)"
+                        style="cursor: pointer; color: blue; text-decoration: underline; font-size: 16px;"
+                        >
+                        {{ file.name }}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <app-custom-header-title class="my-3" text="Thông tin phản hồi"></app-custom-header-title>
+
+            <div class="row dx-widget mb-2">
+                <app-custom-label text="Phản hồi"></app-custom-label>
+                <app-custom-text-area [(value)]="reqSave.response_detail"></app-custom-text-area>
+            </div>
+
+             <div class="row dx-widget mb-2">
+                <app-custom-label text="Mức độ ưu tiên"></app-custom-label>
+                <app-custom-select-box [items]="dataPriorities"
+                        [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                        [(value)]="reqSave.priority" 
+                        valueExpr="value" 
+                        [displayExpr]="displayBasicItemSelect" 
+                        placeholder="Chọn mức độ ưu tiên"></app-custom-select-box>
+            </div>
+
+             <div class="row dx-widget mb-2">
+                <app-custom-label text="Trạng thái"></app-custom-label>
+                <app-custom-select-box [items]="dataStatus"
+                        [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                        [(value)]="reqSave.status" 
+                        valueExpr="value" 
+                        [displayExpr]="displayBasicItemSelect" 
+                        placeholder="Chọn"></app-custom-select-box>
+            </div>
+
+             <div class="row dx-widget mb-2">
+                <app-custom-label text="Đơn vị"></app-custom-label>
+                <app-custom-select-box [items]="dataBranch"
+                        [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                        [(value)]="reqSave.branch_code" 
+                        valueExpr="value" 
+                        [displayExpr]="displayItemSelect" 
+                        placeholder="Chọn"
+                        [disabled]="true"></app-custom-select-box>
+            </div>
+
+            <div class="row dx-widget mb-2">
+                <app-custom-label text="Số lượng giao dịch"></app-custom-label>
+                <app-custom-text-box [(value)]="reqSave.txn_qualtity"></app-custom-text-box>
+            </div>
+
+            <div class="row dx-widget mb-2">
+                <app-custom-label text="Số tiền giao dịch"></app-custom-label>
+                <app-custom-text-box [(value)]="reqSave.txn_amount"></app-custom-text-box>
+            </div>
+
+            <div class="row dx-widget mb-2">
+                <app-custom-label text="Người nhận"></app-custom-label>
+                <app-custom-select-box [items]="dataReceiver"
+                        [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                        [(value)]="reqSave.assigned_to" 
+                        valueExpr="value" 
+                        [displayExpr]="displayItemSelect" 
+                        placeholder="Chọn"></app-custom-select-box>
+
+                <div class="dx-widget d-flex flex-column justify-content-end mb-2 mt-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkbox_send_mail_receiver"
+                                [checked]="true"  
+                                (change)="onCheckboxMailReceiverChange()">
+                        <label class="form-check-label" for="checkbox_send_mail_receiver" style="font-size: 14px;">Gửi mail cho người nhận</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row dx-widget mb-2">
+                <app-custom-label text="Nhóm nhận"></app-custom-label>
+                <app-custom-select-box [items]="dataGroupReceive"
+                        [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                        [(value)]="reqSave.assign_group" 
+                        valueExpr="value" 
+                        [displayExpr]="displayItemSelect" 
+                        placeholder="Chọn"></app-custom-select-box>
+
+                <div class="dx-widget d-flex flex-column justify-content-end mb-2 mt-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkbox_send_mail_group_receive"
+                                [checked]="true"
+                                (change)="onCheckboxMailGroupReceiveChange()">
+                        <label class="form-check-label" for="checkbox_send_mail_group_receive" style="font-size: 14px;">Gửi mail cho nhóm nhận</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fv-row dx-widget mb-2">
+                <div class="upload-box mb-1">
+                    <div (click)="fileInput.click()">
+                        <img class="upload-icon" src="assets/images/icon/upload.svg" />
+                    </div>
+                    <input type="file" (change)="onFileSelected($event)" hidden #fileInput>
+                    <div class="upload-text">Thêm file</div>
+                </div>
+
+                <div style="flex: 1; max-height: 150px; overflow-y: auto; margin-right: 10px;">
+                    <ul class="dx-widget mb-0 ps-0" style="list-style-type: none;">
+                    <li *ngFor="let f of fileUrls; let i = index" class="d-flex align-items-center mb-1">
+                        <div class="me-2 mt-1">
+                            <img class="upload-icon" src="assets/images/icon/upload.svg" />
+                        </div>
+
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <a [href]="f.url"
+                                        [download]="f.file.name"
+                                        target="_blank"
+                                        class="fw-bold"
+                                        style="cursor: pointer; color: #000000DE; font-size: 14px;">
+                                        {{ f.file.name }}
+                                    </a>
+                                </div>
+                                <div (click)="removeFile(i)">
+                                    <img src="assets/images/icon/trash.svg" style="height: 15px;"/>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <dx-button class="ms-2" stylingMode="contained" text="Lưu" type="default" [width]="90"
+                    (click)="Save()" [disabled]="isSaveBtnDisble" [hidden]="isSaveBtnHidden">
+                </dx-button>
+
+                <dx-button class="ms-2" stylingMode="contained" text="Duyệt" type="default" [width]="90"
+                    (click)="Approve()" [disabled]="isApproveBtnDisble" [hidden]="isApproveBtnHidden">
+                </dx-button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-7">
+        <div class="row">
+            <app-custom-header-title class="my-2" text="Thông tin khách hàng" size="14px"></app-custom-header-title>
+
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Mã khách hàng"></app-custom-label>
+                        <app-custom-text-box [(value)]="reqSave.client_id" [readOnly]="true"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Địa chỉ 1"></app-custom-label>
+                        <app-custom-text-box [(value)]="clientInfo.address_1" [readOnly]="true"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Số thẻ"></app-custom-label>
+                        <app-custom-text-box [(value)]="reqSave.card_number" [readOnly]="true"></app-custom-text-box>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Tên KH"></app-custom-label>
+                        <app-custom-text-box [(value)]="clientInfo.full_name" [readOnly]="true"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Địa chỉ 2"></app-custom-label>
+                        <app-custom-text-box [(value)]="clientInfo.address_2" [readOnly]="true"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Sản phẩm"></app-custom-label>
+                        <app-custom-text-box [(value)]="clientInfo.product" [readOnly]="true"></app-custom-text-box>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Số CCCD"></app-custom-label>
+                        <app-custom-text-box [(value)]="clientInfo.legal_id" [readOnly]="true"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Địa chỉ 3"></app-custom-label>
+                        <app-custom-text-box [(value)]="clientInfo.address_3" [readOnly]="true"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Loại thẻ"></app-custom-label>
+                        <app-custom-text-box [(value)]="clientInfo.type_card" [readOnly]="true"></app-custom-text-box>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Ngày sinh"></app-custom-label>
+                        <app-custom-text-box [(value)]="clientInfo.birth_date" [readOnly]="true"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Địa chỉ 4"></app-custom-label>
+                        <app-custom-text-box [(value)]="clientInfo.address_4" [readOnly]="true"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Ngày hết hạn"></app-custom-label>
+                        <app-custom-text-box [(value)]="clientInfo.date_expiry" [readOnly]="true"></app-custom-text-box>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Số tài khoản"></app-custom-label>
+                        <app-custom-text-box [(value)]="clientInfo.account_num" [readOnly]="true"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Thành phố"></app-custom-label>
+                        <app-custom-text-box [(value)]="clientInfo.city" [readOnly]="true"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Tên in trên thẻ"></app-custom-label>
+                        <app-custom-text-box [(value)]="clientInfo.name_print_card" [readOnly]="true"></app-custom-text-box>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Ngày kích hoạt"></app-custom-label>
+                        <app-custom-text-box [(value)]="clientInfo.date_active" [readOnly]="true"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Quốc gia"></app-custom-label>
+                        <app-custom-text-box [(value)]="clientInfo.country" [readOnly]="true"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Đơn vị"></app-custom-label>
+                        <app-custom-text-box [(value)]="clientInfo.branch" [readOnly]="true"></app-custom-text-box>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Tình trạng thẻ"></app-custom-label>
+                        <app-custom-text-box [(value)]="clientInfo.status_card" [readOnly]="true"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Tình trạng dập nổi"></app-custom-label>
+                        <app-custom-text-box [(value)]="clientInfo.embossed_card_status" [readOnly]="true"></app-custom-text-box>
+                    </div>
+                </div>
+
+                <div class="col-md-12 my-3">
+                    <app-custom-button
+                        [text]="'XEM CHI TIẾT GIAO DỊCH'"
+                        [type]="'outline'"
+                        [width]="'200px'"
+                        [height]="'35px'"
+                        [fontSize]="'14px'"
+                        (btnClick)="TransactionDetail()"></app-custom-button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <app-custom-header-title class="my-2" text="Thông tin bổ sung" size="14px"></app-custom-header-title>
+
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Số trace"></app-custom-label>
+                        <app-custom-text-box></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Mã thiết bị giao dịch"></app-custom-label>
+                        <app-custom-text-box></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Số tiền giao dịch"></app-custom-label>
+                        <app-custom-text-box></app-custom-text-box>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Số tiền banknet quyết toán"></app-custom-label>
+                        <app-custom-text-box></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Số tiền phòng thẻ quyết toán"></app-custom-label>
+                        <app-custom-text-box></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-4 fv-row mb-2">
+                        <app-custom-label text="Số lượng giao dịch"></app-custom-label>
+                        <app-custom-text-box></app-custom-text-box>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="htmlContent" [innerHTML]="htmlContent"></div>
+
+        <div class="row" *ngIf="hasResponseData()">
+            <div class="my-2">
+                <app-custom-button
+                        [icon]="'assets/images/icon/print.svg'"
+                        [text]="'IN XÁC NHẬN'"
+                        [type]="'outline'"
+                        [width]="'200px'"
+                        [height]="'35px'"
+                        [fontSize]="'14px'"
+                        [iconSize]="'20px'"
+                        (btnClick)="Print()"></app-custom-button>
+            </div>
+
+            <app-custom-header-title class="my-2" text="Thông tin phản hồi" size="14px"></app-custom-header-title>
+
+            <div class="col-md-12">
+                <div class="row dx-widget mb-2">
+                    <label class="col-md-3 title-label">Mô tả</label>
+                    <label class="col-md-8 description-label" >{{response_desc_hist}}</label>
+                </div>
+
+                <div class="row dx-widget mb-2">
+                    <label class="col-md-3 title-label">Người lập</label>
+                    <label class="col-md-8 description-label" >{{response_user_create_hist}}</label>
+                </div>
+
+                <div class="row dx-widget mb-2">
+                    <label class="col-md-3 title-label">Ngày lập</label>
+                    <label class="col-md-8 description-label">{{response_date_create_hist}}</label>
+                </div>
+
+                <div class="row dx-widget mb-2">
+                    <label class="col-md-3 title-label">Người nhận</label>
+                    <label class="col-md-8 description-label">{{response_user_receive_hist}}</label>
+                </div>
+
+                <div class="row dx-widget mb-2">
+                    <label class="col-md-3 title-label">Mức độ ưu tiên</label>
+                    <label class="col-md-8 description-label">{{response_priority_hist}}</label>
+                </div>
+
+                <div class="row dx-widget mb-2">
+                    <label class="col-md-3 title-label">Trạng thái</label>
+                    <label class="col-md-8 description-label">{{response_status_hist}}</label>
+                </div>
+
+                <div class="row dx-widget mb-2">
+                    <label class="col-md-3 title-label">Số lượng giao dịch</label>
+                    <label class="col-md-8 description-label">{{response_txn_qualtity_hist}}</label>
+                </div>
+
+                <div class="row dx-widget mb-2">
+                    <label class="col-md-3 title-label">Số tiền giao dịch</label>
+                    <label class="col-md-8 description-label">{{response_txn_amount_hist}}</label>
+                </div>
+
+                <div class="row dx-widget mb-2">
+                    <div class="col-md-3 title-label">
+                        <label>Hồ sơ đính kèm</label>
+                    </div>
+                    
+                    <div class="col-md-8">
+                        <div *ngFor="let file of fileResponseHist" class="mb-1">
+                            <label
+                                (click)="downloadFile(file)"
+                                style="cursor: pointer; color: blue; text-decoration: underline; font-size: 16px;"
+                                >
+                            {{ file.name }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card card-primary card-outline button-sticky-footer">
+    <div class="button-group">
+        <div>
+        <app-custom-button
+            [icon]="'assets/images/icon/back.svg'"
+            [text]="'QUAY LẠI'"
+            [type]="'outline'"
+            [width]="'140px'"
+            [height]="'42px'"
+            [iconSize]="'22px'"
+            [fontSize]="'16px'"
+            (btnClick)="BackPage()"
+            [disabled]="isApproveBtnDisble"></app-custom-button>
+        </div>
+
+        <div style="display: flex; gap: 12px;">
+        <app-custom-button
+            [text]="'DUYỆT'"
+            [type]="'soft'"
+            [width]="'140px'"
+            [height]="'42px'"
+            [iconSize]="'22px'"
+            [fontSize]="'16px'"
+            (btnClick)="Approve()"
+            [disabled]="isApproveBtnDisble"
+            [hidden]="isApproveBtnHidden"></app-custom-button>
+
+        <app-custom-button
+            [icon]="'assets/images/icon/save.svg'"
+            [text]="'LƯU'"
+            [type]="'primary'"
+            [width]="'140px'"
+            [height]="'42px'"
+            [iconSize]="'22px'"
+            [fontSize]="'16px'"
+            (btnClick)="Save()"
+            [disabled]="isApproveBtnDisble"
+            [hidden]="isSaveBtnHidden"></app-custom-button>
+        </div>
+    </div>
+</div>
+
+<dx-popup *ngIf="isPopupVisible" [(visible)]="isPopupVisible"
+            [width]="'85vw'" [height]="'90vh'"
+            (onHiding)="hidePopup()" title="Chi tiết giao dịch">
+    <app-transaction-detail [card_number]="clientInfo.card_number"
+                            [account_number]="clientInfo.account_num"
+                            (close)="hidePopup()"></app-transaction-detail>
+</dx-popup>

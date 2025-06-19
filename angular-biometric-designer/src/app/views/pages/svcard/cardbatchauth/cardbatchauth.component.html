@@ -1,0 +1,3 @@
+<app-custom-header-title class="my-3" text="Danh sách duyệt lô"></app-custom-header-title>
+<app-data-grid-control #dataGridBatchAuth [dataSource]="dataSource" [columns]="columns" [length]="length" [requestFilter]="req"
+            (loadData)="loadData($event)"></app-data-grid-control>

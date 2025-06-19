@@ -1,0 +1,23 @@
+.selectable-text {
+    cursor: pointer;
+    font-size: 12px;
+    color: blue;
+}
+
+.default-btn {
+    border: 2px solid #5486ff !important; 
+    color: #5486ff !important; 
+    background-color: white !important; 
+  }
+  
+  .selected-btn {
+    background-color: #5486ff !important; 
+    color: white !important; 
+    border: 2px solid #5486ff !important;
+  }
+
+  .dx-button.dx-state-disabled {
+    border: 2px solid #ced4da !important; 
+    background-color: #f8f9fa !important; 
+    cursor: not-allowed !important;
+  }

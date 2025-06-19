@@ -1,0 +1,74 @@
+<div style="height: 100%;">
+    <app-custom-header-title class="my-3" text="Tạo QR"></app-custom-header-title>
+
+    <div class="mb-2">
+        <div class="row mb-2">
+            <div class="d-flex justify-content-end gap-3">
+                <app-custom-button [icon]="'assets/images/icon/reload.svg'" [text]="'LÀM MỚI'" [type]="'outline'"
+                            [width]="'140px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                            (btnClick)="reload()"></app-custom-button>
+
+                <app-custom-button [icon]="'assets/images/icon/download.svg'" [text]="'TẢI XUỐNG TỆP MẪU'" [type]="'soft'"
+                            [width]="'212px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                            (btnClick)="downloadTemplate()"></app-custom-button>
+            </div>
+        </div>
+
+        <div class="d-flex gap-3 align-items-center mb-2">
+            <div class="flex-grow-1">
+                <div class="upload-box mb-1">
+                    <div *ngIf="filenameUpload == ''">
+                        <div (click)="fileInput.click()">
+                            <img class="upload-icon" src="assets/images/icon/upload.svg" />
+                        </div>
+                        <input type="file" (change)="onFileSelected($event)" hidden #fileInput>
+                        <div class="upload-text">Tải tệp lên</div>
+                    </div>
+
+                    <ul class="dx-widget mb-0 ps-0" style="list-style-type: none;" *ngIf="filenameUpload != ''">
+                        <li class="d-flex align-items-center mb-1">
+                            <div class="me-2 mt-1">
+                                <img class="upload-icon" src="assets/images/icon/upload.svg" />
+                            </div>
+
+                            <div class="flex-grow-1">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <span style="font-size: 14px; margin-left: 20px;">
+                                            {{ filenameUpload }}
+                                        </span>
+                                    </div>
+                                    <div (click)="removeFile()">
+                                        <img src="assets/images/icon/trash.svg" style="height: 15px;"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <app-custom-button [icon]="'assets/images/icon/qr_icon.svg'" [text]="'TẠO MÃ QR'" [type]="'primary'"
+                            [width]="'212px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                            (btnClick)="generateQR()" [disabled]="req.lst_create_qr.length <= 0"></app-custom-button>
+            </div>
+        </div>
+    </div>
+
+    <app-custom-header-title class="my-2" text="Danh sách QR"></app-custom-header-title>
+
+    <app-data-grid-control [dataSource]="dataSource" 
+                        [columns]="columns" 
+                        [length]="length" 
+                        [requestFilter]="reqDisplay"
+                        (loadData)="loadData($event)"></app-data-grid-control>
+</div>
+
+<div class="button-sticky-footer card" *ngIf="dataQrResponse > 0">
+    <div class="d-flex justify-content-end gap-3">
+        <app-custom-button [icon]="'assets/images/icon/download.svg'" [text]="'TẢI TẬP KẾT QUẢ XUỐNG'" [type]="'primary'"
+                        [width]="'252px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                        (btnClick)="downloadFile()" [disabled]="dataQrResponse <= 0"></app-custom-button>
+    </div>
+</div>

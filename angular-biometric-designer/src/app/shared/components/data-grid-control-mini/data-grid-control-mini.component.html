@@ -1,0 +1,17 @@
+<div class="mb-2">
+  <dx-data-grid #dataGridMini id="gridContainer" [dataSource]="dataSource" [remoteOperations]="false"
+    [allowColumnReordering]="false" [rowAlternationEnabled]="false" [showBorders]="false" [cacheEnabled]="false"
+    (onContentReady)="contentReady($event)" [columns]="columns" width="100%" [(selectedRowKeys)]="selectedRows"
+    [loadPanel]="{ enabled: false }" [showBorders]="true" (onRowPrepared)="onRowPreparedEvent($event)"
+    noDataText="Không có dữ liệu" (onSelectionChanged)="selectionChanged($event)" (onCellPrepared)="cellPrepared($event)">
+    <dxo-border [visible]="true" [bottom]="true" [left]="true" [right]="true"></dxo-border>
+    <dxo-selection [selectAllMode]="selectAllMode" [showCheckBoxesMode]="showCheckBoxesMode"
+      [mode]="selectMode"></dxo-selection>
+    <dxo-paging [enabled]="enabledPaging" [pageSize]="pageSize" [pageIndex]="pageIndex"></dxo-paging>
+    <dxo-pager [showPageSizeSelector]="false" [allowedPageSizes]="[10, 25, 50, 100]" [showNavigationButtons]="true"
+      [displayMode]="'compact'" [showInfo]="true" infoText="Page {0} of {1}. Total {2} items"></dxo-pager>
+    <dxo-search-panel [visible]="false" [highlightCaseSensitive]="false"></dxo-search-panel>
+    <dxo-group-panel [visible]="false"></dxo-group-panel>
+    <dxo-grouping [autoExpandAll]="false"></dxo-grouping>
+  </dx-data-grid>
+</div>

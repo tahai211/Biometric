@@ -1,0 +1,79 @@
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-4 mb-2">
+            <app-custom-label text="Hệ thống"></app-custom-label>
+            <app-custom-text-box [value]="data.system_id" [readOnly]="true" [disabled]="disable"></app-custom-text-box>
+        </div>
+        <div class="col-md-4 mb-2">
+            <app-custom-label text="Mã tin điện"></app-custom-label>
+            <app-custom-text-box [value]="data.request_id" [readOnly]="true" [disabled]="disable"></app-custom-text-box>
+        </div>
+        <div class="col-md-4 mb-2">
+            <app-custom-label text="Tên tài khoản"></app-custom-label>
+            <app-custom-text-box [value]="data.username" [readOnly]="true" [disabled]="disable"></app-custom-text-box>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 mb-2">
+            <app-custom-label text="IP"></app-custom-label>
+            <app-custom-text-box [value]="data.ip" [readOnly]="true" [disabled]="disable"></app-custom-text-box>
+        </div>
+        <div class="col-md-4 mb-2">
+            <app-custom-label text="Phương thức"></app-custom-label>
+            <app-custom-text-box [value]="data.http_method" [readOnly]="true" [disabled]="disable"></app-custom-text-box>
+        </div>
+        <div class="col-md-4 mb-2">
+            <app-custom-label text="Mã phản hồi"></app-custom-label>
+            <app-custom-text-box [value]="data.http_status_code" [readOnly]="true" [disabled]="disable"></app-custom-text-box>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 mb-2">
+            <app-custom-label text="Phản hồi (ms)"></app-custom-label>
+            <app-custom-text-box [value]="data.execution_duration" [readOnly]="true" [disabled]="disable"></app-custom-text-box>
+        </div>
+        <div class="col-md-4 mb-2">
+            <app-custom-label text="Thời gian thực hiện"></app-custom-label>
+            <app-custom-text-box [value]="data.execution_time" [readOnly]="true" [disabled]="disable"></app-custom-text-box>
+        </div>
+        <div class="col-md-4 mb-2">
+            <app-custom-label text="Đường dẫn"></app-custom-label>
+            <app-custom-text-box [value]="data.url" [readOnly]="true" [disabled]="disable"></app-custom-text-box>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 mb-2">
+            <app-custom-label text="Màn hình"></app-custom-label>
+            <app-custom-text-box [value]="data.screen_name" [readOnly]="true" [disabled]="disable"></app-custom-text-box>
+        </div>
+        <div class="col-md-4 mb-2">
+            <app-custom-label text="Chức năng"></app-custom-label>
+            <app-custom-text-box [value]="data.action_name" [readOnly]="true" [disabled]="disable"></app-custom-text-box>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 mb-2">
+            <app-custom-label text="Trình duyệt"></app-custom-label>
+            <app-custom-text-box [value]="data.browser" [readOnly]="true" [disabled]="disable"></app-custom-text-box>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 mb-2">
+            <app-custom-label text="Tin điện đến"></app-custom-label>
+            <!-- <dx-text-area [value]="data.request_decypt" [readOnly]="true" [height]="200">
+
+            </dx-text-area> -->
+            <app-custom-text-area  [(value)]="data.request_decypt" [disabled]="disable">
+            </app-custom-text-area>
+            <!-- <app-custom-text-box [value]="data.browser" [readOnly]="true"></app-custom-text-box> -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 mb-2">
+            <app-custom-label text="Tin điện phải hồi"></app-custom-label>
+            <app-custom-text-area  [value]="data.response_decypt" [disabled]="disable">
+            </app-custom-text-area>
+            <!-- <app-custom-text-box [value]="data.browser" [readOnly]="true"></app-custom-text-box> -->
+        </div>
+    </div>
+</div>

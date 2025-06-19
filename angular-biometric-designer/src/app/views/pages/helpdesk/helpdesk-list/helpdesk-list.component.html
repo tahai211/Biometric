@@ -1,0 +1,100 @@
+<div class="card card-primary card-outline mb-2">
+  <div class="card-body pt-9 pb-0">
+  <div class="button-container" style="margin: 10px 0;">
+    <dx-button class="me-1" icon="comment" text="Tất cả" stylingMode="contained" type="default"></dx-button>
+    <dx-button class="me-1" icon="belloutline" text="Chờ xử lý" stylingMode="contained" type="default"></dx-button>
+    <dx-button class="me-1" icon="group" text="Tôi gửi" stylingMode="contained" type="default"></dx-button>
+    <dx-button class="me-1" icon="user" text="Gửi tới tôi" stylingMode="contained" type="default"></dx-button>
+    <dx-button class="me-1" icon="showpanel" text="Đang mở" stylingMode="contained" type="success"></dx-button>
+    <dx-button class="me-1" icon="errorcircle" text="Tạm dừng" stylingMode="contained" type="success"></dx-button>
+    <dx-button class="me-1" icon="runner" text="Đang xử lý" stylingMode="contained" type="success"></dx-button>
+    <dx-button class="me-1" icon="todo" text="Đã phê duyệt" stylingMode="contained" type="success"></dx-button>
+  </div>
+  <div class="search-box">
+    <div class="row">
+      <div class="col">
+        <div class="form-group row">
+          <label for="keyword" class="col-sm-4 col-form-label">Từ khóa</label>
+          <div class="col-sm-8">
+            <dx-text-box id="keyword" ></dx-text-box>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="customerCode" class="col-sm-4 col-form-label">Mã khách hàng</label>
+          <div class="col-sm-8">
+            <dx-text-box id="customerCode" ></dx-text-box>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="accountNumber" class="col-sm-4 col-form-label">Số tài khoản</label>
+          <div class="col-sm-8">
+            <dx-text-box id="accountNumber" ></dx-text-box>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="cardNumber" class="col-sm-4 col-form-label">Số thẻ</label>
+          <div class="col-sm-8">
+            <dx-text-box id="cardNumber" ></dx-text-box>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="trackingCode" class="col-sm-4 col-form-label">Mã tra soát</label>
+          <div class="col-sm-8">
+            <dx-text-box id="trackingCode" ></dx-text-box>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group row">
+          <label for="serviceSupport" class="col-sm-4 col-form-label">Dịch vụ hỗ trợ</label>
+          <div class="col-sm-8">
+            <dx-select-box [showClearButton]="true" id="serviceSupport"  [items]="['Service 1', 'Service 2', 'Service 3']"></dx-select-box>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Loại giao dịch</label>
+          <div class="col-sm-8">
+            <dx-select-box [showClearButton]="true" id="serviceSupport"  [items]="['Tất cả', 'GD tài chính', 'GD phi tài chính','GD khác']"></dx-select-box>
+
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="priorityLevel" class="col-sm-4 col-form-label">Mức ưu tiên</label>
+          <div class="col-sm-8">
+            <dx-select-box [showClearButton]="true" id="priorityLevel"  [items]="['Thấp', 'Trung bình', 'Cao']"></dx-select-box>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="status" class="col-sm-4 col-form-label">Trạng thái</label>
+          <div class="col-sm-8">
+            <dx-select-box [showClearButton]="true" id="status"  [items]="['Đang mở', 'Đang xử lý', 'Đã giải quyết', 'Đã đóng']" multiselect="true"></dx-select-box>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        
+        <div class="form-group row">
+          <label for="fromDate" class="col-sm-4 col-form-label">Từ ngày</label>
+          <div class="col-sm-8">
+            <dx-date-box id="fromDate" ></dx-date-box>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="toDate" class="col-sm-4 col-form-label">Đến ngày</label>
+          <div class="col-sm-8">
+            <dx-date-box id="toDate" ></dx-date-box>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="search-box" style="margin-top: 5px; margin-bottom: 20px;">
+      <dx-button class="me-1" icon="search" text="Tìm kiếm" stylingMode="contained" type="default"></dx-button>
+      <dx-button class="me-1" icon="add" text="Thêm mới" stylingMode="contained" type="default"></dx-button>
+    </div>
+  </div>
+  </div>
+</div>
+
+<app-data-grid-control [dataSource]="dataSource" [columns]="columns" [length]="10" 
+    ></app-data-grid-control>
+

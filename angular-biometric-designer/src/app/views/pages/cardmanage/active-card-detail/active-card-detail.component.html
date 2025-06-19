@@ -1,0 +1,169 @@
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-4 mb-2">
+      <div class="fv-row">
+        <app-custom-label text="Mã KH"></app-custom-label>
+        <app-custom-text-box [value]="data_card_customer.client_code" [readOnly]="true"></app-custom-text-box>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-2">
+      <div class="fv-row">
+        <app-custom-label text="Tên KH"></app-custom-label>
+        <app-custom-text-box [value]="data_card_customer.user_name" [readOnly]="true"></app-custom-text-box>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-2">
+      <div class="fv-row">
+        <app-custom-label text="Số CCCD"></app-custom-label>
+        <app-custom-text-box [value]="data_card_customer.legal_id" [readOnly]="true"></app-custom-text-box>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 mb-2">
+      <div class="fv-row">
+        <app-custom-label text="Ngày sinh"></app-custom-label>
+        <app-custom-text-box [value]="data_card_customer.birth_date" [readOnly]="true"></app-custom-text-box>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+
+    <div class="col-md-4 mb-2">
+      <div class="fv-row">
+        <app-custom-label text="Địa chỉ 1"></app-custom-label>
+        <app-custom-text-box [value]="data_card_customer.address_1" [readOnly]="true"></app-custom-text-box>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-2">
+      <div class="fv-row">
+        <app-custom-label text="Địa chỉ 2"></app-custom-label>
+        <app-custom-text-box [value]="data_card_customer.address_2" [readOnly]="true"></app-custom-text-box>
+      </div>
+    </div>
+    <div class="col-md-4 mb-2">
+      <div class="fv-row">
+        <app-custom-label text="Địa chỉ 3"></app-custom-label>
+        <app-custom-text-box [value]="data_card_customer.address_3" [readOnly]="true"></app-custom-text-box>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 mb-2">
+      <div class="fv-row">
+        <app-custom-label text="Địa chỉ 4"></app-custom-label>
+        <app-custom-text-box [value]="data_card_customer.address_4" [readOnly]="true"></app-custom-text-box>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-2">
+      <div class="fv-row">
+        <app-custom-label text="Thành phố"></app-custom-label>
+        <app-custom-text-box [value]="data_card_customer.city" [readOnly]="true"></app-custom-text-box>
+      </div>
+    </div>
+    <div class="col-md-4 mb-2">
+      <div class="fv-row">
+        <app-custom-label text="Quốc gia"></app-custom-label>
+        <app-custom-text-box [value]="data_card_customer.country" [readOnly]="true"></app-custom-text-box>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 mb-2">
+      <div class="fv-row">
+        <app-custom-label text="Số thẻ"></app-custom-label>
+        <app-custom-text-box [(value)]="data_card_customer.card_number" [readOnly]="true"></app-custom-text-box>
+      </div>
+    </div>
+    <div class="col-md-4 mb-2">
+      <div class="fv-row">
+        <app-custom-label text="Sản phẩm"></app-custom-label>
+        <app-custom-text-box [value]="data_card_customer.product" [readOnly]="true"></app-custom-text-box>
+      </div>
+    </div>
+    <div class="col-md-4 mb-2">
+      <div class="fv-row">
+        <app-custom-label text="Loại thẻ"></app-custom-label>
+        <app-custom-text-box [value]="data_card_customer.type_card" [readOnly]="true"></app-custom-text-box>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 mb-2">
+      <div class="fv-row">
+        <app-custom-label text="Số thẻ chính"></app-custom-label>
+        <app-custom-text-box [value]="data_card_customer.basic_card_number" [readOnly]="true"></app-custom-text-box>
+      </div>
+    </div>
+    <div class="col-md-4 mb-2">
+      <div class="fv-row">
+        <app-custom-label text="Tình trạng thẻ"></app-custom-label>
+        <app-custom-text-box [value]="data_card_customer.status_card" [readOnly]="true"></app-custom-text-box>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-2">
+      <div class="fv-row">
+        <app-custom-label text="Tên in trên thẻ"></app-custom-label>
+        <app-custom-text-box [value]="data_card_customer.embossed_name" [readOnly]="true"></app-custom-text-box>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 mb-2">
+      <div class="fv-row">
+        <app-custom-label text="Đơn vị"></app-custom-label>
+        <app-custom-text-box [value]="data_card_customer.branch" [readOnly]="true"></app-custom-text-box>
+      </div>
+    </div>
+    <div class="col-md-4 mb-2">
+      <div class="fv-row">
+        <app-custom-label text="Trạng thái kích hoạt thẻ"></app-custom-label>
+        <app-custom-text-box [value]="data_card_customer.status_active" [readOnly]="true"></app-custom-text-box>
+      </div>
+    </div>
+    <div class="col-md-4 mb-2">
+      <div class="fv-row">
+        <app-custom-label text="Ngày kích hoạt"></app-custom-label>
+        <app-custom-text-box [value]="data_card_customer.date_active" [readOnly]="true"></app-custom-text-box>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 mb-2">
+      <div class="fv-row">
+        <app-custom-label text="Ngày tạo"></app-custom-label>
+        <app-custom-text-box [value]="data_card_customer.date_create" [readOnly]="true"></app-custom-text-box>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-2">
+      <div class="fv-row">
+        <app-custom-label text="Ngày hết hạn"></app-custom-label>
+        <app-custom-text-box [value]="data_card_customer.date_expiry" [readOnly]="true"></app-custom-text-box>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="row">
+    <div class="col-md-12 d-flex align-items-center justify-content-center">
+      <dx-button class="me-1" stylingMode="contained" text="Kích hoạt" type="default" [width]="110" (click)="active()"
+        *ngIf="isButtonVisible">
+      </dx-button>
+    </div>
+  </div> -->
+  <div class="row" *ngIf="isButtonVisible">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="d-flex my-2" style="display: flex; justify-content: flex-end; gap: 24px;">
+
+          <app-custom-button [text]="'KÍCH HOẠT'" [type]="'primary'" [width]="'140px'" [height]="'42px'"
+            [iconSize]="'22px'" [fontSize]="'16px'" (btnClick)="active()"></app-custom-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

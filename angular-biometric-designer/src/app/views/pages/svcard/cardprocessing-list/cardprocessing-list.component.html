@@ -1,0 +1,88 @@
+<app-custom-header-title class="my-3" text="Tìm kiếm"></app-custom-header-title>
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Từ ngày"></app-custom-label>
+                <app-custom-date-box type="date" [(value)]="req.from_date" displayFormat="dd/MM/yyyy"
+                    dateSerializationFormat="yyyy-MM-dd" [showClearButton]="true" [inputAttr]="{ 'aria-label': 'Date' }"
+                    (onEnterKey)="search()">
+                </app-custom-date-box>
+            </div>
+        </div>
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Đến ngày"></app-custom-label>
+                <app-custom-date-box type="date" [(value)]="req.to_date" displayFormat="dd/MM/yyyy"
+                    dateSerializationFormat="yyyy-MM-dd" [showClearButton]="true" [inputAttr]="{ 'aria-label': 'Date' }"
+                    (onEnterKey)="search()">
+                </app-custom-date-box>
+            </div>
+        </div>
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Agents"></app-custom-label>
+                <app-custom-select-box [showClearButton]="true" [items]="dataAgentCode" [searchEnabled]="true"
+                    [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="req.agent_code"
+                    valueExpr="branch_code" displayExpr="branch_name" placeholder="Chọn"
+                    (onEnterKey)="search()"></app-custom-select-box>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Mã hồ sơ RLOS"></app-custom-label>
+                <app-custom-text-box [(value)]="req.card_id" (onEnterKey)="search()">
+                </app-custom-text-box>
+            </div>
+        </div>
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Số GTTT"></app-custom-label>
+                <app-custom-text-box [(value)]="req.unique_id_value" (onEnterKey)="search()">
+                </app-custom-text-box>
+            </div>
+        </div>
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Trạng thái duyệt"></app-custom-label>
+                <app-custom-select-box [showClearButton]="true" [items]="dataAuthStat"
+                    [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="req.auth_stat" valueExpr="id"
+                    displayExpr="name" placeholder="Chọn" (onEnterKey)="search()"></app-custom-select-box>
+            </div>
+        </div>
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Diễn giải"></app-custom-label>
+                <app-custom-select-box [showClearButton]="true" [items]="dataReissuedType"
+                    [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="req.reissued_type" valueExpr="id"
+                    displayExpr="name" placeholder="Chọn" (onEnterKey)="search()"></app-custom-select-box>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="row">
+        <div class="d-flex gap-3 justify-content-end">
+            <app-custom-button [icon]="'assets/images/icon/reload.svg'" [text]="'LÀM MỚI'" [type]="'outline'"
+                [width]="'140px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                (btnClick)="reload()"></app-custom-button>
+
+            <app-custom-button [icon]="'assets/images/icon/search.svg'" [text]="'TÌM KIẾM'" [type]="'soft'"
+                [width]="'140px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                (btnClick)="search()"></app-custom-button>
+        </div>
+    </div>
+</div>
+
+<app-custom-header-title class="my-2" text="Danh sách yêu cầu chờ tạo"></app-custom-header-title>
+<app-data-grid-control [dataSource]="dataSource" [columns]="columns" [length]="length" [requestFilter]="req"
+    (loadData)="loadData($event)"></app-data-grid-control>
+<dx-popup *ngIf="visibleNotify" [(visible)]="visibleNotify" [width]="'917'" [height]="'auto'" (onHiding)="hidePopup()" 
+    title="Xác nhận hủy giao dịch">
+    <app-custom-confirm-notify *ngIf="visibleNotify" title="{{titleNotify}}" [visible]="visibleNotify"
+    (onCancel)="cancelHandler()" (onConfirm)="confirmHandler()"></app-custom-confirm-notify>
+</dx-popup>

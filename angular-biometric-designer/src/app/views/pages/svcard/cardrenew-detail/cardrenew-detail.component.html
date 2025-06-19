@@ -1,0 +1,625 @@
+<div class="timeline-wrapper">
+    <div class="timeline-steps" [attr.data-steps]="getStepCount()">
+        <div class="step">
+            <div class="circle">
+                <img [src]="isSelectedCard ? 'assets/images/icon/one.svg': 'assets/images/icon/tick.svg'" />
+            </div>
+            <div class="label">Tìm kiếm khách hàng</div>
+        </div>
+
+        <div class="step">
+            <div class="circle">
+                <img [src]="isSelectedCard ? 'assets/images/icon/tick.svg' : 'assets/images/icon/two.svg'" />
+            </div>
+            <div class="label">Phát hành lại</div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12" *ngIf="!isSelectedCard">
+    <app-custom-header-title class="my-3" text="Tìm kiếm khách hàng"></app-custom-header-title>
+    <div class="row">
+        <div class="col-md-4 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Mã khách hàng"></app-custom-label>
+                <app-custom-text-box id="cifNo" [(value)]="reqListCust.cifNo"
+                    (valueChange)="reqListCust.cifNo = $event.trim()" (onEnterKey)="searchCust()">
+                </app-custom-text-box>
+            </div>
+        </div>
+        <div class="col-md-4 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Tên khách hàng"></app-custom-label>
+                <app-custom-text-box id="cifName" [(value)]="reqListCust.cifName"
+                    (valueChange)="reqListCust.cifName = $event.trim()" (onEnterKey)="searchCust()">
+                </app-custom-text-box>
+            </div>
+        </div>
+        <div class="col-md-4 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Số GTTT"></app-custom-label>
+                <app-custom-text-box id="uniqueId" [(value)]="reqListCust.uniqueId"
+                    (valueChange)="reqListCust.uniqueId = $event.trim()" (onEnterKey)="searchCust()">
+                </app-custom-text-box>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="d-flex my-2" style="display: flex; justify-content: flex-end;">
+            <app-custom-button [icon]="'assets/images/icon/search.svg'" [text]="'TÌM KIẾM'" [type]="'primary'"
+                [width]="'140px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                (btnClick)="searchCust()"></app-custom-button>
+        </div>
+    </div>
+    <app-data-grid-control #dataGridCust id="dataGridCust" [dataSource]="dataSourceCust" [columns]="columnsCust"
+        [requestFilter]="reqListCust" [length]="lengthCust" (loadData)="searchCust()"
+        (onRowClick)="custSelected($event)" [pageSize]="5"></app-data-grid-control>
+</div>
+
+
+
+<div class="col-md-12" *ngIf="isSelectedCard">
+    <app-custom-header-title class="my-2" text="Chọn loại thẻ" [important]="true"></app-custom-header-title>
+    <div class="radio-container">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="cardType" id="debitCard" [(ngModel)]="selectedCardType"
+                [value]="'debit'" (ngModelChange)="onChangeCardType($event)" [disabled]="id != null && id != ''" />
+            <label class="form-check-label" for="debitCard">Thẻ Debit</label>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="cardType" id="creditCard" [(ngModel)]="selectedCardType"
+                [value]="'credit'" (ngModelChange)="onChangeCardType($event)" [disabled]="id != null && id != ''" />
+            <label class="form-check-label" for="creditCard">Thẻ Credit</label>
+        </div>
+    </div>
+    <div style="height: 100%;">
+        <div *ngIf="selectedCardType === 'debit'">
+            <div class="col-md-12">
+                <app-custom-header-title class="my-2" text="Tài khoản" [important]="true"></app-custom-header-title>
+                <div class="row">
+                    <!-- <div class="col-md-6"> -->
+                    <div class="fv-row">
+                        <!-- <app-data-grid-control-mini #dataGridAcc id="dataGridAcc" [dataSource]="dataSourceAcc"
+                        [columns]="columnsAcc" [selectMode]="'single'" [enabledPaging]="false"
+                        (onSelectionChanged)="accSelection($event)"></app-data-grid-control-mini> -->
+                        <app-data-grid-control #dataGridAcc id="dataGridAcc" [dataSource]="dataSourceAcc"
+                            [columns]="columnsAcc" (onSelectionChanged)="accSelection($event)"
+                            [pageSize]="5"></app-data-grid-control>
+                    </div>
+                    <!-- </div> -->
+                </div>
+            </div>
+            <div class="col-md-12">
+                <app-custom-header-title class="my-2" text="Thông tin chung"
+                    [important]="true"></app-custom-header-title>
+                <div class="row">
+                    <div class="col-md-4 mb-2">
+                        <div class="fv-row">
+                            <app-custom-label text="Mã giao dịch"></app-custom-label>
+                            <app-custom-text-box id="batch_num" [(value)]="data.reference_no" [disabled]="true">
+                            </app-custom-text-box>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <div class="fv-row">
+                            <app-custom-label text="Số Lô"></app-custom-label>
+                            <app-custom-text-box id="batch_num" [(value)]="data.batch_num" [disabled]="true">
+                            </app-custom-text-box>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <div class="fv-row">
+                            <app-custom-label text="Trạng thái giao dịch"></app-custom-label>
+                            <app-custom-text-box id="auth_stat" [(value)]="data.auth_stat_text" [disabled]="true">
+                            </app-custom-text-box>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 mb-2">
+                        <div class="fv-row">
+                            <app-custom-label text="Mã khách hàng (CIF)"></app-custom-label>
+                            <app-custom-text-box id="cust_no" [(value)]="data.cust_no" [disabled]="true">
+                            </app-custom-text-box>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <div class="fv-row">
+                            <app-custom-label text="Họ tên khách hàng"></app-custom-label>
+                            <app-custom-text-box id="cust_name" [(value)]="data.cust_name" [disabled]="true">
+                            </app-custom-text-box>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <div class="fv-row">
+                            <app-custom-label text="Số GTTT"></app-custom-label>
+                            <app-custom-text-box id="unique_id_value" [(value)]="data.unique_id_value"
+                                [disabled]="true">
+                            </app-custom-text-box>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <div class="fv-row">
+                            <app-custom-label text="Ngày sinh (dd/mm/yyyy)"></app-custom-label>
+                            <app-custom-text-box id="birth_day" [(value)]="data.birth_day" [disabled]="true">
+                            </app-custom-text-box>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 mb-2">
+                        <div class="fv-row">
+                            <app-custom-label text="Loại khách hàng"></app-custom-label>
+                            <app-custom-text-box id="cust_type" [(value)]="data.cust_type" [disabled]="true">
+                            </app-custom-text-box>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <div class="fv-row">
+                            <app-custom-label text="Sản phẩm"></app-custom-label>
+                            <!-- <app-custom-text-box id="product_code" [(value)]="data.product_name" [disabled]="true">
+                        </app-custom-text-box> -->
+                            <app-custom-select-box [showClearButton]="true" id="product_code" [items]="dataProducts"
+                                [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [searchEnabled]="true"
+                                [(value)]="data.product_code" valueExpr="value" displayExpr="text" placeholder="Chọn"
+                                [disabled]="true"></app-custom-select-box>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <div class="fv-row">
+                            <app-custom-label text="Thẻ chính/phụ" [important]="true"></app-custom-label>
+                            <app-custom-select-box [showClearButton]="true" id="card_type" [items]="dataCardType"
+                                [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="data.card_type"
+                                valueExpr="id" displayExpr="name" placeholder="Chọn" [disabled]="id != null && id != ''"
+                                (onValueChanged)="cardTypeChange($event)"></app-custom-select-box>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-5">
+                        <div class="fv-row">
+                            <app-custom-label text="Số thẻ"></app-custom-label>
+                            <app-custom-select-box [showClearButton]="true" id="release_form" [items]="dataCardOld"
+                                [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="data.card_old_no"
+                                valueExpr="card_number" displayExpr="card_number" placeholder="Chọn"
+                                [disabled]="id != null && id != ''"
+                                (onValueChanged)="cardOldChange($event)"></app-custom-select-box>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Họ tên chủ thẻ"></app-custom-label>
+                        <app-custom-text-box id="card_name_sub" [(value)]="data.card_name_sub"
+                            [disabled]="data.card_type == 'TP'">
+                        </app-custom-text-box>
+                    </div>
+                </div> -->
+                </div>
+                <div class="row">
+                    <div class="col-md-3 mb-2">
+                        <div class="fv-row">
+                            <app-custom-label text="Hình thức phát hành" [important]="true"></app-custom-label>
+                            <app-custom-select-box [showClearButton]="true" id="release_form" [items]="dataReleaseFrom"
+                                [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="data.release_form"
+                                valueExpr="id" displayExpr="name" placeholder="Chọn"
+                                (onValueChanged)="releaseFormChange($event)"
+                                [disabled]="id != null && id != ''"></app-custom-select-box>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <div class="fv-row">
+                            <app-custom-label text="Số thẻ phát hành lại"></app-custom-label>
+                            <app-custom-text-box id="card_old_no" [(value)]="data.card_new_no"
+                                [disabled]="data.release_form == 'EVNT0122' || data.release_form == '' || data.release_form == null">
+                            </app-custom-text-box>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <div class="fv-row">
+                            <app-custom-label text="Họ tên chủ thẻ phụ"></app-custom-label>
+                            <app-custom-text-box id="sub_cust_name" [(value)]="data.sub_cust_name"
+                                [disabled]="data.card_type != 'TP'">
+                            </app-custom-text-box>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <div class="fv-row">
+                            <app-custom-label text="Tên in trên thẻ"></app-custom-label>
+                            <app-custom-text-box id="card_name" [(value)]="data.card_name"
+                                [disabled]="id != null && id != ''">
+                            </app-custom-text-box>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 mb-2">
+                        <div class="fv-row">
+                            <app-custom-label text="Đơn vị thẻ (Agent)" [important]="true"></app-custom-label>
+                            <app-custom-select-box [showClearButton]="true" id="agent_code" [items]="dataBranchs"
+                                [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [searchEnabled]="true"
+                                [(value)]="data.agent_code" valueExpr="value" displayExpr="text" placeholder="Chọn"
+                                [disabled]="id != null && id != ''"></app-custom-select-box>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <div class="fv-row">
+                            <app-custom-label text="Đơn vị (tài khoản)"></app-custom-label>
+                            <app-custom-text-box id="user_branch" [(value)]="data.user_branch" [disabled]="true">
+                            </app-custom-text-box>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <div class="fv-row">
+                            <app-custom-label text="Đơn vị (phát hành)"></app-custom-label>
+                            <app-custom-text-box id="branch_code" [(value)]="data.branch_code" [disabled]="true">
+                            </app-custom-text-box>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="fv-row">
+                            <app-custom-label text="Người duyệt" [important]="true"></app-custom-label>
+                            <app-custom-select-box [showClearButton]="true" id="approved_by" [items]="dataUserAuths"
+                                [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [searchEnabled]="true"
+                                [(value)]="data.auth_id" valueExpr="value" displayExpr="text" placeholder="Chọn"
+                                [disabled]="id != null && id != ''"></app-custom-select-box>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="selectedCardType === 'credit'">
+        <div class="col-md-12">
+            <app-custom-header-title class="my-3" text="Tài khoản" [important]="true"></app-custom-header-title>
+            <div class="row">
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-select-box [showClearButton]="true" id="dataGridAcc" [items]="dataSourceAcc"
+                            [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [searchEnabled]="true"
+                            [(value)]="data.cust_ac_no" valueExpr="accountNo" displayExpr="accountNo"
+                            (onValueChanged)="accDropdownSelection($event)" placeholder="Chọn"></app-custom-select-box>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <app-custom-header-title class="my-3" text="Thông tin chung" [important]="true"></app-custom-header-title>
+            <div class="row">
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Sản phẩm"></app-custom-label>
+                        <!-- <app-custom-text-box id="product_code" [(value)]="data.product_name" [disabled]="true">
+                        </app-custom-text-box> -->
+                        <app-custom-select-box [showClearButton]="true" id="product_code" [items]="dataProducts"
+                            [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [searchEnabled]="true"
+                            [(value)]="data.product_code" valueExpr="value" displayExpr="text"
+                            [disabled]="id != null && id != ''" placeholder="Chọn"></app-custom-select-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Số thẻ"></app-custom-label>
+                        <app-custom-select-box [showClearButton]="true" id="release_form" [items]="dataCardOld"
+                            [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="data.card_old_no"
+                            valueExpr="card_number" displayExpr="card_number" placeholder="Chọn"
+                            [disabled]="id != null && id != ''"
+                            (onValueChanged)="cardOldChange($event)"></app-custom-select-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Mã giao dịch"></app-custom-label>
+                        <app-custom-text-box id="batch_num" [(value)]="data.reference_no" [disabled]="true">
+                        </app-custom-text-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Trạng thái giao dịch"></app-custom-label>
+                        <app-custom-text-box id="auth_stat" [(value)]="data.auth_stat_text" [disabled]="true">
+                        </app-custom-text-box>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Mã khách hàng (CIF)"></app-custom-label>
+                        <app-custom-text-box id="cust_no" [(value)]="data.cust_no" [disabled]="true">
+                        </app-custom-text-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Họ tên khách hàng"></app-custom-label>
+                        <app-custom-text-box id="cust_name" [(value)]="data.cust_name" [disabled]="true">
+                        </app-custom-text-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Ngày sinh"></app-custom-label>
+                        <app-custom-text-box id="birth_day" [(value)]="data.birth_day" [disabled]="true">
+                        </app-custom-text-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Loại khách hàng"></app-custom-label>
+                        <app-custom-text-box id="cust_type" [(value)]="data.cust_type" [disabled]="true">
+                        </app-custom-text-box>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Số GTTT"></app-custom-label>
+                        <app-custom-text-box id="unique_id_value" [(value)]="data.unique_id_value" [disabled]="true">
+                        </app-custom-text-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Ngày cấp GTTT"></app-custom-label>
+                        <app-custom-date-box [(value)]="data.unique_id_date" type="date" displayFormat="dd/MM/yyyy"
+                            dateSerializationFormat="yyyy-MM-dd" [showClearButton]="false" [disabled]="true"
+                            [inputAttr]="{ 'aria-label': 'Date' }"></app-custom-date-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Ngày hết hạn GTTT"></app-custom-label>
+                        <app-custom-date-box [(value)]="data.expired_unique_id_date" type="date"
+                            displayFormat="dd/MM/yyyy" dateSerializationFormat="yyyy-MM-dd" [showClearButton]="false"
+                            [disabled]="true" [inputAttr]="{ 'aria-label': 'Date' }"></app-custom-date-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Họ tên chủ thẻ"></app-custom-label>
+                        <app-custom-text-box id="card_name" [(value)]="data.card_name" [disabled]="true">
+                        </app-custom-text-box>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Đơn vị phát hành"></app-custom-label>
+                        <app-custom-text-box id="branch_code" [(value)]="data.branch_code" [disabled]="true">
+                        </app-custom-text-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Đơn vị (tài khoản)"></app-custom-label>
+                        <app-custom-text-box id="user_branch" [(value)]="data.user_branch" [disabled]="true">
+                        </app-custom-text-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Đơn vị thẻ (Agent)" [important]="true"></app-custom-label>
+                        <app-custom-select-box [showClearButton]="true" id="agent_code" [items]="dataBranchs"
+                            [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [searchEnabled]="true"
+                            [(value)]="data.agent_code" valueExpr="value" displayExpr="text" placeholder="Chọn"
+                            [disabled]="id != null && id != ''"></app-custom-select-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Tên in trên thẻ"></app-custom-label>
+                        <app-custom-text-box id="card_name" [(value)]="data.card_name"
+                            [disabled]="id != null && id != ''">
+                        </app-custom-text-box>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Thẻ chính/phụ" [important]="true"></app-custom-label>
+                        <app-custom-select-box [showClearButton]="true" id="card_type" [items]="dataCardType"
+                            [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="data.card_type" valueExpr="id"
+                            displayExpr="name" placeholder="Chọn" [disabled]="true"
+                            (onValueChanged)="cardTypeChange($event)"></app-custom-select-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Hạng thẻ" [important]="true"></app-custom-label>
+                        <app-custom-select-box [showClearButton]="true" id="card_class" [items]="dataCardClass"
+                            [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [searchEnabled]="true"
+                            [(value)]="data.card_class" valueExpr="id" displayExpr="name"
+                            [disabled]="id != null && id != ''" placeholder="Chọn"></app-custom-select-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Hình thức đảm bảo"></app-custom-label>
+                        <app-custom-select-box [showClearButton]="true" id="form_of_guarantee"
+                            [items]="dataFormofguarantee" [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                            [(value)]="data.form_of_guarantee" valueExpr="id" displayExpr="name"
+                            [disabled]="id != null && id != ''" placeholder="Chọn"></app-custom-select-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Hình thức phát hành lại" [important]="true"></app-custom-label>
+                        <app-custom-select-box [showClearButton]="true" id="release_form" [items]="dataReleaseFrom"
+                            [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="data.release_form"
+                            valueExpr="id" displayExpr="name" placeholder="Chọn"
+                            (onValueChanged)="releaseFormChange($event)"
+                            [disabled]="id != null && id != ''"></app-custom-select-box>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <app-custom-header-title class="my-3" text="Thông tin thẻ phụ" [important]="true"></app-custom-header-title>
+            <app-data-grid-control #dataGridAcc id="dataGridSubAccount" [dataSource]="dataSourceSubAccount"
+                [columns]="columnsSubAccount" [pageSize]="5"></app-data-grid-control>
+        </div>
+        <div class="col-md-12" *ngIf="data.form_of_guarantee === 'SECURED'">
+            <app-custom-header-title class="my-3" text="Thông tin tài sản đảm bảo"
+                [important]="true"></app-custom-header-title>
+            <app-data-grid-control #dataGridCollateral id="dataGridCollateral" [dataSource]="dataSourceCollateral"
+                [columns]="columnsCollateral" (onSelectionChanged)="CollateralSelection($event)"
+                [pageSize]="5"></app-data-grid-control>
+            <div class="row">
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Hạn mức thẻ tín dụng"></app-custom-label>
+                        <app-custom-text-box id="credit_card_limit" [(value)]="data.credit_card_limit"
+                            [disabled]="true">
+                        </app-custom-text-box>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-md-12">
+            <app-custom-header-title class="my-3" text="Tài khoản" [important]="true"></app-custom-header-title>
+            <div class="row">
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Tài khoản thanh toán"></app-custom-label>
+                        <app-custom-text-box id="payment_account" [(value)]="data.payment_account" [disabled]="true">
+                        </app-custom-text-box>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="col-md-12">
+            <app-custom-header-title class="my-3" text="Dịch vụ thẻ" [important]="true"></app-custom-header-title>
+            <div class="row">
+                <div class="col-md-3 mb-2 d-flex align-items-center">
+                    <dx-check-box class="custom-checkbox" [(value)]="isOnlineRegistration" text="Đăng ký thanh toán trực tuyến">
+                    </dx-check-box>
+                </div>
+
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Hạn mức đăng ký"></app-custom-label>
+                        <app-custom-text-box id="registration_limit" [(value)]="data.registration_limit"
+                            [disabled]="!isOnlineRegistration">
+                        </app-custom-text-box>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 mb-2 d-flex align-items-center">
+                    <dx-check-box class="custom-checkbox" [(value)]="isOnlineDebit" text="Đăng ký trích nợ tự động">
+                    </dx-check-box>
+                </div>
+
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Tỷ lệ trích nợ"></app-custom-label>
+                        <app-custom-text-box id="debt_ratio" [(value)]="data.debt_ratio" [disabled]="!isOnlineDebit">
+                        </app-custom-text-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Tài khoản thanh toán"></app-custom-label>
+                        <app-custom-text-box id="payment_account" [(value)]="data.payment_account"
+                            [disabled]="!isOnlineDebit">
+                        </app-custom-text-box>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <app-custom-header-title class="my-3" text="Địa chỉ liên lạc" [important]="true"></app-custom-header-title>
+            <div class="row">
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Địa chỉ liên lạc (1)" [important]="true"></app-custom-label>
+                        <app-custom-text-box id="address_1" [(value)]="data.address_1" [disabled]="true">
+                        </app-custom-text-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="(2)" [important]="true"></app-custom-label>
+                        <app-custom-text-box id="address_2" [(value)]="data.address_2" [disabled]="true">
+                        </app-custom-text-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="(3)" [important]="true"></app-custom-label>
+                        <app-custom-text-box id="address_3" [(value)]="data.address_3" [disabled]="true">
+                        </app-custom-text-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="(4)" [important]="true"></app-custom-label>
+                        <app-custom-text-box id="address_4" [(value)]="data.address_4" [disabled]="true">
+                        </app-custom-text-box>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Quốc gia" [important]="true"></app-custom-label>
+                        <app-custom-select-box [showClearButton]="true" id="country_code" [items]="dataCountrys"
+                            [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [searchEnabled]="true"
+                            [(value)]="data.country_code" valueExpr="value" displayExpr="text" placeholder="Chọn"
+                            [disabled]="true"></app-custom-select-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Tỉnh thành" [important]="true"></app-custom-label>
+                        <app-custom-select-box [showClearButton]="true" id="city_code" [items]="dataCitys"
+                            [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [searchEnabled]="true"
+                            [(value)]="data.city_code" valueExpr="value" displayExpr="text" placeholder="Chọn"
+                            [disabled]="true"></app-custom-select-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Điện thoại di động" [important]="true"></app-custom-label>
+                        <app-custom-text-box id="cust_mobile" [(value)]="data.cust_mobile" [disabled]="true">
+                        </app-custom-text-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Điện thoại bàn" [important]="true"></app-custom-label>
+                        <app-custom-text-box id="cust_phone" [(value)]="data.cust_phone" [disabled]="true">
+                        </app-custom-text-box>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <app-custom-header-title class="my-3" text="Người duyệt" [important]="true"></app-custom-header-title>
+            <div class="row">
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <app-custom-label text="Người duyệt" [important]="true"></app-custom-label>
+                        <app-custom-select-box [showClearButton]="true" id="approved_by" [items]="dataUserAuths"
+                            [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [searchEnabled]="true"
+                            [(value)]="data.auth_id" valueExpr="value" displayExpr="text" placeholder="Chọn"
+                            [disabled]="id != null && id != ''"></app-custom-select-box>
+                    </div>
+                </div>
+                <div class="col-md-9 mb-4">
+                    <div class="fv-row">
+                        <app-custom-label text="Diễn giải" [important]="true"></app-custom-label>
+                        <app-custom-text-box id="reason" [(value)]="data.reason" [disabled]="id != null && id != ''">
+                        </app-custom-text-box>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-screen-button class="button-sticky-footer" (onItemClick)="onClick($event)"
+    *ngIf="isSelectedCard"></app-screen-button>

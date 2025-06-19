@@ -1,0 +1,61 @@
+.default-card {
+  background-color: white; 
+}
+
+.selected-card {
+  background-color: #2196F314 !important; 
+}
+
+.status-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card:hover {
+  background-color: #2196F30A;
+}
+
+.card .title {
+  color: #00000099;
+  font-size: 16px;
+  margin-bottom: 0px;
+}
+
+.card .value {
+  font-size: 34px;
+  font-weight: bold;
+}
+
+.card .value.blue {
+  color: #0057b7;
+}
+
+.card .value.orange {
+  color: #f57c00;
+}
+
+.card .value.green {
+  color: #388e3c;
+}
+
+.card .value.red {
+  color: #d32f2f;
+}
+
+.card .value.yellow {
+  color: #fbc02d;
+}
+

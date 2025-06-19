@@ -1,0 +1,25 @@
+{
+    "env": {
+        "name": "UAT",
+        "production": false,
+        "appVersion": "v1.0.0",
+        "isMockEnabled": true
+    },
+    "application": {
+        "baseUrl": "",
+        "name": "RPTP",
+        "logoUrl": ""
+    },
+    "apis": {
+        "apiUrl": "https://localhost:5000/adminapi/"
+    },
+    "oAuthConfig": {
+        "issuer": "https://sso.techplus.vn/auth/",
+        "redirectUri": "",
+        "clientId": "eTax_client_id",
+        "responseType": "code",
+        "scope": "eTax",
+        "requireHttps": true,
+        "realm": "eTax"
+      }
+}

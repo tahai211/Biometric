@@ -1,0 +1,51 @@
+<!-- <iframe *ngIf="urlSafe != null && urlSafe != ''" scrolling="auto" frameborder="0"     
+style=" position: relative; height: 876px; width: 100%;" frameBorder="0" [src]="urlSafe"></iframe> -->
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="col-md-12">
+    <div class="row"> <!-- thêm row -->
+      <div *ngFor="let p of params" class="col-md-3 mb-2">
+        <div class="fv-row"> <!-- mỗi control 6/12 = ½ -->
+          <!-- <label class="form-label fs-6 fw-medium mb-1">{{ p.Param_Name }}</label> -->
+          <app-custom-label text="{{ p.Param_Name }}"></app-custom-label>
+
+          <!-- Text -->
+          <dx-text-box class="content-box-search" *ngIf="p.Param_Type === 'Text'" [formControlName]="p.Param_Code"
+            placeholder="Nhập {{ p.Param_Name }}">
+          </dx-text-box>
+
+          <!-- SQL (select) -->
+          <dx-select-box class="content-select-box" *ngIf="p.Param_Type === 'SQL'" [formControlName]="p.Param_Code"
+            [items]="p.Param_Exc" valueExpr="key" displayExpr="value" [showClearButton]="true"
+            placeholder="Chọn {{ p.Param_Name }}">
+          </dx-select-box>
+            
+            <app-custom-date-box-form *ngIf="p.Param_Type === 'DateTime'" [formControlName]="p.Param_Code"
+              type="date" displayFormat="dd/MM/yyyy" placeholder="Chọn ngày">
+            </app-custom-date-box-form>
+          <!-- </div> -->
+
+          <!-- Boolean -->
+          <dx-check-box *ngIf="p.Param_Type === 'Boolean'" [formControlName]="p.Param_Code" text="{{ p.Param_Name }}">
+          </dx-check-box>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="d-flex my-2" style="display: flex; justify-content: flex-end; gap: 24px;">
+          <app-custom-button [icon]="'assets/images/icon/search.svg'" [text]="'TÌM KIẾM'" [type]="'primary'"
+            [width]="'140px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+            (btnClick)="onSubmit()"></app-custom-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<dx-report-viewer [reportUrl]="reportUrl" height="800px">
+  <dxrv-callbacks></dxrv-callbacks>
+  <dxrv-request-options [invokeAction]="invokeAction" [host]="hostUrl"></dxrv-request-options>
+  <dxrv-export-settings [useSameTab]="useSameTabExport"
+    [useAsynchronousExport]="useAsynchronousExport"></dxrv-export-settings>
+</dx-report-viewer>

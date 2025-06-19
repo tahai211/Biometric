@@ -1,0 +1,20 @@
+export class ParamDto {
+    id: string = '';
+    param_code: string = '';
+    param_name: string = '';
+    param_value: string = '';
+    param_type: string = '';
+    job_type: string = '';
+    job_interval: string = '';
+    job_minute: string = '';
+    job_time: string = '';
+    job_day_of_week: string = '';
+    job_day_of_month: string = '';
+    job_month: string = '';
+    created_by: string = '';
+    created_date: string = '';
+    last_modified_by: string = '';
+    last_modified_date: string = '';
+    approved_by: string = '';
+    approved_date: string = '';
+  }

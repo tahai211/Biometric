@@ -1,0 +1,129 @@
+<nav class="sidebar">
+
+
+  <div class="sidebar-header">
+    <!-- User Info Section -->
+    <div class="user-info">
+      <div class="user-avatar">
+        <!-- Khi sidebar không fold: hiện dropdown -->
+        <div class="nav-item nav-profile" ngbDropdown *ngIf="!isSidebarFolded">
+          <a class="avatar-icon">
+            <img src="assets/images/_Avatar_.svg" alt="User Avatar" class="user-avatar-img" />
+            <div class="avatar-overlay-icon" ngbDropdownToggle id="sidebarProfileDropdown" [attr.data-bs-toggle]="null">
+              <img src="assets/images/menu/log_in.svg" alt="User Avatar" />
+              <!-- <i class="feather icon-log-out"></i> -->
+            </div>
+          </a>
+          <div ngbDropdownMenu class="px-0" aria-labelledby="sidebarProfileDropdown">
+            <div class="d-flex flex-column align-items-center border-bottom px-5 py-3">
+              <div class="mb-3">
+                <img class="wd-80 ht-80 rounded-circle" src="assets/images/_Avatar_.svg" alt="">
+              </div>
+              <div class="text-center">
+                <p class="tx-16 fw-bolder">{{fullName}}</p>
+                <p class="tx-12 text-muted">{{branchName}}</p>
+                <small class="tx-10 text-muted">{{userRole}}</small>
+              </div>
+            </div>
+            <ul class="list-unstyled p-1">
+              <li class="dropdown-item py-2">
+                <a href="" (click)="onLogout($event)" class="d-flex text-body ms-0">
+                  <i class="feather icon-log-out me-2 icon-md"></i>
+                  <span>Đăng xuất</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Khi sidebar fold: chỉ có click handler -->
+        <div class="avatar-icon" *ngIf="isSidebarFolded" (click)="handleAvatarClick()">
+          <img src="assets/images/_Avatar_.svg" alt="User Avatar" class="user-avatar-img" />
+        </div>
+      </div>
+
+      <div class="user-details" *ngIf="!isSidebarFolded">
+        <h4 class="user-name">{{fullName}}</h4>
+        <p class="user-branch">{{branchName}}</p>
+        <small class="user-role">{{userRole}}</small>
+      </div>
+      <div class="divider-line"></div>
+    </div>
+
+    <!-- Toggler chỉ hiện khi sidebar mở -->
+    <div class="sidebar-toggler" #sidebarToggler (click)="toggleSidebar($event)" [class.not-active]="!isSidebarFolded"
+      [class.active]="isSidebarFolded" *ngIf="!isSidebarFolded">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+
+  <div class="sidebar-body" (mouseenter)="operSidebarFolded()" (mouseleave)="closeSidebarFolded()">
+    <ng-scrollbar>
+      <!--- Sidemenu start -->
+
+      <ul class="sidebar-nav metismenu" id="sidebar-menu" #sidebarMenu>
+        <ng-container *ngFor="let item of menuItems">
+          <li class="nav-item nav-category" *ngIf="item.isTitle">{{ item.label }}</li>
+
+          <li class="nav-item" *ngIf="!item.isTitle">
+
+            <a class="nav-link" *ngIf="hasItems(item)" href="javascript:void(0);">
+              <!-- <i class="link-icon" [attr.data-feather]="item.icon" appFeatherIcon *ngIf="item.icon"></i> -->
+              <img *ngIf="item.icon" class="link-icon" [src]="'assets/images/menu/' + item.icon+'.svg'" alt="icon" />
+              <span class="link-title"> {{ item.label }}</span>
+              <!-- <span class="link-arrow" data-feather="chevron-down" appFeatherIcon></span> -->
+              <img class="link-arrow" src="assets/images/menu/arrow_next.svg" alt="arrow" />
+            </a>
+
+            <a class="nav-link nav-link-ref" [routerLink]="item.link" *ngIf="!hasItems(item)"
+              [attr.data-parent]="item.parentId">
+              <!-- <i class="link-icon" [attr.data-feather]="item.icon" appFeatherIcon *ngIf="item.icon"></i> -->
+              <img *ngIf="item.icon" class="link-icon" [src]="'assets/images/menu/' + item.icon+'.svg'" alt="icon" />
+              <span class="link-title"> {{ item.label }}</span>
+              <span class="badge bg-{{item.badge.variant}}" *ngIf="item.badge">{{item.badge.text}}</span>
+            </a>
+
+            <ul class="sidebar-nav sub-menu nav-second-level" *ngIf="hasItems(item)" aria-expanded="false">
+
+              <li class="nav-item" *ngFor="let subitem of item.subItems"
+                [ngClass]="{'side-nav-item': hasItems(subitem)}">
+                <a class="nav-link side-nav-link-a-ref" *ngIf="hasItems(subitem)" href="javascript:void(0);">
+                  <!-- <i class="link-icon" [attr.data-feather]="subitem.icon" appFeatherIcon *ngIf="subitem.icon"></i> -->
+                  <img *ngIf="subitem.icon" class="link-icon" [src]="'assets/images/menu/' + subitem.icon+'.svg'"
+                    alt="icon" />
+                  <span class="link-title"> {{ subitem.label }}</span>
+                  <!-- <span class="link-arrow" data-feather="chevron-down" appFeatherIcon></span> -->
+                  <img class="link-arrow" src="assets/images/menu/arrow_next.svg" alt="arrow" />
+                </a>
+
+                <a class="nav-link nav-link-ref" [routerLink]="subitem.link" *ngIf="!hasItems(subitem)"
+                  [attr.data-parent]="subitem.parentId">
+                  <!-- <i class="link-icon" [attr.data-feather]="subitem.icon" appFeatherIcon *ngIf="subitem.icon"></i> -->
+                  <img *ngIf="subitem.icon" class="link-icon" [src]="'assets/images/menu/' + subitem.icon+'.svg'"
+                    alt="icon" />
+                  {{ subitem.label }}
+                </a>
+
+                <ul class="sidebar-nav sub-menu nav-third-level" *ngIf="hasItems(subitem)" aria-expanded="false">
+                  <li class="nav-item" *ngFor="let subSubitem of subitem.subItems">
+                    <a class="nav-link nav-link-ref" [routerLink]="subSubitem.link" [routerLinkActive]="['active']"
+                      [attr.data-parent]="subSubitem.parentId">
+                      <!-- <i class="link-icon" [attr.data-feather]="subitem.icon" appFeatherIcon *ngIf="subitem.icon"></i> -->
+                      <img *ngIf="subitem.icon" class="link-icon" [src]="'assets/images/menu/' + subitem.icon +'.svg'"
+                        alt="icon" />
+                      {{ subSubitem.label }}
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ng-container>
+      </ul>
+    </ng-scrollbar>
+  </div>
+
+</nav>

@@ -1,0 +1,433 @@
+<div class="row">
+    <div class="col-md-3">
+        <app-custom-header-title class="my-3" text="Tạo mới tra soát"></app-custom-header-title>
+
+        <div class="fv-row mb-2">
+            <app-custom-label text="Dịch vụ hỗ trợ"></app-custom-label>
+
+            <app-custom-select-box [items]="dataTypeService"
+                        [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                        [(value)]="reqInsertIssue.issue_type" 
+                        valueExpr="value" 
+                        displayExpr="text" 
+                        placeholder="Chọn loại dịch vụ" 
+                        (valueChange)="onRadioChange($event)"
+                        class="mb-1"></app-custom-select-box>
+
+            <app-custom-select-box [items]="dataSupportService"
+                        [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                        [(value)]="reqInsertIssue.service" 
+                        valueExpr="value" 
+                        [displayExpr]="displayBasicItemSelect" 
+                        placeholder="Chọn dịch vụ" 
+                        (valueChange)="onServiceChange($event)"></app-custom-select-box>
+        </div>
+
+        <div class="fv-row mb-2">
+            <app-custom-label text="Tiêu đề"></app-custom-label>
+            <app-custom-text-box [(value)]="reqInsertIssue.issue_name"></app-custom-text-box>
+        </div>
+
+        <div class="fv-row mb-2">
+            <app-custom-label text="Mô tả"></app-custom-label>
+            <app-custom-text-area [(value)]="reqInsertIssue.issue_detail"></app-custom-text-area>
+        </div>
+
+        <div class="fv-row mb-2">
+            <app-custom-label text="Mức ưu tiên"></app-custom-label>
+
+            <app-custom-select-box [items]="dataPriorities"
+                        [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                        [(value)]="reqInsertIssue.priority" 
+                        valueExpr="value" 
+                        [displayExpr]="displayBasicItemSelect" 
+                        placeholder="Chọn mức độ ưu tiên"></app-custom-select-box>
+        </div>
+
+        <div class="fv-row mb-2">
+            <app-custom-label text="Trạng thái"></app-custom-label>
+
+            <app-custom-select-box [items]="dataStatus"
+                        [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                        [(value)]="reqInsertIssue.status" 
+                        valueExpr="value" 
+                        [displayExpr]="displayBasicItemSelect" 
+                        placeholder="Chọn"></app-custom-select-box>
+        </div>
+
+        <div class="fv-row mb-2">
+            <app-custom-label text="Người nhận"></app-custom-label>
+
+            <app-custom-select-box [items]="dataUserReceive"
+                        [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                        [(value)]="reqInsertIssue.assigned_to" 
+                        valueExpr="value" 
+                        [displayExpr]="displayItemSelect" 
+                        placeholder="Chọn"></app-custom-select-box>
+        </div>
+
+        <div class="dx-widget d-flex flex-column justify-content-end mb-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="checkbox_send_mail_user"
+                        [checked]="true" 
+                        (change)="onCheckboxMailReceiverChange()" >
+                <label class="form-check-label" for="checkbox_send_mail_user" style="font-size: 14px;">Gửi mail cho người nhận</label>
+            </div>
+        </div>
+
+        <div class="fv-row mb-2">
+            <app-custom-label text="Nhóm nhận"></app-custom-label>
+            
+            <app-custom-select-box [items]="dataGroupReceive"
+                        [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                        [(value)]="reqInsertIssue.assign_group" 
+                        valueExpr="value" 
+                        [displayExpr]="displayItemSelect" 
+                        placeholder="Chọn"
+                        [disabled]="!checkRoleUserGroup"></app-custom-select-box>
+        </div>
+
+        <div class="dx-widget d-flex flex-column justify-content-end mb-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="checkbox_send_mail_group" 
+                        [checked]="true"         
+                        (change)="onCheckboxMailGroupReceiveChange()">
+                <label class="form-check-label" for="checkbox_send_mail_group" style="font-size: 14px;">Gửi mail cho nhóm nhận</label>
+            </div>
+        </div>
+
+        <div class="fv-row mb-3">
+            <app-custom-label text="Đơn vị"></app-custom-label>
+            
+            <app-custom-select-box [items]="dataBranch"
+                        [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                        [(value)]="reqInsertIssue.branch_code" 
+                        valueExpr="value" 
+                        [displayExpr]="displayItemSelect" 
+                        placeholder="Chọn"
+                        [disabled]="true"></app-custom-select-box>
+        </div>
+
+        <div class="fv-row mb-2">
+            <div class="upload-box mb-1">
+                <div (click)="fileInput.click()">
+                    <img class="upload-icon" src="assets/images/icon/upload.svg" />
+                </div>
+                <input type="file" (change)="onFileSelected($event)" hidden #fileInput>
+                <div class="upload-text">Tải lên hồ sơ đính kèm</div>
+            </div>
+
+            <div style="flex: 1; max-height: 150px; overflow-y: auto; margin-right: 10px;">
+                <ul class="dx-widget mb-0 ps-0" style="list-style-type: none;">
+                    <li *ngFor="let f of fileUrls; let i = index" class="d-flex align-items-center mb-1">
+                        <!-- Icon -->
+                        <div class="me-2 mt-1">
+                            <img class="upload-icon" src="assets/images/icon/upload.svg" />
+                        </div>
+
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <a [href]="f.url"
+                                        [download]="f.file.name"
+                                        target="_blank"
+                                        class="fw-bold"
+                                        style="cursor: pointer; color: #000000DE; font-size: 14px;">
+                                        {{ f.file.name }}
+                                    </a>
+                                </div>
+                                <div (click)="removeFile(i)">
+                                    <img src="assets/images/icon/trash.svg" style="height: 15px;"/>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <label class="dx-widget fw-bold mb-2" style="font-size: 14px;">Người tạo: {{userCreate}}</label>
+
+        <label class="dx-widget fw-bold mb-3" style="font-size: 14px;">Ngày tạo: {{currentDate}}</label>
+
+        <div class="d-flex justify-content-end">
+            <app-custom-button
+                    [icon]="'assets/images/icon/save.svg'"
+                    [text]="'LƯU'"
+                    [type]="'primary'"
+                    [width]="'140px'"
+                    [height]="'42px'"
+                    [iconSize]="'22px'"
+                    [fontSize]="'16px'"
+                    (btnClick)="Save()"
+                    ></app-custom-button>
+        </div>
+    </div>
+
+    <!-- <div class="col-md-1"></div> -->
+
+    <div class="col-md-9">
+        <app-custom-header-title class="my-3" text="Tìm kiếm thông tin khách hàng"></app-custom-header-title>
+
+        <div class="col-md-12">
+            <div class="row mb-2">
+                <div class="col-md-3">
+                    <div class="fv-row">
+                        <app-custom-label text="Số thẻ"></app-custom-label>
+                        <app-custom-text-box [(value)]="reqListCustomer.card_number" (onEnterKey)="Search()"></app-custom-text-box>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="fv-row">
+                        <app-custom-label text="Số tài khoản"></app-custom-label>
+                        <app-custom-text-box [(value)]="reqListCustomer.account_num" (onEnterKey)="Search()"></app-custom-text-box>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-md-3">
+                    <div class="fv-row">
+                        <app-custom-label text="Mã khách hàng"></app-custom-label>
+                        <app-custom-text-box [(value)]="reqListCustomer.client_code" (onEnterKey)="Search()"></app-custom-text-box>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="fv-row">
+                        <app-custom-label text="Số CCCD"></app-custom-label>
+                        <app-custom-text-box [(value)]="reqListCustomer.legal_id" (onEnterKey)="Search()"></app-custom-text-box>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="fv-row">
+                        <app-custom-label text="Họ tên khách hàng"></app-custom-label>
+                        <app-custom-text-box [(value)]="reqListCustomer.name" (onEnterKey)="Search()"></app-custom-text-box>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 d-flex justify-content-end">
+                <app-custom-button
+                    [icon]="'assets/images/icon/search.svg'"
+                    [text]="'TÌM KIẾM'"
+                    [type]="'soft'"
+                    [width]="'140px'"
+                    [height]="'42px'"
+                    [iconSize]="'22px'"
+                    [fontSize]="'16px'"
+                    (btnClick)="Search()"
+                ></app-custom-button>
+            </div>
+        </div>
+
+        <div  class="mb-3">
+            <app-data-grid-control-mini #dataGridCust id="dataGridCust" 
+                                    [dataSource]="dataSource"
+                                    [columns]="columns" 
+                                    [pageSize]="5"></app-data-grid-control-mini>
+        </div>
+
+        <div class="row mb-3">
+            <app-custom-header-title class="mb-2" size="14px" text="Thông tin khách hàng"></app-custom-header-title>
+
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Mã khách hàng"></app-custom-label>
+                        <app-custom-text-box [readOnly]="true" [(value)]="clientCode_Info" (valueChange)="onClientCodeInfoChange($event)"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Địa chỉ 1"></app-custom-label>
+                        <app-custom-text-box [readOnly]="true" [(value)]="dataCus.address_1"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Tình trạng thẻ"></app-custom-label>
+                        <app-custom-text-box [readOnly]="true" [(value)]="dataCus.status_card"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Số thẻ"></app-custom-label>
+                        <app-custom-text-box [readOnly]="true" [(value)]="cardNumber_Info" (valueChange)="onCardNumberInfoChange($event)"></app-custom-text-box>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Tên KH"></app-custom-label>
+                        <app-custom-text-box [readOnly]="true" [(value)]="dataCus.full_name"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Địa chỉ 2"></app-custom-label>
+                        <app-custom-text-box [readOnly]="true" [(value)]="dataCus.address_2"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Tình trạng dập nổi"></app-custom-label>
+                        <app-custom-text-box [readOnly]="true" [(value)]="dataCus.embossed_card_status"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Sản phẩm"></app-custom-label>
+                        <app-custom-text-box [readOnly]="true" [(value)]="dataCus.product"></app-custom-text-box>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Số CCCD"></app-custom-label>
+                        <app-custom-text-box [readOnly]="true" [(value)]="dataCus.legal_id"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Địa chỉ 3"></app-custom-label>
+                        <app-custom-text-box [readOnly]="true" [(value)]="dataCus.address_3"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Tên in trên thẻ"></app-custom-label>
+                        <app-custom-text-box [readOnly]="true" [(value)]="dataCus.name_print_card"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Loại thẻ"></app-custom-label>
+                        <app-custom-text-box [readOnly]="true" [(value)]="dataCus.type_card"></app-custom-text-box>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Ngày sinh"></app-custom-label>
+                        <app-custom-text-box [readOnly]="true" [(value)]="dataCus.birth_date"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Địa chỉ 4"></app-custom-label>
+                        <app-custom-text-box [readOnly]="true" [(value)]="dataCus.address_4"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Số dư thực tế"></app-custom-label>
+                        <app-custom-text-box [readOnly]="true" [(value)]="dataCus.actual_account_balance"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Ngày kích hoạt"></app-custom-label>
+                        <app-custom-text-box [readOnly]="true" [(value)]="dataCus.date_active"></app-custom-text-box>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Số tài khoản"></app-custom-label>
+                        <app-custom-text-box [readOnly]="true" [(value)]="dataCus.account_num"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Thành phố"></app-custom-label>
+                        <app-custom-text-box [readOnly]="true" [(value)]="dataCus.city"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Số dư khả dụng"></app-custom-label>
+                        <app-custom-text-box [readOnly]="true" [(value)]="dataCus.available_account_balance"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Ngày hết hạn"></app-custom-label>
+                        <app-custom-text-box [readOnly]="true" [(value)]="dataCus.date_expiry"></app-custom-text-box>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Loại hình kỳ hạn"></app-custom-label>
+                        <app-custom-text-box [readOnly]="true" [(value)]="dataCus.term_type"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Quốc gia"></app-custom-label>
+                        <app-custom-text-box [readOnly]="true" [(value)]="dataCus.country"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Đơn vị"></app-custom-label>
+                        <app-custom-text-box [readOnly]="true" [(value)]="dataCus.branch"></app-custom-text-box>
+                    </div>
+                </div>
+
+                <div class="col-md-12 mb-2">
+                    <app-custom-button
+                        [text]="'XEM CHI TIẾT GIAO DỊCH'"
+                        [type]="'outline'"
+                        [width]="'200px'"
+                        [height]="'35px'"
+                        [fontSize]="'14px'"
+                        (btnClick)="TransactionDetail()"
+                    ></app-custom-button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <app-custom-header-title class="mb-2" size="14px" text="Thông tin bổ sung"></app-custom-header-title>
+
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Số trace"></app-custom-label>
+                        <app-custom-text-box [(value)]="reqInsertIssue.trace_no"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Mã thiết bị giao dịch"></app-custom-label>
+                        <app-custom-text-box [(value)]="reqInsertIssue.device_id"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Số tiền giao dịch"></app-custom-label>
+                        <app-custom-text-box [(value)]="reqInsertIssue.txn_amt"></app-custom-text-box>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Số tiền banknet quyết toán"></app-custom-label>
+                        <app-custom-text-box [(value)]="reqInsertIssue.banknet_amt"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Số tiền phòng thẻ quyết toán"></app-custom-label>
+                        <app-custom-text-box [(value)]="reqInsertIssue.carddp_amt"></app-custom-text-box>
+                    </div>
+
+                    <div class="col-md-3 fv-row mb-2">
+                        <app-custom-label text="Số lượng giao dịch"></app-custom-label>
+                        <app-custom-text-box [(value)]="reqInsertIssue.txn_qual"></app-custom-text-box>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<dx-popup *ngIf="isPopupVisible" [(visible)]="isPopupVisible"
+            [width]="'85vw'" [height]="'90vh'"
+            (onHiding)="hidePopup()" title="Chi tiết giao dịch">
+    <app-transaction-detail [card_number]="cardNumber_Info"
+                            [account_number]="dataCus.account_num"
+                            (close)="hidePopup()"></app-transaction-detail>
+</dx-popup>
+<!-- <app-custom-popup [(visible)]="isPopupVisible"
+                [width]="'85vw'"
+                [height]="'90vh'"
+                [title]="'Chi tiết giao dịch'">
+  <app-transaction-detail [card_number]="cardNumber_Info"
+                            [account_number]="dataCus.account_num"
+                            (close)="hidePopup()"></app-transaction-detail>
+</app-custom-popup> -->

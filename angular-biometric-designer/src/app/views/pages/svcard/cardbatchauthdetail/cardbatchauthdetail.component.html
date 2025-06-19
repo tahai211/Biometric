@@ -1,0 +1,36 @@
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Số lô"></app-custom-label>
+                <app-custom-text-box [(value)]="this.batchNo" [readOnly]="true">
+                </app-custom-text-box>
+            </div>
+        </div>
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Trạng thái gửi API"></app-custom-label>
+                <app-custom-text-box id="txt_batchStatText" [(value)]="this.batchStatText" [readOnly]="true" [inputAttr]="{ style: 'color: red !important' }">
+                </app-custom-text-box>
+            </div>
+        </div>
+        <!-- [inputAttr]="{ style: 'color: red !important' }" -->
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Người duyệt"></app-custom-label>
+                <app-custom-text-box [(value)]="this.user_auth" [readOnly]="true">
+                </app-custom-text-box>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="row">
+        <div class="d-flex my-2" style="display: flex; justify-content: flex-end; gap: 24px;">
+            <app-screen-button (onItemClick)="onClick($event)"></app-screen-button>
+        </div>
+
+    </div>
+</div>
+<app-data-grid-control [dataSource]="dataSource" [columns]="columns" [length]="length" [requestFilter]="req"
+    (loadData)="loadData($event)" (onRowPreparedEventEmit)="handleRowPreparedEvent($event)"></app-data-grid-control>

@@ -1,0 +1,21 @@
+.content-select-box {
+    height: 40px;
+    border: 1px solid #0000003B;
+    border-radius: 4px;   
+    width: 100%;
+}
+
+/* Áp dụng font-size cho input trong dx-drop-down-box */
+::ng-deep .content-select-box .dx-dropdowneditor-input {
+    font-size: 14px;
+}
+
+/* Disabled state của dx-drop-down-box */
+::ng-deep .content-select-box.dx-state-disabled {
+    border: 1px solid #0000003B !important;
+}
+
+/* Placeholder trong dx-drop-down-box */
+::ng-deep .content-select-box .dx-placeholder {
+    font-size: 14px;
+}

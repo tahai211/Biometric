@@ -1,0 +1,82 @@
+<!-- <dx-button *ngFor="let item of _buttons" class="me-1" stylingMode="contained" [disabled]="item.disable"
+        text="{{item.buttonName}}" type="default" width="{{width}}" (onClick)="onClick(item.buttonCode)"></dx-button> -->
+
+<!-- <dx-button *ngIf="isBack == true" class="me-1" stylingMode="contained" text="Quay lại" type="default" width="auto" (onClick)="back()">
+</dx-button> -->
+
+<!-- <div style="display: flex; gap: 24px; justify-content: flex-end; width: 100%; background-color: yellow;">
+<app-custom-button
+        *ngFor="let item of _buttons"
+        [icon]="item.buttonCode === 'CREATE' ? 'assets/images/icon/save.svg' :
+                item.buttonCode === 'BACK' ? 'assets/images/icon/back.svg' :
+                item.buttonCode === 'REFRESH' ? 'assets/images/icon/refresh.svg' :
+                item.buttonCode === 'CANCEL' ? 'assets/images/icon/cancel.svg' :
+                item.buttonCode === 'REJECT' ? '' :
+                item.buttonCode === 'AUTH' ? '' :
+                ''"
+        [type]="item.buttonCode === 'CREATE' ? 'primary' :
+                item.buttonCode === 'BACK' ? 'outline' :
+                item.buttonCode === 'REFRESH' ? 'soft' :
+                item.buttonCode === 'CANCEL' ? 'outline-red' :
+                item.buttonCode === 'REJECT' ? 'soft' :
+                item.buttonCode === 'AUTH' ? 'primary' :
+                'primary'"
+        [text]="item.buttonName"
+        [width]="'140px'"
+        [height]="'42px'"
+        [iconSize]="'22px'"
+        [fontSize]="'16px'"
+        [disabled]="item.disable"
+        (onEventClick)="onClick(item.buttonCode)"
+        ></app-custom-button>
+</div> -->
+
+<div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+
+  <div style="display: flex; gap: 12px;">
+    <app-custom-button
+      *ngFor="let item of leftButtons"
+      [icon]="getIcon(item.buttonCode)"
+      [type]="getType(item.buttonCode)"
+      [text]="item.buttonName"
+      [width]="'140px'"
+      [height]="'42px'"
+      [iconSize]="'22px'"
+      [fontSize]="'16px'"
+      [disabled]="item.disable"
+      (onEventClick)="onClick(item.buttonCode)">
+    </app-custom-button>
+  </div>
+
+
+  <div style="display: flex; gap: 12px;">
+    <app-custom-button
+      *ngFor="let item of centerButtons"
+      [icon]="getIcon(item.buttonCode)"
+      [type]="getType(item.buttonCode)"
+      [text]="item.buttonName"
+      [width]="'140px'"
+      [height]="'42px'"
+      [iconSize]="'22px'"
+      [fontSize]="'16px'"
+      [disabled]="item.disable"
+      (onEventClick)="onClick(item.buttonCode)">
+    </app-custom-button>
+  </div>
+
+
+  <div style="display: flex; gap: 24px;">
+    <app-custom-button
+      *ngFor="let item of rightButtons"
+      [icon]="getIcon(item.buttonCode)"
+      [type]="getType(item.buttonCode)"
+      [text]="item.buttonName"
+      [width]="'140px'"
+      [height]="'42px'"
+      [iconSize]="'22px'"
+      [fontSize]="'16px'"
+      [disabled]="item.disable"
+      (onEventClick)="onClick(item.buttonCode)">
+    </app-custom-button>
+  </div>
+</div>

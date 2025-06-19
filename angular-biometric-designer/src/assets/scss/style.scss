@@ -1,0 +1,122 @@
+/*
+* NobleUI - Angular Admin Dashboard Template v2.0
+* Copyright © 2022 NobleUI
+* Licensed under ThemeForest License
+*/
+
+// Theme style for demo1 (Vertical-Menu-Light & Vertical-Menu-Light-RTL)
+
+
+// Custom variables
+@import './variables';
+
+
+// Bootstrap stylesheets
+@import "/node_modules/bootstrap/scss/functions";
+@import "/node_modules/bootstrap/scss/variables";
+@import "/node_modules/bootstrap/scss/mixins";
+@import "/node_modules/bootstrap/scss/utilities";
+
+// Bootstrap layout & components
+@import "/node_modules/bootstrap/scss/root";
+@import "/node_modules/bootstrap/scss/reboot";
+@import "/node_modules/bootstrap/scss/type";
+@import "/node_modules/bootstrap/scss/images";
+@import "/node_modules/bootstrap/scss/containers";
+@import "/node_modules/bootstrap/scss/grid";
+@import "/node_modules/bootstrap/scss/tables";
+@import "/node_modules/bootstrap/scss/forms";
+@import "/node_modules/bootstrap/scss/buttons";
+@import "/node_modules/bootstrap/scss/transitions";
+@import "/node_modules/bootstrap/scss/dropdown";
+@import "/node_modules/bootstrap/scss/button-group";
+@import "/node_modules/bootstrap/scss/nav";
+@import "/node_modules/bootstrap/scss/navbar";
+@import "/node_modules/bootstrap/scss/card";
+@import "/node_modules/bootstrap/scss/accordion";
+@import "/node_modules/bootstrap/scss/breadcrumb";
+@import "/node_modules/bootstrap/scss/pagination";
+@import "/node_modules/bootstrap/scss/badge";
+@import "/node_modules/bootstrap/scss/alert";
+@import "/node_modules/bootstrap/scss/progress";
+@import "/node_modules/bootstrap/scss/list-group";
+@import "/node_modules/bootstrap/scss/close";
+@import "/node_modules/bootstrap/scss/toasts";
+@import "/node_modules/bootstrap/scss/modal";
+@import "/node_modules/bootstrap/scss/tooltip";
+@import "/node_modules/bootstrap/scss/popover";
+@import "/node_modules/bootstrap/scss/carousel";
+@import "/node_modules/bootstrap/scss/spinners";
+
+// Bootstrap helpers
+@import "/node_modules/bootstrap/scss/helpers";
+
+// Bootstrap utilities
+@import './utilities';
+@import "/node_modules/bootstrap/scss/utilities/api";
+
+
+// Custom mixins
+@import './mixins/animation';
+@import './mixins/buttons';
+@import './mixins/misc';
+@import './mixins/width';
+
+
+// Core styles
+@import './background';
+@import './reset';
+@import './functions';
+@import './misc';
+@import './helpers';
+@import './typography';
+@import './demo';
+@import './spinner';
+
+// Layout
+@import './vertical-wrapper';
+@import './navbar';
+@import './sidebar';
+@import './layouts';
+
+// components
+@import "./components/badges";
+@import "./components/bootstrap-alert";
+@import "./components/breadcrumbs";
+@import "./components/buttons";
+@import "./components/cards";
+@import "./components/datepicker";
+@import "./components/dropdown";
+@import "./components/forms";
+@import "./components/icons";
+@import "./components/nav";
+@import "./components/pagination";
+@import "./components/rating";
+@import "./components/tables";
+
+// Pages
+@import "./components/dashboard";
+@import "./components/timeline";
+@import "./components/auth";
+@import "./components/chat";
+
+// Email
+@import "./components/email/inbox";
+
+
+// Plugin overrides
+@import "./components/plugin-overrides/full-calendar";
+@import "./components/plugin-overrides/ng-select";
+@import "./components/plugin-overrides/ngx-chips";
+@import "./components/plugin-overrides/ngx-quill";
+@import "./components/plugin-overrides/simplemde";
+@import "./components/plugin-overrides/sweet-alert";
+@import "./components/plugin-overrides/dropzone";
+@import "./components/plugin-overrides/angular-archwizard";
+@import "./components/plugin-overrides/apex-charts";
+@import "./components/plugin-overrides/data-tables";
+@import "./components/plugin-overrides/ngx-datatable";
+
+
+// Custom scss
+@import "./custom";

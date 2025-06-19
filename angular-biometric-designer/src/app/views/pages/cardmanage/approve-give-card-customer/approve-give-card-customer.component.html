@@ -1,0 +1,175 @@
+<div class="card card-primary card-outline mb-2">
+    <div class="card-body pt-9 pb-2">
+        <div class="search-box col-md-12">
+            <div class="row">
+                <div class="col-md-4 mb-2">
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label text-nowrap">Mã KH</label>
+                        <div class="col-sm-8">
+                            <dx-text-box [value]="data_card_customer.client_code" [disabled]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label text-nowrap">Tên KH</label>
+                        <div class="col-sm-8">
+                        <dx-text-box [value]="data_card_customer.user_name" [disabled]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label text-nowrap">Số CCCD</label>
+                        <div class="col-sm-8">
+                        <dx-text-box [value]="data_card_customer.legal_id" [disabled]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label text-nowrap">Ngày sinh</label>
+                        <div class="col-sm-8">
+                        <dx-text-box [value]="data_card_customer.birth_date" [disabled]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label text-nowrap">Ngày tạo</label>
+                        <div class="col-sm-8">
+                        <dx-text-box [value]="data_card_customer.date_create" [disabled]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label text-nowrap">Ngày hết hạn</label>
+                        <div class="col-sm-8">
+                        <dx-text-box [value]="data_card_customer.date_expiry" [disabled]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label text-nowrap">Kích hoạt thẻ</label>
+                        <div class="col-sm-8">
+                        <dx-text-box [value]="data_card_customer.status_active" [disabled]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label text-nowrap">Người duyệt</label>
+                        <div class="col-sm-8">
+                            <dx-text-box [value]="data_card_customer.user_confirm" [disabled]="true"></dx-text-box>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-2">
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label text-nowrap">Địa chỉ 1</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.address_1" [disabled]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label text-nowrap">Địa chỉ 2</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.address_2" [disabled]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label text-nowrap">Địa chỉ 3</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.address_3" [disabled]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label text-nowrap">Địa chỉ 4</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.address_4" [disabled]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label text-nowrap">Thành phố</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.city" [disabled]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label text-nowrap">Quốc gia</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.country" [disabled]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label text-nowrap">Ngày kích hoạt</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.date_active" [disabled]="true"></dx-text-box>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-2">
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label text-nowrap">Số thẻ</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [(value)]="data_card_customer.card_number" [disabled]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label text-nowrap">Sản phẩm</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.product" [disabled]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label text-nowrap">Loại thẻ</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.type_card" [disabled]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label text-nowrap">Số thẻ chính</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.basic_card_number" [disabled]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label text-nowrap">Tình trạng thẻ</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.status_card" [disabled]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 wrap col-form-label text-nowrap">Tên in trên thẻ</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.embossed_name" [disabled]="true"></dx-text-box>
+                        </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 col-form-label text-nowrap">Đơn vị</label>
+                        <div class="col-sm-8">
+                          <dx-text-box [value]="data_card_customer.branch" [disabled]="true"></dx-text-box>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 d-flex align-items-center justify-content-center">
+                    <dx-button class="me-1" stylingMode="contained" text="Duyệt" type="default" [width]="110"
+                               (click)="approve()">
+                    </dx-button>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>

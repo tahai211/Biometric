@@ -1,0 +1,12 @@
+<div class="d-flex">
+	<mat-paginator class="demo-paginator dx-widget" [length]="length" [pageIndex]="pageIndex" [pageSize]="pageSize"
+		[pageSizeOptions]="pageSizeOptions" (page)="paginationChange($event)" aria-label="Select page"
+		[showFirstLastButtons]="showFirstLastButtons">
+	</mat-paginator>
+	<!-- <div class="go-to-container" style="background-color: transparent;">
+		<div class="go-to-label">Go To: </div>
+		<mat-form-field class="example-form-field">
+			<input matInput type="number" [(ngModel)]="goTo" style="color:#6c757d" (change)="goToChange()">
+		</mat-form-field>
+	</div> -->
+</div>

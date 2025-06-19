@@ -1,0 +1,130 @@
+<app-custom-header-title class="my-3" text="Tìm kiếm giao dịch"></app-custom-header-title>
+
+<div class="pt-9 pb-0">
+  <div class="row mb-2">
+    <div class="status-cards">
+      <div class="card" 
+            [ngClass]="{'selected-card': titleHeader === 'Yêu cầu tra soát', 'default-card': titleHeader !== 'Yêu cầu tra soát'}"
+            (click)="switchTable('RequestVerification')">
+        <div class="title">Yêu cầu tra soát</div>
+        <div class="value blue">{{countRequestVerification}}</div>
+      </div>
+      <div class="card"
+            [ngClass]="{'selected-card': titleHeader === 'Giao dịch chờ xử lý', 'default-card': titleHeader !== 'Giao dịch chờ xử lý'}"
+            (click)="switchTable('PendingTransaction')">
+        <div class="title">Giao dịch đang chờ xử lý</div>
+        <div class="value orange">{{countPendingTransaction}}</div>
+      </div>
+      <div class="card"
+            [ngClass]="{'selected-card': titleHeader === 'Giao dịch hoàn thành', 'default-card': titleHeader !== 'Giao dịch hoàn thành'}"
+            (click)="switchTable('TransactionCompleted')">
+        <div class="title">Giao dịch hoàn thành</div>
+        <div class="value green">{{countTransactionCompleted}}</div>
+      </div>
+      <div class="card"
+            [ngClass]="{'selected-card': titleHeader === 'Giao dịch bị từ chối', 'default-card': titleHeader !== 'Giao dịch bị từ chối'}"
+            (click)="switchTable('TransactionDeclined')">
+        <div class="title">Giao dịch bị từ chối</div>
+        <div class="value red">{{countTransactionDeclined}}</div>
+      </div>
+      <div class="card"
+            [ngClass]="{'selected-card': titleHeader === 'Giao dịch bị hủy', 'default-card': titleHeader !== 'Giao dịch bị hủy'}"
+            (click)="switchTable('TransactionCancelled')">
+        <div class="title">Giao dịch bị huỷ</div>
+        <div class="value red">{{countTransactionCancelled}}</div>
+      </div>
+      <div class="card"
+            [ngClass]="{'selected-card': titleHeader === 'Giao dịch chờ tạo', 'default-card': titleHeader !== 'Giao dịch chờ tạo'}"
+            (click)="switchTable('TransactionWaitingCreate')">
+        <div class="title">Giao dịch chờ tạo</div>
+        <div class="value yellow">{{countTransactionWaitingCreate}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-3 fv-row">
+      <app-custom-label text="{{titleIdSearch}}"></app-custom-label>
+      <app-custom-text-box [(value)]="id_search" (onEnterKey)="search()"></app-custom-text-box>
+    </div>
+
+    <div class="col-md-3 fv-row">
+      <app-custom-label text="Diễn giải"></app-custom-label>
+      <app-custom-text-box [(value)]="description_search" (onEnterKey)="search()"></app-custom-text-box>
+    </div>
+
+    <div class="col-md-3 fv-row">
+      <app-custom-label text="Từ ngày"></app-custom-label>
+
+      <app-custom-date-box [(value)]="from_date_search"
+                  type="date" displayFormat="dd/MM/yyyy"
+                  dateSerializationFormat="yyyy-MM-dd" 
+                  [showClearButton]="true"
+                  [inputAttr]="{ 'aria-label': 'Date' }"
+                  (onEnterKey)="search()">
+      </app-custom-date-box>
+    </div>
+
+    <div class="col-md-3 fv-row">
+      <app-custom-label text="Đến ngày"></app-custom-label>
+
+      <app-custom-date-box [(value)]="to_date_search"
+                  type="date" displayFormat="dd/MM/yyyy"
+                  dateSerializationFormat="yyyy-MM-dd" 
+                  [showClearButton]="true"
+                  [inputAttr]="{ 'aria-label': 'Date' }"
+                  (onEnterKey)="search()">
+      </app-custom-date-box>
+    </div>
+  </div>
+
+  <div class="col-md-12 mb-3" style="display: flex; justify-content: flex-end; gap: 24px;">
+    <app-custom-button
+      [icon]="'assets/images/icon/reload.svg'"
+      [text]="'LÀM MỚI'"
+      [type]="'outline'"
+      [width]="'140px'"
+      [height]="'42px'"
+      [iconSize]="'22px'"
+      [fontSize]="'16px'"
+      (btnClick)="reload()"
+    ></app-custom-button>
+
+    <app-custom-button
+      [icon]="'assets/images/icon/search.svg'"
+      [text]="'TÌM KIẾM'"
+      [type]="'primary'"
+      [width]="'140px'"
+      [height]="'42px'"
+      [iconSize]="'22px'"
+      [fontSize]="'16px'"
+      (btnClick)="search()"
+    ></app-custom-button>
+  </div>
+</div>
+
+<div class="col-md-12 mb-3 section-header">
+  <span class="title">{{titleHeader}}</span>
+  <div class="divider" ></div>
+</div>
+
+<div [ngSwitch]="currentTable">
+  <div *ngSwitchCase="'table1'">
+    <app-data-grid-control [dataSource]="dataSource_table1" 
+                            [columns]="columns_table1" 
+                            [length]="length_table1" 
+                            [requestFilter]="req_table1"
+                            (loadData)="loadData_table1($event)"></app-data-grid-control>
+  </div>
+
+  <div *ngSwitchCase="'table2'">
+    <app-data-grid-control [dataSource]="dataSource_table2" 
+                            [columns]="columns_table2" 
+                            [length]="length_table2" 
+                            [requestFilter]="req_table2"
+                            (loadData)="loadData_table2($event)"
+                            #dataGridControlComponent2></app-data-grid-control>
+  </div>
+</div>
+
+

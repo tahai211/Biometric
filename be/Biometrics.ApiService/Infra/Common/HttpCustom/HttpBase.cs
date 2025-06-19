@@ -28,12 +28,12 @@ namespace Biometrics.ApiService.Infra.Common.HttpCustom
         public string ErrorDesc { get; set; }
         public dynamic response { get; set; }
 
-        public HttpBase( HttpStatusCode code, dynamic message,string type = ResposeType.ApplicationJson,string errorCode = "success", string errorDesc = "success") 
+        public HttpBase( HttpStatusCode code, dynamic message,string type = ResposeType.ApplicationJson,string errorCode = "success", string errorDesc = "success",bool encript = true) 
         {
             this.code = code;
             this.ErrorCode = errorCode;
             this.ErrorDesc = errorDesc;
-            this.response = EncryptResponse(type == ResposeType.ApplicationJson ? JsonConvert.SerializeObject(message) : message , type).GetAwaiter().GetResult();
+            this.response = encript ? EncryptResponse(type == ResposeType.ApplicationJson ? JsonConvert.SerializeObject(message) : message , type).GetAwaiter().GetResult(): message;
         }
 
         private async Task<string> EncryptResponse(string message, string type)

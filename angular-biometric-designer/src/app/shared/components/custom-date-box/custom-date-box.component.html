@@ -1,0 +1,19 @@
+<div class="custom-date-wrapper">
+  <div class="calendar-icon" (click)="openCalendar()">
+    <img src="assets/images/icon/calendar-small.svg" />
+  </div>
+
+  <dx-date-box
+    #dateBoxRef
+    class="left-calendar-icon"
+    [value]="value"
+    (onValueChanged)="onValueChanged($event)"
+    (onEnterKey)="handleEnterKey($event)"
+    [type]="type"
+    [disabled]="disabled"
+    [displayFormat]="displayFormat"
+    [dateSerializationFormat]="dateSerializationFormat"
+    [showClearButton]="showClearButton"
+    [inputAttr]="inputAttr">
+  </dx-date-box>
+</div>

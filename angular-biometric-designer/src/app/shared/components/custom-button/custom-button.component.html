@@ -1,0 +1,29 @@
+<button
+  [ngClass]="[
+    'custom-btn',
+    type,
+    disabled ? 'disabled' : '',
+    size,
+    isSelected ? 'btn-selected' : ''
+  ]"
+  [disabled]="disabled"
+  [hidden]="hidden"
+  (click)="onClick()"
+  (click)="onClickEvent($event)"
+  [ngStyle]="{
+    'font-size': fontSize,
+    'width': width,
+    'height': height
+  }"
+>
+  <div class="btn-content">
+    <ng-container *ngIf="icon && sanitizedSvg">
+      <div
+        class="icon-wrapper"
+        [ngStyle]="{ width: iconSize, height: iconSize }"
+        [innerHTML]="sanitizedSvg"
+      ></div>
+    </ng-container>
+    <span class="text">{{ text }}</span>
+  </div>
+</button>

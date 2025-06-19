@@ -1,0 +1,38 @@
+<div>
+    <app-custom-header-title class="my-3" text="Tạo nhóm hỗ trợ"></app-custom-header-title>
+    
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-4 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="ID nhóm" [important]="true"></app-custom-label>
+                    <app-custom-text-box [(value)]="data.group_id" ></app-custom-text-box>
+                </div>
+            </div>
+            <div class="col-md-4 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Tên nhóm" [important]="true"></app-custom-label>
+                    <app-custom-text-box [(value)]="data.group_name" ></app-custom-text-box>
+                </div>
+            </div>
+            <div class="col-md-4 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Record stat" [important]="true"></app-custom-label>
+                    <app-custom-select-box [showClearButton]="true" [items]="dataRecordStat" [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                        [(value)]="data.record_stat" valueExpr="id" displayExpr="name"
+                        placeholder="Chọn"></app-custom-select-box>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="d-flex my-2 justify-content-end">
+                    <app-custom-button [icon]="'assets/images/icon/add.svg'" [text]="'TẠO NHÓM'" [type]="'primary'"
+                    [width]="'140px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                    (btnClick)="createGroup()"></app-custom-button>
+            </div>
+        </div>
+    </div>
+</div>
+

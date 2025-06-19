@@ -1,0 +1,35 @@
+<div class="content-wrapper">
+  <div class="login-page">
+    <div class="background">
+      <div class="blob blob1"></div>
+      <div class="blob blob2"></div>
+      <div class="blob blob3"></div>
+      <div class="blob blob4"></div>
+      <div class="blob blob5"></div>
+    </div>
+
+    <div class="login-box ">
+      <div class="avatar">
+        <img src="assets/images/icon/avatar.svg" alt="User icon" />
+      </div>
+
+      <div class="input-wrapper">
+        <div class="my-2 mb-3">
+          <app-custom-text-box [(value)]="username" placeholder="Tên đăng nhập" icon="assets/images/icon/user.svg"
+            (onEnterKey)="onLoggedin()"></app-custom-text-box>
+          <span class="error-text mt-1">{{notifyUsername}}</span>
+        </div>
+
+        <div class="my-2">
+          <app-custom-text-box [(value)]="password" type="password" placeholder="Mật khẩu"
+            icon="assets/images/icon/lock.svg" (onEnterKey)="onLoggedin()"></app-custom-text-box>
+          <span class="error-text">{{notifyPassword}}</span>
+        </div>
+      </div>
+
+      <button (click)="onLoggedin()">ĐĂNG NHẬP</button>
+    </div>
+  </div>
+  
+  <app-footer></app-footer>
+</div>

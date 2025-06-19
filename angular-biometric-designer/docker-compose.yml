@@ -1,0 +1,10 @@
+version: '3'
+services:
+  cimp.fe:
+    environment:
+        - TZ=Asia/Ho_Chi_Minh
+    image: cimpfe
+    build: .
+    ports: []
+      # - "6010:80"
+    restart: always

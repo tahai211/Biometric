@@ -1,0 +1,8 @@
+<div class="section-header" [ngClass]="class">
+  <div class="divider" *ngIf="textAlign == 'right' || textAlign == 'center'"></div>
+  <span class="title" [ngStyle]="{ 'font-size': size }">
+    {{ text }}
+    <span *ngIf="important" class="red_flag">&nbsp;*</span>
+  </span>
+  <div class="divider" *ngIf="textAlign == 'left' || textAlign == 'center'"></div>
+</div>

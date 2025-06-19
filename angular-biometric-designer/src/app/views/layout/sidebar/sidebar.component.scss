@@ -1,0 +1,136 @@
+.sidebar {
+    margin: 20px 0;
+    padding: 0;
+    //height: 100vh;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
+
+
+    .sidebar-header {
+        //border-bottom: 2px solid #0D47A1;
+        height: 80px;
+        position: relative;
+        border-bottom: 1px solid #0D47A1;
+        padding: 16px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #F5F5F5;
+        border-radius: 0 15px 0 0;
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex: 1;
+
+            .user-avatar {
+                position: relative;
+
+                .user-avatar-img {
+                    width: 40px; // hoặc 40px tùy bạn
+                    height: 40px;
+                    object-fit: cover;
+                }
+
+
+                .avatar-icon {
+                    width: 40px;
+                    height: 40px;
+                    background: #BDBDBD;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    i {
+                        width: 24px;
+                        height: 24px;
+                        color: var(--background-paper-elevation-0);
+                    }
+                }
+            }
+
+            .user-details {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+                flex: 1;
+
+                .user-name {
+                    color: #0D47A1;
+                    font-size: 14px;
+                    // font-weight: 400;
+                    // line-height: 20px;
+                    letter-spacing: 0.14px;
+                    margin: 0;
+                    word-wrap: break-word;
+                    font-weight: 500;
+                    line-height: 12px;
+                    word-wrap: break-word
+                }
+
+                .user-branch {
+                    color: var(--text-primary);
+                    font-size: 10px;
+                    font-weight: 400;
+                    line-height: 10px;
+                    margin: 0;
+                    word-wrap: break-word;
+                }
+
+                .user-role {
+                    color: var(--text-primary);
+                    font-size: 10px;
+                    font-weight: 400;
+                    line-height: 10px;
+                    word-wrap: break-word;
+                }
+            }
+        }
+    }
+
+    .sidebar-body {
+        background-color: #F5F5F5;
+        border-radius: 0 0 15px 0;
+        margin-bottom: 70px;
+    }
+
+}
+
+.avatar-overlay-icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  background-color: #FEEBEE;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  z-index: 2;
+}
+.avatar-overlay-icon i {
+  width: 12px !important;
+  height: 12px !important;
+  font-size: 12px !important;
+  color: red !important;
+}
+
+/* Bỏ dấu dropdown arrow cho avatar */
+// .user-avatar .nav-link::after,
+// .nav-profile .nav-link::after,
+// [ngbDropdownToggle]::after {
+//   display: none !important;
+// }
+
+/* Hoặc có thể dùng cách này */
+.dropdown-toggle::after {
+  display: none !important;
+}
+

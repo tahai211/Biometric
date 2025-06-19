@@ -1,0 +1,8 @@
+<dx-text-area 
+    #textAreaRef
+    class="content-box"
+    [(value)]="value"
+    [disabled]="disabled"
+    (onValueChanged)="onValueChanged($event)"
+    (onEnterKey)="onEnter($event)">
+</dx-text-area>

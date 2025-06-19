@@ -1,0 +1,49 @@
+<div class="col-md-12">
+    <div class="row">
+
+        <div class="col-md-6 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Mã sản phẩm" [important]="true"></app-custom-label>
+                <app-custom-text-box [(value)]="productCredit_request.data.product_code" [disabled]="visibleNotify"></app-custom-text-box>
+            </div>
+        </div>
+        <div class="col-md-6 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Tên sản phẩm" [important]="true"></app-custom-label>
+                <app-custom-text-box [(value)]="productCredit_request.data.description" [disabled]="visibleNotify"></app-custom-text-box>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        
+        <div class="col-md-6 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Trạng thái" [important]="true"></app-custom-label>
+                <app-custom-select-box [showClearButton]="true" [items]="dataStatus" [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                        [(value)]="productCredit_request.data.record_stat" valueExpr="id" displayExpr="name"
+                        placeholder="Chọn" [disabled]="visibleNotify"></app-custom-select-box>
+            </div>
+        </div>
+        <div class="col-md-6 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Trạng thái duyệt"></app-custom-label>
+                
+                <app-custom-select-box [showClearButton]="true" [items]="dataAuthStatus" [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                        [(value)]="productCredit_request.data.auth_stat" valueExpr="id" displayExpr="name"
+                        placeholder=" " [disabled]="true" [showDropDownButton]="false"></app-custom-select-box>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="row" [hidden]="visibleNotify">
+        <div class="flex my-2 justify-content-end">
+            <app-screen-button (onItemClick)="onClick($event)"></app-screen-button>
+            <!-- <dx-button class="me-1" stylingMode="contained" text="Quay lại" type="default" width="auto" (onClick)="onClick('Back')">
+                            </dx-button> -->
+        </div>
+    </div>
+
+    <app-custom-confirm-notify title="{{titleNotify}}" [visible]="visibleNotify" (onCancel)="cancelHandler()" (onConfirm)="confirmHandler()"></app-custom-confirm-notify>
+</div>

@@ -1,0 +1,39 @@
+<div class="col-md-12 mb-3">
+    <app-custom-header-title class="my-3" text="Tạo nhóm"></app-custom-header-title>
+
+    <div class="row">
+        <div class="col-md-4">
+            <app-custom-label text="Id người dùng" [important]="true"></app-custom-label>
+            <app-custom-select-box [showClearButton]="true" [items]="dataUser" [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                        [valueExpr]="'user_name_up'" [displayExpr]="displayUser" [searchEnabled]="true"
+                        placeholder="Chọn" (onValueChanged)="onUserSelected($event)"></app-custom-select-box>
+
+            <!-- <dx-button class="d-flex my-2 col-auto ms-auto" stylingMode="contained" text="Phân nhóm" type="default" [width]="110" 
+                            (click)="assignGroup()">
+            </dx-button> -->
+        </div>
+    </div>
+</div>
+
+<app-data-grid-control [dataSource]="dataSource" 
+                       [columns]="columns"  
+                       [length] = "length"
+                       [requestFilter]="req"
+                       (loadData)="loadDataSupportGroup($event)"
+></app-data-grid-control>
+
+<div class="card button-sticky-footer p-3">
+  <!-- Nội dung khác -->
+
+  <div class="d-flex justify-content-end">
+    <app-custom-button
+      [text]="'PHÂN NHÓM'"
+      [type]="'primary'"
+      [width]="'140px'"
+      [height]="'42px'"
+      [iconSize]="'22px'"
+      [fontSize]="'16px'"
+      (btnClick)="assignGroup()"
+    ></app-custom-button>
+  </div>
+</div>

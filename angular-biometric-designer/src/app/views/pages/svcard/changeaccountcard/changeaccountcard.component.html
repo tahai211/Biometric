@@ -1,0 +1,265 @@
+<div class="col-md-12" *ngIf="id == null || id == ''">
+    <div class="timeline-wrapper">
+        <div class="timeline-line"></div>
+
+        <div class="timeline-steps">
+            <div class="step">
+            <div class="circle">
+                <!-- <img src="assets/images/icon/tick.svg" /> -->
+                <img [src]="isSelectedCard ? 'assets/images/icon/one.svg' : 'assets/images/icon/tick.svg'" />
+            </div>
+            <div class="label">Tìm kiếm khách hàng</div>
+            </div>
+
+            <div class="step">
+            <div class="circle">
+                <!-- <img src="assets/images/icon/two.svg" /> -->
+                <img [src]="isSelectedCard ? 'assets/images/icon/tick.svg' : 'assets/images/icon/two.svg'" />
+            </div>
+            <div class="label">Nhập thông tin khách hàng</div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!isSelectedCard">
+        <app-custom-header-title class="my-3" text="Tìm kiếm khách hàng"></app-custom-header-title>
+
+        <div class="row">
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Mã khách hàng"></app-custom-label>
+                    <app-custom-text-box id="customerId" [(value)]="reqListCust.customerId" (valueChange)="reqListCust.customerId = $event.trim()"  (onEnterKey)="searchCust()"></app-custom-text-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Số thẻ"></app-custom-label>
+                    <app-custom-text-box id="cardNo" [(value)]="reqListCust.cardNo" (valueChange)="reqListCust.cardNo = $event.trim()"  (onEnterKey)="searchCust()"></app-custom-text-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Theo họ và tên"></app-custom-label>
+                    <app-custom-text-box id="customerName" [(value)]="reqListCust.customerName" (valueChange)="reqListCust.customerName = $event.trim()"  (onEnterKey)="searchCust()"></app-custom-text-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Số GTTT"></app-custom-label>
+                    <app-custom-text-box id="identityNo" [(value)]="reqListCust.identityNo" (valueChange)="reqListCust.identityNo = $event.trim()"  (onEnterKey)="searchCust()"></app-custom-text-box>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="d-flex my-2 justify-content-end">
+                <app-custom-button
+                        [icon]="'assets/images/icon/search.svg'"
+                        [text]="'TÌM KIẾM'"
+                        [type]="'primary'"
+                        [width]="'140px'"
+                        [height]="'42px'"
+                        [iconSize]="'22px'"
+                        [fontSize]="'16px'"
+                        (btnClick)="searchCust()"
+                    ></app-custom-button>
+            </div>
+        </div>
+        <app-data-grid-control #dataGridCust id="dataGridCust" [dataSource]="dataSourceCust" [columns]="columnsCust"
+            [requestFilter]="reqListCust" [length]="lengthCust" (loadData)="searchCust()"
+            (onRowClick)="custSelected($event)"></app-data-grid-control>
+    </div>
+</div>
+
+<div *ngIf="isSelectedCard">
+    <div class="col-md-12">
+        <app-custom-header-title class="my-3" text="Tài khoản" [important]="true"></app-custom-header-title>
+        <div class="row">
+            <!-- <div class="col-md-6"> -->
+                <div class="fv-row">
+                    <app-data-grid-control-mini #dataGridAcc id="dataGridAcc" [dataSource]="dataSourceAcc"
+                        [columns]="columnsAcc" [selectMode]="'single'" [enabledPaging]="false"
+                        (onSelectionChanged)="accSelection($event)" [disabled]="disableApprove"></app-data-grid-control-mini>
+                </div>
+            </div>
+        <!-- </div> -->
+    </div>
+
+    <div class="col-md-12">
+        <app-custom-header-title class="my-3" text="Thông tin chung"></app-custom-header-title>
+        <div class="row">
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Mã giao dịch"></app-custom-label>
+                    <app-custom-text-box id="batch_num" [(value)]="data.reference_no" [disabled]="true"></app-custom-text-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Trạng thái giao dịch"></app-custom-label>
+                    <app-custom-text-box id="auth_stat" [(value)]="data.auth_stat_text" [disabled]="true"></app-custom-text-box>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Sản phẩm" [important]="true"></app-custom-label>
+                    <app-custom-select-box [showClearButton]="true" id="product_code" [items]="dataProducts"
+                            [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [searchEnabled]="true" 
+                            [(value)]="data.product_code" valueExpr="value"
+                            displayExpr="text" placeholder="Chọn" [disabled]="true"></app-custom-select-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Mã khách hàng (CIF)"></app-custom-label>
+                    <app-custom-text-box  id="cust_no" [(value)]="data.cust_no" [disabled]="true"></app-custom-text-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Số GTTT"></app-custom-label>
+                    <app-custom-text-box  id="unique_id_value" [(value)]="data.unique_id_value" [disabled]="true"></app-custom-text-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Ngày sinh"></app-custom-label>
+                    <app-custom-text-box  id="birth_day" [(value)]="data.birth_day" [disabled]="true"></app-custom-text-box>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Loại khách hàng"></app-custom-label>
+                    <app-custom-text-box  id="cust_type" [(value)]="data.cust_type" [disabled]="true"></app-custom-text-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Họ tên khách hàng"></app-custom-label>
+                    <app-custom-text-box  id="cust_name" [(value)]="data.cust_name" [disabled]="true"></app-custom-text-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Đơn vị (tài khoản)"></app-custom-label>
+                    <app-custom-text-box  id="user_branch" [(value)]="data.user_branch" [disabled]="true"></app-custom-text-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Đơn vị (phát hành)"></app-custom-label>
+                    <app-custom-text-box  id="branch_code" [(value)]="data.branch_code" [disabled]="true"></app-custom-text-box>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Thẻ chính/phụ" [important]="true"></app-custom-label>
+                    <app-custom-select-box [showClearButton]="true" id="card_type" [items]="dataCardType"
+                            [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" 
+                            [(value)]="data.card_type" valueExpr="id"
+                            displayExpr="name" placeholder="Chọn" [disabled]="true"></app-custom-select-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Số thẻ"></app-custom-label>
+                    <app-custom-text-box  id="card_no" [(value)]="data.card_no" [disabled]="true"></app-custom-text-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Số tài khoản (cũ)"></app-custom-label>
+                    <app-custom-text-box  id="account_no" [(value)]="data.account_no" [disabled]="true"></app-custom-text-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Tên in trên thẻ"></app-custom-label>
+                    <app-custom-text-box  id="card_name" [(value)]="data.card_name" [disabled]="true"></app-custom-text-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Người duyệt" [important]="true"></app-custom-label>
+                    <app-custom-select-box [showClearButton]="true" id="approved_by" [items]="dataUserAuths"
+                            [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [searchEnabled]="true"
+                            [(value)]="data.auth_id" valueExpr="value"
+                            displayExpr="text" placeholder="Chọn" [disabled]="disableApprove"></app-custom-select-box>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 mb-3">
+        <app-custom-header-title class="my-3" text="Địa chỉ liên lạc"></app-custom-header-title>
+        <div class="row">
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Địa chỉ liên lạc (1)"></app-custom-label>
+                    <app-custom-text-box  id="address_1" [(value)]="data.address_1" [disabled]="true"></app-custom-text-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="(2)"></app-custom-label>
+                    <app-custom-text-box  id="address_2" [(value)]="data.address_2" [disabled]="true"></app-custom-text-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="(3)"></app-custom-label>
+                    <app-custom-text-box  id="address_3" [(value)]="data.address_3" [disabled]="true"></app-custom-text-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="(4)"></app-custom-label>
+                    <app-custom-text-box  id="address_4" [(value)]="data.address_4" [disabled]="true"></app-custom-text-box>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Quốc gia" [important]="true"></app-custom-label>
+                    <app-custom-select-box [showClearButton]="true" id="country_code" [items]="dataCountrys"
+                            [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [searchEnabled]="true"
+                            [(value)]="data.country_code" valueExpr="value"
+                            displayExpr="text" placeholder="Chọn" [disabled]="true"></app-custom-select-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Tỉnh thành" [important]="true"></app-custom-label>
+                    <app-custom-select-box [showClearButton]="true" id="city_code" [items]="dataCitys"
+                            [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [searchEnabled]="true"
+                            [(value)]="data.city_code" valueExpr="value"
+                            displayExpr="text" placeholder="Chọn" [disabled]="true"></app-custom-select-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Điện thoại di động"></app-custom-label>
+                    <app-custom-text-box  id="cust_mobile" [(value)]="data.cust_mobile" [disabled]="true"></app-custom-text-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Điện thoại bàn"></app-custom-label>
+                    <app-custom-text-box  id="cust_phone" [(value)]="data.cust_phone" [disabled]="true"></app-custom-text-box>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-primary card-outline button-sticky-footer" *ngIf="isDisplayFooterButton">
+        <app-screen-button (onItemClick)="onClick($event)"></app-screen-button>
+    </div>
+</div>
+
+

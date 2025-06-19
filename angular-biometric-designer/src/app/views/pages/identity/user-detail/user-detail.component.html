@@ -1,0 +1,117 @@
+<!-- <div class="card card-primary card-outline mb-2">
+    <div class="card-body pt-9 pb-0"> -->
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-4 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Tên đăng nhập" [important]="true"></app-custom-label>
+                <app-custom-text-box [(value)]="data.user_name"
+                    [disabled]="id !== null && id !== ''"></app-custom-text-box>
+            </div>
+        </div>
+        <div class="col-md-4 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Họ và tên người dùng" [important]="true"></app-custom-label>
+                <app-custom-text-box [(value)]="data.full_name" [disabled]="isDisable">
+                </app-custom-text-box>
+            </div>
+        </div>
+        <div class="col-md-4 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Trạng thái" [important]="true"></app-custom-label>
+                <app-custom-select-box [showClearButton]="true" [items]="dataStatus"
+                    [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="data.status" valueExpr="id"
+                    displayExpr="name" placeholder="Chọn" [disabled]="isDisable"></app-custom-select-box>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 mb-2">
+            <app-custom-label text="Mật khẩu" [important]="id === '' || id === null"></app-custom-label>
+            <app-custom-text-box [(value)]="data.password" type="password" [disabled]="isDisable"></app-custom-text-box>
+        </div>
+        <div class="col-md-4 mb-2">
+            <app-custom-label text="Nhập lại mật khẩu" [important]="id === '' || id === null"></app-custom-label>
+            <app-custom-text-box [(value)]="data.re_password" type="password"[disabled]="isDisable"></app-custom-text-box>
+        </div>
+        <div class="col-md-4 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Phân quyền" [important]="true"></app-custom-label>
+                <!-- <dx-drop-down-box [(value)]="userRoles" [inputAttr]="{ 'aria-label': 'Owner' }" valueExpr="value"
+                    displayExpr="text" placeholder="Select" [showClearButton]="true" [dataSource]="roles"
+                    placeholder="Chọn">
+                    <div *dxTemplate="let data of 'content'">
+                        <dx-data-grid [dataSource]="roles" [columns]="columnsRole" keyExpr="value"
+                            [selection]="{ mode: 'multiple' }" [hoverStateEnabled]="true"
+                            [paging]="{ enabled: true, pageSize: 10 }" [filterRow]="{ visible: true }"
+                            [scrolling]="{ mode: 'virtual' }" [height]="345" [(selectedRowKeys)]="userRoles">
+                        </dx-data-grid>
+                    </div>
+                </dx-drop-down-box> -->
+
+                <app-custom-dropdown-box [(value)]="userRoles" [items]="roles"
+                    [columns]="columnsRole" [inputAttr]="{ 'aria-label': 'Multiple role Selection' }"
+                    valueExpr="value" displayExpr="text" placeholder="Chọn các quyền" selectionMode="multiple"
+                    displaySeparator="; " [showClearButton]="true" [disabled]="isDisable">
+                </app-custom-dropdown-box>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Đơn vị" [important]="true"></app-custom-label>
+                <!-- <dx-drop-down-box [(value)]="data.branch_code" [inputAttr]="{ 'aria-label': 'Owner' }" valueExpr="value"
+                    displayExpr="text" placeholder="Select" [showClearButton]="true" [dataSource]="branchs"
+                    placeholder="Chọn" (onValueChanged)="onBranchValueChanged($event)">
+                    <div *dxTemplate="let data of 'content'">
+                        <dx-data-grid #grid [dataSource]="branchs" [columns]="columnsBranch" keyExpr="value"
+                            [selection]="{ mode: 'single' }" [hoverStateEnabled]="true"
+                            [paging]="{ enabled: true, pageSize: 10 }" [filterRow]="{ visible: true }"
+                            [scrolling]="{ mode: 'virtual' }" [height]="345"
+                            (onSelectionChanged)="dropBranchSelected($event)">
+                        </dx-data-grid>
+                    </div>
+                </dx-drop-down-box> -->
+                <app-custom-dropdown-box [(value)]="data.branch_code" [items]="branchs" [columns]="columnsBranch"
+                    [inputAttr]="{ 'aria-label': 'Branch Selection' }" valueExpr="value" displayExpr="text"
+                    placeholder="Chọn chi nhánh" selectionMode="single" [showClearButton]="true"
+                    (valueChange)="onBranchValueChanged($event)"[disabled]="isDisable">
+                </app-custom-dropdown-box>
+
+            </div>
+        </div>
+        <div class="col-md-4 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Email"></app-custom-label>
+                <app-custom-text-box [(value)]="data.email"[disabled]="isDisable">
+                </app-custom-text-box>
+            </div>
+        </div>
+        <div class="col-md-4 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Số điện thoại"></app-custom-label>
+                <app-custom-text-box [(value)]="data.phone"[disabled]="isDisable">
+                </app-custom-text-box>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="form-check" *ngIf="isVisibleCheckboxMail">
+        <input class="form-check-input" type="checkbox" id="checkbox_send_mail_user" [(ngModel)]="isSendMail">
+        <label class="form-check-label fst-italic" for="checkbox_send_mail_user">Gửi mail thông báo cập nhật
+            thông tin</label>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="row"[hidden]="visibleNotify">
+        <div class="flex my-2 justify-content-end">
+            <app-screen-button (onItemClick)="onClick($event)"></app-screen-button>
+            <!-- <dx-button class="me-1" stylingMode="contained" text="Quay lại" type="default" width="auto" (onClick)="onClick('Back')">
+                            </dx-button> -->
+        </div>
+    </div>
+    <app-custom-confirm-notify *ngIf="visibleNotify" title="{{titleNotify}}" [visible]="visibleNotify" (onCancel)="cancelHandler()" (onConfirm)="confirmHandler()"></app-custom-confirm-notify>
+</div>

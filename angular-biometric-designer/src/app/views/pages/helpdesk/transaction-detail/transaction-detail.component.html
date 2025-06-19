@@ -1,0 +1,49 @@
+
+<div class="search-box col-md-12">
+    <div class="row mb-2">
+        <div class="col-md-2">
+            <div class="fv-row">
+                <app-custom-label text="Số thẻ"></app-custom-label>
+                <app-custom-text-box [(value)]="req.card_number">
+                </app-custom-text-box>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="fv-row">
+                <app-custom-label text="Từ ngày"></app-custom-label>
+                <app-custom-date-box [(value)]="req.from_date" type="date" displayFormat="dd/MM/yyyy"
+                    dateSerializationFormat="yyyy-MM-dd" [showClearButton]="true" [inputAttr]="{ 'aria-label': 'Date' }"
+                    (onEnterKey)="Search()"></app-custom-date-box>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="fv-row">
+                <app-custom-label text="Đến ngày"></app-custom-label>
+                <app-custom-date-box [(value)]="req.to_date" type="date" displayFormat="dd/MM/yyyy"
+                    dateSerializationFormat="yyyy-MM-dd" [showClearButton]="true" [inputAttr]="{ 'aria-label': 'Date' }"
+                    (onEnterKey)="Search()"></app-custom-date-box>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+    <div class="col-md-12 mt-3">
+        <div class="row">
+            <div class="d-flex my-2" style="display: flex;justify-content: flex-end; gap: 24px;">
+
+                <app-custom-button [icon]="'assets/images/icon/search.svg'" [text]="'TÌM KIẾM'" [type]="'soft'"
+                [width]="'140px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                (btnClick)="Search()"></app-custom-button>
+
+            <app-custom-button [icon]="'assets/images/icon/print.svg'" [text]="'IN'" [type]="'outline'"
+                [width]="'140px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                (btnClick)="Print()"></app-custom-button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<app-data-grid-control [dataSource]="dataSource" [columns]="columns" [length]="length" [requestFilter]="req"
+    (loadData)="loadData($event)"></app-data-grid-control>

@@ -1,0 +1,40 @@
+.title-label {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.38);
+}
+
+.description-label {
+    font-size: 16px;
+}
+
+.upload-box {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.upload-icon {
+  height: 20px;
+  color: #1976d2; 
+}
+
+.upload-text {
+  font-size: 14px;
+  margin-top: 10px;
+  color: #000000DE;
+}
+
+.button-sticky-footer {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15), /* bóng dưới */
+              -4px 0 10px rgba(0, 0, 0, 0.05), /* bóng trái */
+              4px 0 10px rgba(0, 0, 0, 0.05);  /* bóng phải */
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}

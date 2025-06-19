@@ -1,0 +1,27 @@
+<div class="popup-backdrop" *ngIf="visible">
+  <div class="popup-container" [ngStyle]="{ width: width, height: height }">
+
+    <!-- Row chứa nút close -->
+    <div class="popup-close-row">
+      <button class="close-btn" (click)="close()">
+        <img src="assets/images/icon/close.svg" alt="Close" class="close-icon" />
+      </button>
+    </div>
+
+    <!-- Header chứa title và line -->
+    <div class="popup-header">
+      <div class="popup-title">
+        <app-custom-header-title class="mb-2" [text]="title"></app-custom-header-title>
+      </div>
+    </div>
+
+    <div class="popup-body">
+      <ng-content></ng-content>
+    </div>
+
+    <div class="popup-footer" *ngIf="footerTemplate">
+      <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,47 @@
+.timeline-wrapper {
+  position: relative;
+  width: 100%;
+  padding: 20px 0;
+}
+
+.timeline-line {
+  position: absolute;
+  top: 32px; 
+  left: 24%;  /* bằng vị trí icon đầu tiên */
+  width: 50%;   /* kéo dài đến gần icon cuối */
+  height: 2px;
+  background-color: #cce5ff;
+  z-index: 0;
+}
+
+.timeline-steps {
+  display: flex;
+  justify-content: space-around;
+  z-index: 1;
+  position: relative;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.label {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #444;
+  text-align: center;
+}
+
+.button-sticky-footer {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15), /* bóng dưới */
+              -4px 0 10px rgba(0, 0, 0, 0.05), /* bóng trái */
+              4px 0 10px rgba(0, 0, 0, 0.05);  /* bóng phải */
+}

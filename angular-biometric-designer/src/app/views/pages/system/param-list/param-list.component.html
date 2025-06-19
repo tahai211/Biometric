@@ -1,0 +1,59 @@
+<!-- <div class="card card-primary card-outline mb-2">
+    <div class="card-body pt-9 pb-0">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <label class="dx-widget mb-1">Tên tài khoản</label>
+                        <dx-text-box [(value)]="req.user_name">
+                        </dx-text-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <label class="dx-widget mb-1">Tên người dùng</label>
+                        <dx-text-box [(value)]="req.full_name">
+                        </dx-text-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <label class="dx-widget mb-1">Trạng thái</label>
+                        <dx-select-box [showClearButton]="true" [items]="dataStatus" [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                            [(value)]="req.status" valueExpr="id" displayExpr="name" placeholder="Chọn"></dx-select-box>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <label class="dx-widget mb-1">Trạng thái duyệt</label>
+                        <dx-select-box [showClearButton]="true" [items]="dataAuthStatus" [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                            [(value)]="req.auth_stat" valueExpr="id" displayExpr="name"
+                            placeholder="Chọn"></dx-select-box>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="d-flex my-2">
+                    <dx-button class="me-1" stylingMode="text" type="default" (click)="reload()">
+                        <i class="fas fa-sync-alt"></i>
+                    </dx-button>
+                    <dx-button class="me-1" stylingMode="contained" text="Tìm kiếm" type="default" [width]="90"
+                        (click)="search()">
+                    </dx-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<app-custom-header-title class="my-3" text="Thiết lập tham số"></app-custom-header-title>
+<app-data-grid-control [dataSource]="dataSource" [columns]="columns" [length]="length" [requestFilter]="req"
+    (loadData)="loadData($event)"></app-data-grid-control>
+
+<dx-popup *ngIf="isPopupVisible" [(visible)]="isPopupVisible" [width]="'917'" [height]="'auto'" (onHiding)="hidePopup()"
+    title="Thông tin chi tiết">
+    <app-param-detail [id]="id" (close)="hidePopup()"></app-param-detail>
+</dx-popup>

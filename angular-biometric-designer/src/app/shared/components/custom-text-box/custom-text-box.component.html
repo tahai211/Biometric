@@ -1,0 +1,39 @@
+<div class="custom-text-wrapper" [ngClass]="{'has-icon': !!icon}">
+  <div class="text-icon" *ngIf="icon">
+    <img [src]="icon" />
+  </div>
+
+  <dx-number-box
+    *ngIf="isNumberBox; else textBox"
+    #numberBoxRef
+    class="content-box-search"
+    [id]="id"
+    [value]="value"
+    [disabled]="disabled"
+    [readOnly]="readOnly"
+    [inputAttr]="inputAttr"
+    [placeholder]="placeholder"
+    [format]="'##,###'" 
+    [showSpinButtons]="false"
+    [min]="0"
+    (onValueChanged)="onValueChanged($event)"
+    (onEnterKey)="onEnter($event)">
+  </dx-number-box>
+
+  <ng-template #textBox>
+    <dx-text-box
+    #textBoxRef
+    class="content-box-search"
+    [id]="id"
+    [value]="value"
+    [disabled]="disabled"
+    [readOnly]="readOnly"
+    [mode]="type"  
+    [inputAttr]="inputAttr"
+    [placeholder]="placeholder"
+    (onValueChanged)="onValueChanged($event)"
+    (onEnterKey)="onEnter($event)"
+    >
+    </dx-text-box>
+  </ng-template>
+</div>

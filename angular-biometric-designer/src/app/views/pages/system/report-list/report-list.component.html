@@ -1,0 +1,41 @@
+<app-custom-header-title class="my-3" text="Tìm kiếm"></app-custom-header-title>
+<div class="col-md-12">
+    <div class="row">
+        <!-- <div class="col-md-3 mb-2">
+                    <div class="fv-row">
+                        <label class="dx-widget mb-1">Mã tham số</label>
+                        <dx-text-box [(value)]="req.paramCode" (valueChange)="req.paramCode = $event.trim()" (onEnterKey)="search()">
+                        </dx-text-box>
+                    </div>
+                </div> -->
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Tên báo cáo"></app-custom-label>
+                <app-custom-text-box [(value)]="req.reportName" (valueChange)="req.reportName = $event.trim()"
+                    (onEnterKey)="search()">
+                </app-custom-text-box>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="row">
+        <div class="d-flex gap-3 justify-content-end">
+            <app-custom-button [icon]="'assets/images/icon/reload.svg'" [text]="'LÀM MỚI'" [type]="'outline'"
+                [width]="'140px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                (btnClick)="reload()"></app-custom-button>
+
+            <app-custom-button [icon]="'assets/images/icon/search.svg'" [text]="'TÌM KIẾM'" [type]="'soft'"
+                [width]="'140px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                (btnClick)="search()"></app-custom-button>
+        </div>
+    </div>
+</div>
+<app-custom-header-title class="my-2" text="Danh sách báo cáo"></app-custom-header-title>
+<app-data-grid-control [dataSource]="dataSource" [columns]="columns" [length]="length" [requestFilter]="req"
+    (loadData)="loadData($event)"></app-data-grid-control>
+
+<!-- <dx-popup *ngIf="isPopupVisible" [(visible)]="isPopupVisible" [width]="'1200'" [height]="'auto'"
+    (onHiding)="hidePopup()" title="Thông tin chi tiết">
+    <app-cardnew-detail [id]="id" (close)="hidePopup()"></app-cardnew-detail>
+</dx-popup> -->

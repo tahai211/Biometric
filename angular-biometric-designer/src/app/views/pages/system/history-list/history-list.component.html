@@ -1,0 +1,92 @@
+<div class="col-md-12">
+    <app-custom-header-title class="my-3" text="Tìm kiếm lịch sử truy cập"></app-custom-header-title>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Từ ngày"></app-custom-label>
+                    <app-custom-date-box [(value)]="req.from_date" type="date" displayFormat="dd/MM/yyyy"
+                        dateSerializationFormat="yyyy-MM-dd" [showClearButton]="true"
+                        [inputAttr]="{ 'aria-label': 'Date' }" (onEnterKey)="search()"></app-custom-date-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Đến ngày"></app-custom-label>
+                    <app-custom-date-box [(value)]="req.to_date" type="date" displayFormat="dd/MM/yyyy"
+                        dateSerializationFormat="yyyy-MM-dd" [showClearButton]="true"
+                        [inputAttr]="{ 'aria-label': 'Date' }" (onEnterKey)="search()"></app-custom-date-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Hệ thống"></app-custom-label>
+                    <app-custom-select-box [showClearButton]="true" [items]="dataSystemId"
+                        [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="req.system_id" valueExpr="id"
+                        displayExpr="name" placeholder="Chọn" (onEnterKey)="search()"></app-custom-select-box>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Phương thức"></app-custom-label>
+                    <app-custom-select-box [showClearButton]="true" [items]="dataHttpMethod"
+                        [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="req.http_method" valueExpr="id"
+                        displayExpr="name" placeholder="Chọn" (onEnterKey)="search()"></app-custom-select-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Mã phản hổi"></app-custom-label>
+                    <app-custom-select-box [showClearButton]="true" [items]="dataHttpStatusCode"
+                        [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="req.http_status_code"
+                        valueExpr="id" displayExpr="name" placeholder="Chọn"
+                        (onEnterKey)="search()"></app-custom-select-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Màn hình"></app-custom-label>
+                    <app-custom-select-box [showClearButton]="true" [items]="dataScreens"
+                        [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="req.screens_code"
+                        valueExpr="value" displayExpr="text" placeholder="Chọn"
+                        (onEnterKey)="search()"></app-custom-select-box>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="fv-row">
+                    <app-custom-label text="Chức năng"></app-custom-label>
+                    <app-custom-select-box [showClearButton]="true" [items]="dataFunction"
+                        [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="req.action_code"
+                        valueExpr="value" displayExpr="text" placeholder="Chọn"
+                        (onEnterKey)="search()"></app-custom-select-box>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="d-flex my-2" style="display: flex; justify-content: flex-end; gap: 24px;">
+                <app-custom-button [icon]="'assets/images/icon/reload.svg'" [text]="'LÀM MỚI'" [type]="'outline'"
+                    [width]="'140px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                    (btnClick)="reload()"></app-custom-button>
+
+                <app-custom-button [icon]="'assets/images/icon/search.svg'" [text]="'TÌM KIẾM'" [type]="'soft'"
+                    [width]="'140px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                    (btnClick)="search()"></app-custom-button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-custom-header-title class="mb-2 mt-2" text="Danh sách lịch sử truy cập"></app-custom-header-title>
+<app-data-grid-control [dataSource]="dataSource" [columns]="columns" [length]="length" [requestFilter]="req"
+    (loadData)="loadData($event)"></app-data-grid-control>
+
+<dx-popup *ngIf="isPopupVisible" [(visible)]="isPopupVisible" [width]="'1000'" [height]="'auto'"
+    (onHiding)="hidePopup()" title="Thông tin chi tiết">
+    <app-history-detail [id]="id" (close)="hidePopup()"></app-history-detail>
+</dx-popup>

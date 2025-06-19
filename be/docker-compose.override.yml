@@ -1,6 +1,7 @@
 services:
   biometrics.apiservice:
     environment:
+      - TZ=Asia/Ho_Chi_Minh
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
@@ -12,9 +13,16 @@ services:
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
   biometrics.web:
     environment:
+      - TZ=Asia/Ho_Chi_Minh
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
+      # - App:CorsOrigins=http://192.168.100.242:6010/*,http://192.168.100.242:6010,http://192.168.100.242:6060/*,http://192.168.100.242:6060
+      # - connectionstrings:default=/ESWLXVY6zM=
+      # - redis:connection=192.168.100.239:6379
+      # - redis:password=eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+      # - redis:instance=CIMS_API_
+      # - App:secret_key=+arHJCPbufxUMph1EWaLZywInX3IEJX07h8zB09Rme8=
     ports:
       - "8080"
       - "8081"
@@ -24,6 +32,7 @@ services:
 
   apigateway:
     environment:
+      - TZ=Asia/Ho_Chi_Minh
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081

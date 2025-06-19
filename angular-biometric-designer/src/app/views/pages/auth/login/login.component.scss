@@ -1,0 +1,210 @@
+// :host {
+//   height: 100vh;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// }
+
+.login-page {
+  position: relative;
+  height: 100vh;
+  background: white;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.background .blob {
+  position: absolute;
+  border-radius: 20px;
+  filter: blur(25px);
+  opacity: 0.7;
+}
+
+.blob1 {
+  width: 330px;
+  height: 330px;
+  background: linear-gradient(to bottom, #29B6F6, #FFFFFF);
+  top: 5%;
+  left: 10%;
+  animation: move1 5s infinite ease-in-out;
+  animation-delay: 0s;
+}
+.blob2 {
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(to bottom, #B2DFDB, #FFFFFF);
+  top: 30%;
+  left: 20%;
+  animation: move2 5s infinite ease-in-out;
+  animation-delay: 0s;
+}
+.blob3 {
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(to bottom, #009688, #C3E6E3, #FFFFFF);
+  top: 20%;
+  left: 55%;
+  animation: move3 5s infinite ease-in-out;
+  animation-delay: 0s;
+}
+.blob4 {
+  width: 260px;
+  height: 260px;
+  background: linear-gradient(to bottom, #00B0FF, #FFFFFF);
+  top: 65%;
+  left: 52%;
+  animation: move4 5s infinite ease-in-out;
+  animation-delay: 0;
+}
+.blob5 {
+  width: 112px;
+  height: 112px;
+  background: linear-gradient(to bottom, #0288D1, #003B5B);
+  top: 90%;
+  left: 70%;
+  animation: move5 5s infinite ease-in-out;
+  animation-delay: 0;
+}
+
+@keyframes move1 {
+  0%   { transform: translate(0, 0); }
+  45%  { transform: translate(0, 0); }      
+
+  65%  { transform: translate(-150px, 150px); }
+  90%  { transform: translate(-150px, 150px); } /* Dừng tại 50% ~ 1s */
+
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes move2 {
+  0%   { transform: translate(0, 0); }
+  5%  { transform: translate(0, 0); }      
+
+  20%  { transform: translate(100px, 100px); }
+  25%  { transform: translate(100px, 100px); }
+
+  40% { transform: translate(0, 0); }
+  45% { transform: translate(0, 0); }
+  
+  65%  { transform: translate(-150px, 150px); }
+  90%  { transform: translate(-150px, 150px); }
+
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes move3 {
+  0%   { transform: translate(0, 0); }
+  5%  { transform: translate(0, 0); }      
+
+  20%  { transform: translate(200px, -70px); }
+  25%  { transform: translate(200px, -70px); }
+
+  40% { transform: translate(200px, 50px); }
+  45% { transform: translate(200px, 50px); }
+  
+  65%  { transform: translate(0, -120px); }
+  90%  { transform: translate(0, -120px); }
+
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes move4 {
+  0%   { transform: translate(0, 0); }
+  5%  { transform: translate(0, 0); }      
+
+  20%  { transform: translate(-50px, 70px); }
+  25%  { transform: translate(-50px, 70px); }
+
+  40% { transform: translate(-50px, 70px); }
+  45% { transform: translate(-50px, 70px); }
+  
+  65%  { transform: translate(200px, -100px); }
+  90%  { transform: translate(200px, -100px); }
+
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes move5 {
+  0%   { transform: translate(0, 0); }
+  5%  { transform: translate(0, 0); }      
+
+  20%  { transform: translate(0px, -150px); }
+  25%  { transform: translate(0px, -150px); }
+
+  40% { transform: translate(-100px, -250px); }
+  45% { transform: translate(-100px, -250px); }
+  
+  65%  { transform: translate(200px, -50px); }
+  90%  { transform: translate(200px, -50px); }
+
+  100% { transform: translate(0, 0); }
+}
+
+.login-box {
+  z-index: 10;
+  background: #EDF9FF0D;
+  padding: 60px 30px;
+  border-radius: 20px;
+  width: 400px;
+  height: 550px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border: 2px solid;
+  border-color: #E1F5FE;
+}
+
+.avatar {
+  width: 180px;
+  height: 180px;
+  background: linear-gradient(#6AA8F0, #3061A5);
+  border-radius: 50%;
+  margin: 0 auto 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-wrapper {
+  flex-grow: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* căn trái */
+}
+
+.error-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: red;
+  font-size: 13px;
+  padding-left: 2px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(to bottom, #0D47A1, #051A3B);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #1565C0;
+}

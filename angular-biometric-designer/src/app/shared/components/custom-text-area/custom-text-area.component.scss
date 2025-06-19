@@ -1,0 +1,13 @@
+.content-box {
+  height: 104px;
+  border: 1px solid #0000003B;
+  border-radius: 4px;   
+}
+
+::ng-deep .content-box .dx-texteditor-input {
+  font-size: 14px;
+}
+
+::ng-deep .content-box.dx-state-disabled {
+  border: 1px solid #0000003B !important;
+}

@@ -1,0 +1,93 @@
+<!-- <div class="card card-primary card-outline mb-2">
+    <div class="card-body pt-9 pb-0"> -->
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-4 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Mã tham số"></app-custom-label>
+                <app-custom-text-box [(value)]="data.param_code" [disabled]="disable">
+                </app-custom-text-box>
+            </div>
+        </div>
+        <div class="col-md-4 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Tên tham số" [important]="true"></app-custom-label>
+                <app-custom-text-box [(value)]="data.param_name" [disabled]="disable">
+                </app-custom-text-box>
+            </div>
+        </div>
+        <div class="col-md-4 mb-2" *ngIf="data.param_type == 'P'">
+            <div class="fv-row">
+                <app-custom-label text="Giá trị" [important]="true"></app-custom-label>
+                <app-custom-text-box [(value)]="data.param_value" [disabled]="disable">
+                </app-custom-text-box>
+            </div>
+        </div>
+        <div class="col-md-4 mb-2" *ngIf="data.param_type == 'J'">
+            <div class="fv-row">
+                <app-custom-label text="Loại vòng lặp" [important]="true"></app-custom-label>
+                <app-custom-select-box [items]="dataParamType" [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                    [(value)]="data.job_type" valueExpr="id" displayExpr="name"
+                    placeholder="Chọn loại vòng lặp"  [disabled]="disable"></app-custom-select-box>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="data.param_type == 'J'">
+        <div class="col-md-4 mb-2" *ngIf="data.job_type == 'MINUTE'">
+            <app-custom-label text="Số phút" [important]="true"></app-custom-label>
+            <app-custom-text-box [(value)]="data.job_interval"  [disabled]="disable">
+            </app-custom-text-box>
+        </div>
+        <div class="col-md-4 mb-2"
+            *ngIf="data.job_type == 'PERDAY' || data.job_type == 'PERWEEK' ||data.job_type == 'PERMONTH' || data.job_type == 'PERQUARTER' || data.job_type == 'PERYEAR'">
+            <app-custom-label text="Thời gian" [important]="true"></app-custom-label>
+            <app-custom-date-box [(value)]="selectedTime" type="time" displayFormat="dd/MM/yyyy" displayFormat="HH:mm"
+                [showClearButton]="true" [inputAttr]="{ 'aria-label': 'Time' }"  [disabled]="disable"></app-custom-date-box>
+        </div>
+        <div class="col-md-4 mb-2" *ngIf="data.job_type == 'PERWEEK'">
+            <app-custom-label text="Ngày trong tuần" [important]="true"></app-custom-label>
+            <app-custom-select-box [items]="dataWeek" [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                [(value)]="data.job_day_of_week" valueExpr="id" displayExpr="name"
+                placeholder="Chọn ngày trong tuần"  [disabled]="disable"></app-custom-select-box>
+        </div>
+        <div class="col-md-4 mb-2"
+            *ngIf="data.job_type == 'PERMONTH' || data.job_type == 'PERQUARTER' || data.job_type == 'PERYEAR'">
+            <app-custom-label text="Ngày trong tháng" [important]="true"></app-custom-label>
+            <app-custom-select-box [items]="dataDay" [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                [(value)]="data.job_day_of_month" valueExpr="id" displayExpr="name"
+                placeholder="Chọn ngày trong tháng"  [disabled]="disable"></app-custom-select-box>
+        </div>
+        <div class="col-md-4 mb-2" *ngIf="data.job_type == 'PERYEAR'">
+            <app-custom-label text="Tháng" [important]="true"></app-custom-label>
+            <app-custom-select-box [items]="dataMonth" [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+                [(value)]="data.job_month" valueExpr="id" displayExpr="name"
+                placeholder="Chọn tháng"  [disabled]="disable"></app-custom-select-box>
+        </div>
+    </div>
+</div>
+<div class="row" *ngIf="!accepted">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="d-flex my-2" style="display: flex; justify-content: flex-end; gap: 24px;">
+                <app-screen-button (onItemClick)="onClick($event)"></app-screen-button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row"*ngIf="accepted">
+    <app-custom-header-title class="mb-2 mt-2" text="Xác nhận cập nhật thông tin" textAlign = "center"></app-custom-header-title>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="d-flex my-2" style="display: flex; justify-content: flex-end; gap: 24px;">
+
+                <app-custom-button [icon]="'assets/images/icon/cancel.svg'" [text]="'HỦY'" [type]="'outline-red'"
+                    [width]="'140px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                    (btnClick)="cancel()"></app-custom-button>
+
+                <app-custom-button [icon]="'assets/images/icon/accept.svg'" [text]="'XÁC NHẬN'" [type]="'primary'"
+                    [width]="'140px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                    (btnClick)="update()"></app-custom-button>
+            </div>
+        </div>
+    </div>
+</div>

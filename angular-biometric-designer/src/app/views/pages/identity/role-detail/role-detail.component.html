@@ -1,0 +1,64 @@
+<!-- <div class="card card-primary card-outline mb-2">
+    <div class="card-body pt-9 pb-0"> -->
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Mã quyền" [important]="true"></app-custom-label>
+                <app-custom-text-box [(value)]="data.role_code" [readOnly]="id !== null && id !== ''" [disabled]="visibleNotify"></app-custom-text-box>
+            </div>
+        </div>
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Tên quyền" [important]="true"></app-custom-label>
+                <app-custom-text-box [(value)]="data.role_name" [disabled]="visibleNotify"></app-custom-text-box>
+            </div>
+        </div>
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Trạng thái" [important]="true"></app-custom-label>
+
+                <app-custom-select-box [showClearButton]="true" [items]="dataStatus" 
+                    [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="data.status" valueExpr="id" 
+                    displayExpr="name" placeholder="Chọn" [disabled]="visibleNotify"></app-custom-select-box>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 mb-2">
+    <dx-tree-list #treeList [dataSource]="dataSource" keyExpr="key" parentIdExpr="depKey" [columnAutoWidth]="true"
+        [wordWrapEnabled]="true" [autoExpandAll]="true" [showBorders]="false" (onContentReady)="contentReady($event)"
+        (onSelectionChanged)="selected($event)" [selectedRowKeys]="selectRowkey" [showBorders]="true" [disabled]="visibleNotify">
+        <dxo-scrolling mode="standard"></dxo-scrolling>
+        <dxo-sorting mode="none"></dxo-sorting>
+        <dxo-search-panel [visible]="false" [width]="200"></dxo-search-panel>
+        <dxo-header-filter [visible]="false"></dxo-header-filter>
+        <dxo-column-chooser [enabled]="false"></dxo-column-chooser>
+        <dxo-selection [mode]="modeType" [allowSelectAll]="true" [recursive]="true"></dxo-selection>
+
+        <!-- <dxi-column dataField="code" caption="Mã" [width]="350"></dxi-column> -->
+        <dxi-column dataField="name" caption="Màn hình" [width]="350"></dxi-column>
+
+        <dxi-column dataField="RoleTags" caption="Chức năng" cellTemplate="rowData">
+            <div *dxTemplate="let cell of 'rowData'">
+                <div class="d-flex flex-wrap fw-bold fs-6 pe-2"
+                    *ngIf="cell.data.lstFunc != null && cell.data.lstFunc.length > 0">
+                    <div class="" *ngFor="let item of cell.data.lstFunc">
+                        <dx-check-box class="me-3" [(value)]="item.value" [text]="item.funcName"
+                            [elementAttr]="{ 'aria-label': 'Checked' }">
+                        </dx-check-box>
+                    </div>
+                </div>
+            </div>
+        </dxi-column>
+    </dx-tree-list>
+</div>
+
+<div class="button-sticky-footer card">
+    <div class="width-100" [hidden]="visibleNotify">
+     <app-screen-button (onItemClick)="onClick($event)"></app-screen-button>
+    </div>
+
+    <app-custom-confirm-notify title="{{titleNotify}}" [visible]="visibleNotify" (onCancel)="cancelHandler()" (onConfirm)="confirmHandler()"></app-custom-confirm-notify>
+</div>

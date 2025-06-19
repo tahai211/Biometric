@@ -1,0 +1,59 @@
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-4 mb-2">
+      <div class="fv-row">
+        <app-custom-label text="Mã tham số" [important]="true"></app-custom-label>
+        <app-custom-text-box [(value)]="paramCode" (valueChange)="paramCode = $event.trim()"
+          placeholder="Nhập mã tham số">
+        </app-custom-text-box>
+      </div>
+    </div>
+    <div class="col-md-4 mb-2">
+      <div class="fv-row">
+        <app-custom-label text="Tên tham số" [important]="true"></app-custom-label>
+        <app-custom-text-box [(value)]="paramName" (valueChange)="paramName = $event.trim()"
+          placeholder="Nhập tên tham số">
+        </app-custom-text-box>
+      </div>
+    </div>
+    <!-- Chọn loại tham số -->
+    <div class="col-md-4 mb-2">
+      <app-custom-label text="Loại tham số" [important]="true"></app-custom-label>
+      <app-custom-select-box [items]="paramTypes" [inputAttr]="{ 'aria-label': 'ReadOnly Product' }"
+        [(value)]="paramType" valueExpr="id" displayExpr="name" placeholder="Chọn loại tham số"></app-custom-select-box>
+    </div>
+
+    <!-- Nếu là SQL → SQL Query -->
+    <div class="col-md-8 mb-2" *ngIf="paramType === 'SQL'">
+      <app-custom-label text="SQL Query"></app-custom-label>
+      <app-custom-text-area [value]="paramValue" (valueChange)="paramValue = $event" placeholder="Viết truy vấn SQL...">
+      </app-custom-text-area>
+    </div>
+
+    <!-- Nếu là Boolean → chọn True/False -->
+    <div class="col-md-8 mb-2" *ngIf="paramType === 'Boolean'">
+      <app-custom-label text="Giá trị Boolean"></app-custom-label>
+      <app-custom-select-box [items]="[{ id: true, name: 'True' }, { id: false, name: 'False' }]"
+        [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="paramValue" valueExpr="id" displayExpr="name"
+        placeholder="Chọn True/False"></app-custom-select-box>
+    </div>
+
+    <!-- Nếu là Text → nhập text -->
+    <div class="col-md-8 mb-2" *ngIf="paramType === 'Text'">
+      <app-custom-label text="Giá trị"></app-custom-label>
+        <app-custom-text-box [(value)]="paramValue" (valueChange)="paramValue = $event.trim()"
+          placeholder="Nhập giá trị">
+        </app-custom-text-box>
+    </div>
+
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="d-flex my-2" style="display: flex; justify-content: flex-end; gap: 24px;">
+        <app-screen-button (onItemClick)="onClick($event)"></app-screen-button>
+      </div>
+    </div>
+  </div>
+</div>

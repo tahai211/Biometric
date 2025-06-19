@@ -1,0 +1,68 @@
+<app-custom-header-title class="my-3" text="Tìm kiếm tài khoản"></app-custom-header-title>
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Tên tài khoản"></app-custom-label>
+                <app-custom-text-box [(value)]="req.user_name" (onEnterKey)="search()"></app-custom-text-box>
+            </div>
+        </div>
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Tên người dùng"></app-custom-label>
+                <app-custom-text-box [(value)]="req.full_name" (onEnterKey)="search()"></app-custom-text-box>
+            </div>
+        </div>
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Trạng thái"></app-custom-label>
+                <app-custom-select-box [showClearButton]="true" [items]="dataStatus"
+                    [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="req.status" valueExpr="id"
+                    displayExpr="name" placeholder="Chọn" (onEnterKey)="search()"></app-custom-select-box>
+            </div>
+        </div>
+        <div class="col-md-3 mb-2">
+            <div class="fv-row">
+                <app-custom-label text="Trạng thái duyệt"></app-custom-label>
+                <app-custom-select-box [showClearButton]="true" [items]="dataAuthStatus"
+                    [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="req.auth_stat" valueExpr="id"
+                    displayExpr="name" placeholder="Chọn" (onEnterKey)="search()"></app-custom-select-box>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="row">
+        <div class="d-flex gap-3 justify-content-end">
+            <app-custom-button [icon]="'assets/images/icon/reload.svg'" [text]="'LÀM MỚI'" [type]="'outline'"
+                [width]="'140px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                (btnClick)="reload()"></app-custom-button>
+
+            <app-custom-button [icon]="'assets/images/icon/search.svg'" [text]="'TÌM KIẾM'" [type]="'soft'"
+                [width]="'140px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                (btnClick)="search()"></app-custom-button>
+        </div>
+    </div>
+</div>
+<app-custom-header-title class="mb-2 mt-2" text="Danh sách tài khoản"></app-custom-header-title>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="d-flex my-2" style="display: flex; justify-content: flex-end; gap: 24px;">
+
+                <app-custom-button [icon]="'assets/images/icon/download.svg'" [text]="'EXPORT EXCEL'" [type]="'primary'"
+                    [width]="'179px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                    (btnClick)="exportToExcel()"></app-custom-button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-data-grid-control [dataSource]="dataSource" [columns]="columns" [length]="length" [requestFilter]="req"
+    (loadData)="loadData($event)"></app-data-grid-control>
+
+<dx-popup *ngIf="isPopupVisible" [(visible)]="isPopupVisible" [width]="'917'" [height]="'auto'" (onHiding)="hidePopup()"
+    title="Thông tin chi tiết">
+    <app-user-detail [id]="id" (close)="hidePopup()"></app-user-detail> <!-- Component con -->
+</dx-popup>

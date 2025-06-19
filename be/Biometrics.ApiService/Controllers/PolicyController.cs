@@ -10,9 +10,11 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Biometrics.ApiService.Infra.Constans;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Biometrics.ApiService.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("policy")]
     public class PolicyController : ControllerBase

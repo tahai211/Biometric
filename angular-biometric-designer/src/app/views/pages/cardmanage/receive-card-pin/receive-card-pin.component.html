@@ -1,0 +1,98 @@
+<div style="height: 100%;">
+    <app-custom-header-title class="my-3" text="Tìm kiếm"></app-custom-header-title>
+
+    <div class="search-box col-md-12">
+        <div class="row gap-5 mb-3">
+            <div class="col">
+                <div class="form-group row align-items-center mb-3">
+                    <app-custom-label text="Từ ngày"></app-custom-label>
+                    <app-custom-date-box [(value)]="req.from_date"
+                                type="date" displayFormat="dd/MM/yyyy"
+                                dateSerializationFormat="yyyy-MM-dd" 
+                                [showClearButton]="true"
+                                [inputAttr]="{ 'aria-label': 'Date' }"
+                                (onEnterKey)="search()">
+                    </app-custom-date-box>
+                </div>
+
+                <div class="form-group row align-items-center">
+                    <app-custom-label text="Số thẻ"></app-custom-label>
+                    <app-custom-text-box [(value)]="req.card_number" (onEnterKey)="search()"></app-custom-text-box>
+                </div>
+            </div>
+            
+            <div class="col">
+                <div class="form-group row align-items-center mb-3">
+                    <app-custom-label text="Đến ngày"></app-custom-label>
+                    <app-custom-date-box [(value)]="req.to_date"
+                                type="date" displayFormat="dd/MM/yyyy"
+                                dateSerializationFormat="yyyy-MM-dd" 
+                                [showClearButton]="true"
+                                [inputAttr]="{ 'aria-label': 'Date' }"
+                                (onEnterKey)="search()">
+                    </app-custom-date-box>
+                </div>
+
+                <div class="form-group row align-items-center">
+                    <app-custom-label text="Số lô"></app-custom-label>
+                    <app-custom-text-box [(value)]="req.batch_create_num" (onEnterKey)="search()"></app-custom-text-box>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="form-group row align-items-center mb-3">
+                    <app-custom-label text="Đơn vị"></app-custom-label>
+                    <app-custom-select-box [showClearButton]="true" [items]="dataBranchs" 
+                            [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="req.branch_code" valueExpr="value" 
+                            [displayExpr]="displayItemSelect" placeholder="Chọn" (onEnterKey)="search()"></app-custom-select-box>
+                </div>
+
+                <div class="form-group row align-items-center">
+                    <app-custom-label text="Trạng thái"></app-custom-label>
+                    <app-custom-select-box [showClearButton]="true" [items]="dataStatusCard" [disabled] = "isDisabled" 
+                            [inputAttr]="{ 'aria-label': 'ReadOnly Product' }" [(value)]="req.card_status" valueExpr="value" 
+                            [displayExpr]="displayItemSelect" placeholder="Chọn" (onEnterKey)="search()"></app-custom-select-box>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 d-flex justify-content-end gap-3 mb-1">
+            <app-custom-button [icon]="'assets/images/icon/reload.svg'" [text]="'LÀM MỚI'" [type]="'outline'"
+                        [width]="'140px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                        (btnClick)="reload()"></app-custom-button>
+
+            <app-custom-button [icon]="'assets/images/icon/search.svg'" [text]="'TÌM KIẾM'" [type]="'primary'"
+                        [width]="'140px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                        (btnClick)="search()"></app-custom-button>
+
+            
+        </div>
+    </div>
+
+    <app-custom-header-title class="my-2" text="Danh sách bàn giao"></app-custom-header-title>
+
+    <app-data-grid-control [dataSource]="dataSource" 
+                        [columns]="columns"  
+                        [length] = "length"
+                        [requestFilter]="req"
+                        (loadData)="loadData($event)"
+    ></app-data-grid-control>
+</div>
+
+<dx-popup *ngIf="isPopupVisible" [(visible)]="isPopupVisible"
+          [width]="'1000'" [height]="'auto'"
+          (onHiding)="hidePopup()" title="Thông tin trạng thái thẻ">
+    <app-status-card-detail [card_number]="card_number" (close)="hidePopup()"></app-status-card-detail>
+</dx-popup>
+
+<div class="button-sticky-footer card" *ngIf="dataSource.length > 0">
+    <div class="d-flex justify-content-end gap-3">
+        <app-custom-button [icon]="'assets/images/icon/cancel.svg'" [text]="'HỦY CẬP NHẬT'" [type]="'outline-red'"
+                    [width]="'182px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                    (btnClick)="cancelStatusCard()"></app-custom-button>
+
+        <app-custom-button [icon]="'assets/images/icon/search.svg'" [text]="'CẬP NHẬT TRẠNG THÁI'" [type]="'primary'"
+                    [width]="'250px'" [height]="'42px'" [iconSize]="'22px'" [fontSize]="'16px'"
+                    (btnClick)="updateStatusCard()"></app-custom-button>
+    </div>
+</div>
